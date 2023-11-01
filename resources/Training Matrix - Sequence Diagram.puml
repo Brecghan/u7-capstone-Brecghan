@@ -1,0 +1,43 @@
+@startuml
+title Get Employee
+
+actor Client
+participant "API Gateway" as APIGateway
+participant Lambda
+participant GetEmployeeActivity
+participant EmployeeDao
+participant ModelConverter
+database DynamoDB
+
+Client -> APIGateway : GET /employee/:employeeId
+activate Client
+APIGateway -> Lambda
+activate Lambda
+activate GetEmployeeActivity
+activate EmployeeDao
+Lambda -> GetEmployeeActivity :  handleRequest(GetEmployeeRequest)
+GetEmployeeActivity -> EmployeeDao : getEmployee(employeeId : String)
+EmployeeDao -> DynamoDB : load employee by ID
+alt if employee ID does not exist
+    EmployeeDao <-- DynamoDB : null
+    Lambda <-- EmployeeDao : throw EmployeeNotFoundException
+    APIGateway <-- Lambda
+    Client <-- APIGateway : 404 Response
+else otherwise, continue
+end
+
+EmployeeDao <-- DynamoDB : Employee
+GetEmployeeActivity <-- EmployeeDao : Employee
+GetEmployeeActivity -> ModelConverter : toEmployeeModel(Employee)
+activate ModelConverter
+GetEmployeeActivity <-- ModelConverter : EmployeeModel
+deactivate ModelConverter
+Lambda <-- GetEmployeeActivity : GetEmployeeResult
+APIGateway <-- Lambda
+deactivate EmployeeDao
+deactivate GetEmployeeActivity
+deactivate Lambda
+Client <-- APIGateway : 200 Response
+deactivate Client
+
+@enduml
