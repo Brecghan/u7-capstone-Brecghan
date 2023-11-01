@@ -209,8 +209,8 @@ trainingStatus // string
 
 ```
 trainingId // partition key, string
-trainingName // sort key, string
-trainingDate // string trainings-by-series-index sort key
+trainingName // string
+trainingDate // string
 isActive // boolean
 monthsTilExpire // number
 expirationStatus // string
