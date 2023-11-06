@@ -6,7 +6,7 @@
 
 ## 1. Problem Statement
 
-This service is designed to manage a training system for a company's personnel. It allows them to track active employees, what training they have received, what testing they have taken and the results of the test, and if any trainings are set to expire.
+Brecghan's Training Matrix is a comprehensive software solution designed to streamline and enhance the management of employee training within a company. This system provides an efficient and organized platform for tracking active employees, monitoring their training history, recording test results, and managing upcoming training expirations. This project aims to create a user-friendly, centralized tool to simplify the training process, improve compliance, and ensure that employees receive the necessary training to excel in their roles.
 
 This design document describes the service that will provide the training matrix functionality to meet our customers' needs. It is designed to contain employees, trainings, and a testing tracker. It will be able to return current employees, trainings that have been conducted, and tests results from the different trainings.
 
@@ -48,8 +48,8 @@ S2. As a BTM customer, I want to be able to make the next training in a training
 
 * Creating, retrieving, and updating an employee
 * Test list that can be searched by training or employee name
-* Recipes can be retrieved and individual recipes added to meal plan
-* A user's meal plan which consists of chosen recipes
+* Creating, retrieving, and updating a training
+* Creating a training series
 
 ### 3.2. Out of Scope
 
@@ -111,7 +111,7 @@ String employeeId;
 Integer scoreToPass;
 Integer latestScore;
 Boolean hasPassed;
-Integer timesTaken;
+List<String> testAttempts;
 ```
 
 ```
@@ -120,75 +120,98 @@ Integer timesTaken;
 String trainingSeriesName;
 ```
 
-## 6.2. Endpoints
+### 6.2. Get Employee Endpoint
 
-### Employees
+* Accepts `GET` requests to `/employee/:employeeId`
+* Accepts an employee ID and returns the corresponding EmployeeModel.
+    * If the given employee ID is not found, will throw a
+      `EmployeeNotFoundException`
+
+### 6.3. Create Employee Endpoint
 
 * Accepts `POST` requests to `/employee`
-* Accepts an employeeId, employeeName, start Date, and team; returns the corresponding EmployeeModel including a true boolean parameter isActive, a training status of Up-To-Date, and 2 blank sets of trainingsTaken and testsTaken.
+* Accepts data to create a new employee with a provided name, a given employee
+  ID, a start Date, and a team. Returns the new employee.
 
-* Accepts `GET` requests to `/employee`
-* Returns a list of all employees.
+### 6.4. Update Employee Endpoint
 
-* Accepts `GET` requests to `/employee?isActive={isActive}`
-* Returns a list of employees. If specified through the boolean query parameter, returns only Active employees.
+* Accepts `PUT` requests to `/employee/:employeeId`
+* Accepts data to update an employee including updated employeeName, team, and isActive boolean. Returns the updated
+  employee.
+    * If the employee ID is not found, will throw a `EmployeeNotFoundException`
 
-* Accepts `GET` requests to `/employee?team={team}`
-* Accepts a team and returns the employees within the corresponding team. 
- 
-* Accepts `GET` requests to `/employee/{employeeId}`
-* Accepts an employeeId and returns the corresponding EmployeeModel.
+### 6.5. Get EmployeeList Endpoint
 
-* Accepts `PUT` requests to `/employee/{employeeId}`
-* Accepts data to update an employee including an updated employeeName, team, and isActive boolean.
+* Accepts `GET` requests to `/employee/`
+* Returns a list of corresponding EmployeeModels.
+* Accepts a parameter isActive that will return a list of active employees
+* Accepts a parameter team that will return a list of employees from that team
 
-* Accepts `GET` requests to `/employee/{employeeId}/tests`
-* Accepts an employeeId returns the corresponding list of tests for that employee.
+### 6.6. Get Training Endpoint
 
-### Training Series
+* Accepts `GET` requests to `/training/:trainingId`
+* Accepts a training ID and returns the corresponding TrainingModel.
+    * If the given training ID is not found, will throw a
+      `TrainingNotFoundException`
 
-* Accepts `POST` requests to `/trainingSeries`
-* Accepts a trainingSeriesName and returns a list of Training Series, containing the newly added Series.
-
-* Accepts `GET` requests to `/trainingSeries`
-* Returns a list of Training Series.
-
-* Accepts `GET` requests to `/trainingSeries/trainings`
-* Returns a list of all trainings for a specific Training Series.
-
-### Trainings
+### 6.7. Create Training Endpoint
 
 * Accepts `POST` requests to `/training`
-* Accepts a trainingName, trainingDate, trainingSeries(can be null), and monthsTilExpire and returns the corresponding TrainingModel including a unique trainingId assigned by the Training Service.
+* Accepts data to create a new training with a trainingName, trainingDate, trainingSeries(can be null), and monthsTilExpire and 
+  returns the corresponding TrainingModel including a unique trainingId assigned by the Training Service. Returns the new training.
 
-* Accepts `GET` requests to `/training`
-* Returns a list of all Trainings.
+### 6.8. Update Training Endpoint
 
-* Accepts `GET` requests to `/training?isActive={isActive}`
-* Returns a list of all Trainings. If specified through the boolean query parameter, returns only Active trainings.
+* Accepts `PUT` requests to `/training/:trainingId`
+* Accepts data update a training: all instance variables other than name, date, trainingSeries, and ID can be updated.
+    * If the training ID is not found, will throw a `TrainingNotFoundException`
 
-* Accepts `GET` requests to `/training?isActive={isActive}&expirationStatus={expirationStatus}`
-* Returns a list of all Trainings. If specified through the query parameters, returns only Active trainings close to expiring.
+### 6.9. Get TrainingList Endpoint
 
-* Accepts `PUT` requests to `/training/{trainingId}`
-* Accepts data to update a training all instance variables other than name, date, trainingSeries, and ID can be updated.
+* Accepts `GET` requests to `/training/`
+* Returns a list of corresponding TrainingModels.
+* Accepts a parameter isActive that will return a list of active trainings
+* Accepts a parameter expirationStatus that will return a list of trainings matching the provided status
+* Accepts a parameter trainingSeries that will return a list of trainings matching the provided trainingSeries
 
-* Accepts `GET` requests to `/training/{trainingId}`
-* Accepts a trainingId returns the corresponding training.
+### 6.10. Get Test Endpoint
 
-* Accepts `POST` requests to `/training/{trainingId}/tests`
-* Accepts a list of employeeIDs and an integer scoreToPass, it then creates a test for this training for each employee on the list.
+* Accepts `GET` requests to `/test/:TestId`
+* Accepts a Test ID and returns the corresponding TestModel.
+    * If the given test ID is not found, will throw a
+      `TestNotFoundException`
 
-* Accepts `GET` requests to `/training/{trainingId}/tests`
-* Returns a list of all tests for the specified training.
+### 6.11. Create Test Endpoint
 
-* Accepts `GET` requests to `/training/{trainingId}/tests?hasPassed={hasPassed}`
-* Returns a list of all tests for the specified training. If specified through the query parameters, returns only tests passed/failed..
+* Accepts `POST` requests to `/test/`
+* Accepts data to create a new Test: a trainingId, a list of employeeIDs and an integer scoreToPass, 
+  it then creates a test for this training for each employee on the list.
 
-### Tests
+### 6.12. Update Test Endpoint
 
-* Accepts `PUT` requests to `/test`
+* Accepts `PUT` requests to `/test/:TestId`
 * Accepts a trainingId, an employeeId, and a score update and returns the corresponding TestModel.
+    * If the test ID is not found, will throw a `TestNotFoundException`
+
+### 6.13. Get TestList Endpoint
+
+* Accepts `GET` requests to `/test/`
+* Returns a list of corresponding TestModels.
+* Accepts a parameter trainingId that will return a list of tests for that training
+* Accepts a parameter employeeId that will return a list of tests for that employee
+* Accepts a parameter hasPassed that will return a list of tests for that training that match the provided status
+
+### 6.14. Create TrainingSeries Endpoint
+
+* Accepts `POST` requests to `trainingSeries`
+* Accepts data to create a new TrainingSeries: a trainingSeriesName and returns a list of Training Series, 
+  containing the newly added Series.
+
+### 6.15. Get TrainingSeries Endpoint
+
+* Accepts `GET` requests to `/trainingSeries/`
+* Returns a list of corresponding TrainingSeries.
+
 
 # 7. Tables
 
@@ -227,7 +250,7 @@ employeeId // sort key, string tests-by-employee-index partition key
 scoreToPass // number
 latestScore // number
 hasPassed // boolean
-timesTaken // number
+testAttempts // string set
 ```
 
 ### 7.4. `trainingSeries`
@@ -242,3 +265,16 @@ trainingSeriesName // partition key, string
 
 
 # 8. Pages
+![](/home/brecghan/workspace/Unit 7/u7-capstone-Brecghan/resources/Images/Slide1.PNG)
+![](/home/brecghan/workspace/Unit 7/u7-capstone-Brecghan/resources/Images/Slide2.PNG)
+![](/home/brecghan/workspace/Unit 7/u7-capstone-Brecghan/resources/Images/Slide3.PNG)
+![](/home/brecghan/workspace/Unit 7/u7-capstone-Brecghan/resources/Images/Slide4.PNG)
+![](/home/brecghan/workspace/Unit 7/u7-capstone-Brecghan/resources/Images/Slide5.PNG)
+![](/home/brecghan/workspace/Unit 7/u7-capstone-Brecghan/resources/Images/Slide6.PNG)
+![](/home/brecghan/workspace/Unit 7/u7-capstone-Brecghan/resources/Images/Slide7.PNG)
+![](/home/brecghan/workspace/Unit 7/u7-capstone-Brecghan/resources/Images/Slide8.PNG)
+![](/home/brecghan/workspace/Unit 7/u7-capstone-Brecghan/resources/Images/Slide9.PNG)
+![](/home/brecghan/workspace/Unit 7/u7-capstone-Brecghan/resources/Images/Slide10.PNG)
+![](/home/brecghan/workspace/Unit 7/u7-capstone-Brecghan/resources/Images/Slide11.PNG)
+![](/home/brecghan/workspace/Unit 7/u7-capstone-Brecghan/resources/Images/Slide12.PNG)
+![](/home/brecghan/workspace/Unit 7/u7-capstone-Brecghan/resources/Images/Slide13.PNG)
