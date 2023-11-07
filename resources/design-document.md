@@ -1,10 +1,6 @@
 # Design Document
 
-<<<<<<< HEAD
 ## Instructions
-=======
-## Instruction
->>>>>>> main
 
 ## Brecghan's Training Matrix(BTM) Design
 
@@ -20,11 +16,7 @@ U1. As a BTM customer, I want to create an employee
 
 U2. As a BTM customer, I want to be able to create a training
 
-<<<<<<< HEAD
-U3. As a BTM customer, I want to be able to create a training series
-=======
 U3. As a BTM customer, I want to be able to create a reoccurring training series
->>>>>>> main
 
 U4. As a BTM customer, I want to be able to create tests for trainings
 
@@ -57,11 +49,7 @@ S2. As a BTM customer, I want to be able to make the next training in a training
 * Creating, retrieving, and updating an employee
 * Test list that can be searched by training or employee name
 * Creating, retrieving, and updating a training
-<<<<<<< HEAD
-* Creating a training series
-=======
 * Creating a reoccurring training series
->>>>>>> main
 
 ### 3.2. Out of Scope
 
@@ -216,11 +204,7 @@ String trainingSeriesName;
 ### 6.14. Create TrainingSeries Endpoint
 
 * Accepts `POST` requests to `trainingSeries`
-<<<<<<< HEAD
-* Accepts data to create a new TrainingSeries: a trainingSeriesName and returns a list of Training Series, 
-=======
-* Accepts data to create a new reoccurring TrainingSeries: a trainingSeriesName and returns a list of Training Series, 
->>>>>>> main
+* Accepts data to create a new reoccurring TrainingSeries: a trainingSeriesName and returns a list of Training Series,
   containing the newly added Series.
 
 ### 6.15. Get TrainingSeries Endpoint
