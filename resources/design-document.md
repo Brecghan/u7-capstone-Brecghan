@@ -266,29 +266,29 @@ trainingSeriesName // partition key, string
 
 # 8. Pages
 ### Welcome/Login Screen
-![Slide1.PNG](Images%2FSlide1.PNG)
+![Slide1.PNG](Images/Slide1.PNG)
 ### Welcome Screen Post Login
-![Slide2.PNG](Images%2FSlide2.PNG)
+![Slide2.PNG](Images/Slide2.PNG)
 ### Employee Base Page
-![Slide3.PNG](Images%2FSlide3.PNG)
+![Slide3.PNG](Images/Slide3.PNG)
 ### Create Employee Page
-![Slide4.PNG](Images%2FSlide4.PNG)
+![Slide4.PNG](Images/Slide4.PNG)
 ### Update Employee Page
-![Slide5.PNG](Images%2FSlide5.PNG)
+![Slide5.PNG](Images/Slide5.PNG)
 ### Employee List Page
-![Slide6.PNG](Images%2FSlide6.PNG)
+![Slide6.PNG](Images/Slide6.PNG)
 ### View Employee Page
-![Slide7.PNG](Images%2FSlide7.PNG)
+![Slide7.PNG](Images/Slide7.PNG)
 ### Training Base Page
-![Slide8.PNG](Images%2FSlide8.PNG)
+![Slide8.PNG](Images/Slide8.PNG)
 ### Training List Page
-![Slide9.PNG](Images%2FSlide9.PNG)
+![Slide9.PNG](Images/Slide9.PNG)
 ### Create Training Page
-![Slide10.PNG](Images%2FSlide10.PNG)
+![Slide10.PNG](Images/Slide10.PNG)
 ### View Training Page
-![Slide11.PNG](Images%2FSlide11.PNG)
+![Slide11.PNG](Images/Slide11.PNG)
 ### Update Training Page
-![Slide12.PNG](Images%2FSlide12.PNG)
+![Slide12.PNG](Images/Slide12.PNG)
 ### View Test Page
-![Slide13.PNG](Images%2FSlide13.PNG)
+![Slide13.PNG](Images/Slide13.PNG)
 
