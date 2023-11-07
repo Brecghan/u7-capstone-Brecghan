@@ -1,4 +1,4 @@
-package com.nashss.se.musicplaylistservice.lambda;
+package com.nashss.se.trainingmatrix.lambda;
 
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 

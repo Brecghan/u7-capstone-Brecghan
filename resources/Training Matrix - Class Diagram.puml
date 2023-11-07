@@ -1,0 +1,171 @@
+@startuml
+
+class CreateEmployeeActivity {
+  +handleRequest(createEmployeeRequest : CreateEmployeeRequest) : CreateEmployeeResult
+}
+class GetEmployeeActivity {
+  +handleRequest(getEmployeeRequest : GetEmployeeRequest) : GetEmployeeResult
+}
+class UpdateEmployeeActivity {
+  +handleRequest(updateEmployeeRequest : UpdateEmployeeRequest) : UpdateEmployeeResult
+}
+class GetEmployeeListActivity {
+  +handleRequest(getEmployeeListRequest : GetEmployeeListRequest) : GetEmployeeListResult
+}
+
+class EmployeeDao {
+  -dynamoDbMapper : DynamoDBMapper
+
+  +getEmployeeList(isActive : Boolean, String : team) : List<TrainingSeries>
+  +saveEmployee(employee : Employee) : Employee
+  +getEmployee(employeeId : String) : Employee
+}
+
+CreateEmployeeActivity o-- EmployeeDao
+GetEmployeeActivity o-- EmployeeDao
+UpdateEmployeeActivity o-- EmployeeDao
+GetEmployeeListActivity o-- EmployeeDao
+
+newpage
+
+class CreateTestActivity {
+  +handleRequest(createTestRequest : CreateTestRequest) : CreateTestResult
+}
+class GetTestActivity {
+  +handleRequest(getTestRequest : GetTestRequest) : GetTestResult
+}
+class UpdateTestActivity {
+  +handleRequest(updateTestRequest : UpdateTestRequest) : UpdateTestResult
+}
+class GetTestListActivity {
+  +handleRequest(getTestListRequest : GetTestListRequest) : GetTestListResult
+}
+
+class TestDao {
+  -dynamoDbMapper : DynamoDBMapper
+
+  +saveTest(test : Test) : Test
+  +getTest(trainingId : String, employeeId : String) Test
+  +getTestsByEmployee(employeeId : String) List<Test>
+}
+
+CreateTestActivity o-- TestDao
+GetTestActivity o-- TestDao
+UpdateTestActivity o-- TestDao
+GetTestListActivity o-- TestDao
+
+newpage
+
+class CreateTrainingActivity {
+  +handleRequest(createTrainingRequest : CreateTrainingRequest) : CreateTrainingResult
+}
+class GetTrainingActivity {
+  +handleRequest(getTrainingRequest : GetTrainingRequest) : GetTrainingResult
+}
+class UpdateTrainingActivity {
+  +handleRequest(updateTrainingRequest : UpdateTrainingRequest) : UpdateTrainingResult
+}
+class GetTrainingListActivity {
+  +handleRequest(getTrainingListRequest : GetTrainingListRequest) : GetTrainingListResult
+}
+
+class TrainingDao {
+  -dynamoDbMapper : DynamoDBMapper
+
+  +getTrainingList(isActive : Boolean, expirationStatus : String, trainingSeries : String) : List<Training>
+  +saveTraining(training : Training) : Training
+  +getTraining(trainingId : String)
+}
+
+CreateTrainingActivity o-- TrainingDao
+GetTrainingActivity o-- TrainingDao
+UpdateTrainingActivity o-- TrainingDao
+GetTrainingListActivity o-- TrainingDao
+
+newpage
+
+class CreateTrainingSeriesActivity {
+  +handleRequest(createTrainingSeriesRequest : CreateTrainingSeriesRequest) : CreateTrainingSeriesResult
+}
+class GetTrainingSeriesListActivity {
+  +handleRequest(getTrainingSeriesListRequest : GetTrainingSeriesListRequest) : GetTrainingSeriesListResult
+}
+
+class TrainingSeriesDao {
+  -dynamoDbMapper : DynamoDBMapper
+
+  +saveTrainingSeries(trainingSeries : TrainingSeries) : List<TrainingSeries>
+  +getTrainingSeries() : List<TrainingSeries>
+}
+
+CreateTrainingSeriesActivity o-- TrainingSeriesDao
+GetTrainingSeriesListActivity o-- TrainingSeriesDao
+
+newpage
+
+class Employee {
+  -@DynamoDBHashKey employeeId : String
+  -employeeName : String
+  -isActive : Boolean
+  -@DynamoDBHashKey*employees-by-team-index* team : Enum
+  -startDate : Date
+  -trainingsTaken : Set<String>
+  -testsTaken : Set<String>
+  -trainingStatus : Enum
+}
+class Training {
+  -@DynamoDBHashKey trainingId : String
+  -trainingName : String
+  -trainingDate : ZoneDateTime
+  -isActive : Boolean
+  -monthsTilExpire : Integer
+  -expirationStatus : Enum
+  -testsForTraining : Set<String>
+  -employeesTrained : Set<String>
+  -@DynamoDBHashKey*trainings-by-series-index* trainingSeries : String
+}
+class Test {
+  -@DynamoDBHashKey trainingId : String
+  -@DynamoDBRangeKey @DynamoDBHashKey*tests-by-employee-index* employeeId : String
+  -scoreToPass : Integer
+  -latestScore : Integer
+  -hasPassed : Boolean
+  -timesTaken : Integer
+}
+class TrainingSeries {
+  -@DynamoDBHashKey trainingSeriesName : String
+}
+enum Team {
+INNOVATION
+MANUFACTURING
+QUALITY
+SAFETY
+HR
+}
+enum Status {
+UP-TO-DATE
+EXPIRING-SOON
+EXPIRED
+}
+
+Training *-* Employee
+Training *-* Test
+Test *--* Employee
+Training *-- TrainingSeries
+Employee *-- Team
+Training *-- Status
+Employee *-- Status
+
+newpage
+
+class EmployeeNotFoundException
+class TestNotFoundException
+class TrainingNotFoundException
+class TrainingSeriesNotFoundException
+
+RuntimeException <|-- EmployeeNotFoundException
+RuntimeException <|-- TestNotFoundException
+RuntimeException <|-- TrainingNotFoundException
+RuntimeException <|-- TrainingSeriesNotFoundException
+
+@enduml
