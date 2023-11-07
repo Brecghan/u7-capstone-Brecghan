@@ -1,6 +1,10 @@
 # Design Document
 
+<<<<<<< HEAD
 ## Instructions
+=======
+## Instruction
+>>>>>>> main
 
 ## Brecghan's Training Matrix(BTM) Design
 
@@ -16,7 +20,11 @@ U1. As a BTM customer, I want to create an employee
 
 U2. As a BTM customer, I want to be able to create a training
 
+<<<<<<< HEAD
 U3. As a BTM customer, I want to be able to create a training series
+=======
+U3. As a BTM customer, I want to be able to create a reoccurring training series
+>>>>>>> main
 
 U4. As a BTM customer, I want to be able to create tests for trainings
 
@@ -49,7 +57,11 @@ S2. As a BTM customer, I want to be able to make the next training in a training
 * Creating, retrieving, and updating an employee
 * Test list that can be searched by training or employee name
 * Creating, retrieving, and updating a training
+<<<<<<< HEAD
 * Creating a training series
+=======
+* Creating a reoccurring training series
+>>>>>>> main
 
 ### 3.2. Out of Scope
 
@@ -204,7 +216,11 @@ String trainingSeriesName;
 ### 6.14. Create TrainingSeries Endpoint
 
 * Accepts `POST` requests to `trainingSeries`
+<<<<<<< HEAD
 * Accepts data to create a new TrainingSeries: a trainingSeriesName and returns a list of Training Series, 
+=======
+* Accepts data to create a new reoccurring TrainingSeries: a trainingSeriesName and returns a list of Training Series, 
+>>>>>>> main
   containing the newly added Series.
 
 ### 6.15. Get TrainingSeries Endpoint
@@ -265,16 +281,30 @@ trainingSeriesName // partition key, string
 
 
 # 8. Pages
-![](/home/brecghan/workspace/Unit 7/u7-capstone-Brecghan/resources/Images/Slide1.PNG)
-![](/home/brecghan/workspace/Unit 7/u7-capstone-Brecghan/resources/Images/Slide2.PNG)
-![](/home/brecghan/workspace/Unit 7/u7-capstone-Brecghan/resources/Images/Slide3.PNG)
-![](/home/brecghan/workspace/Unit 7/u7-capstone-Brecghan/resources/Images/Slide4.PNG)
-![](/home/brecghan/workspace/Unit 7/u7-capstone-Brecghan/resources/Images/Slide5.PNG)
-![](/home/brecghan/workspace/Unit 7/u7-capstone-Brecghan/resources/Images/Slide6.PNG)
-![](/home/brecghan/workspace/Unit 7/u7-capstone-Brecghan/resources/Images/Slide7.PNG)
-![](/home/brecghan/workspace/Unit 7/u7-capstone-Brecghan/resources/Images/Slide8.PNG)
-![](/home/brecghan/workspace/Unit 7/u7-capstone-Brecghan/resources/Images/Slide9.PNG)
-![](/home/brecghan/workspace/Unit 7/u7-capstone-Brecghan/resources/Images/Slide10.PNG)
-![](/home/brecghan/workspace/Unit 7/u7-capstone-Brecghan/resources/Images/Slide11.PNG)
-![](/home/brecghan/workspace/Unit 7/u7-capstone-Brecghan/resources/Images/Slide12.PNG)
-![](/home/brecghan/workspace/Unit 7/u7-capstone-Brecghan/resources/Images/Slide13.PNG)
+
+### Welcome/Login Screen
+![Slide1.PNG](Images/Slide1.PNG)
+### Welcome Screen Post Login
+![Slide2.PNG](Images/Slide2.PNG)
+### Employee Base Page
+![Slide3.PNG](Images/Slide3.PNG)
+### Create Employee Page
+![Slide4.PNG](Images/Slide4.PNG)
+### Update Employee Page
+![Slide5.PNG](Images/Slide5.PNG)
+### Employee List Page
+![Slide6.PNG](Images/Slide6.PNG)
+### View Employee Page
+![Slide7.PNG](Images/Slide7.PNG)
+### Training Base Page
+![Slide8.PNG](Images/Slide8.PNG)
+### Training List Page
+![Slide9.PNG](Images/Slide9.PNG)
+### Create Training Page
+![Slide10.PNG](Images/Slide10.PNG)
+### View Training Page
+![Slide11.PNG](Images/Slide11.PNG)
+### Update Training Page
+![Slide12.PNG](Images/Slide12.PNG)
+### View Test Page
+![Slide13.PNG](Images/Slide13.PNG)
