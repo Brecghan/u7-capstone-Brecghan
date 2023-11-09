@@ -15,7 +15,6 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConvertedEnum;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTyped;
 
 import java.time.ZonedDateTime;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -80,6 +79,11 @@ public class Employee {
         this.startDate = startDate;
     }
 
+    /**
+     * Returns the set of Tests associated with this Employee, null if there are none.
+     *
+     * @return Set of Tests for this Employee
+     */
     @DynamoDBTypeConverted(converter = SetConverter.class)
     @DynamoDBAttribute(attributeName = "testsTaken")
     public Set<String> getTestsTaken() {
@@ -92,6 +96,11 @@ public class Employee {
         return new HashSet<>(testsTaken);
     }
 
+    /**
+     * Sets the Tests for this Employee as a copy of input, or null if input is null.
+     *
+     * @param testsTaken Set of Tests for this Employee
+     */
     public void setTestsTaken(Set<String> testsTaken) {
         // see comment in getTrainingsTaken()
         if (null == testsTaken) {
@@ -101,6 +110,11 @@ public class Employee {
         }
     }
 
+    /**
+     * Returns the set of Trainings associated with this Employee, null if there are none.
+     *
+     * @return Set of Trainings for this Employee
+     */
     @DynamoDBTypeConverted(converter = SetConverter.class)
     @DynamoDBAttribute(attributeName = "trainingsTaken")
     public Set<String> getTrainingsTaken() {
@@ -113,6 +127,11 @@ public class Employee {
         return new HashSet<>(trainingsTaken);
     }
 
+    /**
+     * Sets the Trainings for this Employee as a copy of input, or null if input is null.
+     *
+     * @param trainingsTaken Set of Tests for this Employee
+     */
     public void setTrainingsTaken(Set<String> trainingsTaken) {
         // see comment in getTrainingsTaken()
         if (null == trainingsTaken) {

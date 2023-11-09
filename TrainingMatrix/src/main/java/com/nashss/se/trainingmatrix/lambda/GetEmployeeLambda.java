@@ -12,13 +12,13 @@ public class GetEmployeeLambda  extends LambdaActivityRunner<GetEmployeeRequest,
     @Override
     public LambdaResponse handleRequest(AuthenticatedLambdaRequest<GetEmployeeRequest> input, Context context) {
         return super.runActivity(
-                () -> {
-                    return input.fromPath(path ->
+            () -> {
+                return input.fromPath(path ->
                             GetEmployeeRequest.builder()
                                     .withEmployeeId(path.get("id"))
                                     .build());
-                },
-                (request, serviceComponent) ->
+            },
+            (request, serviceComponent) ->
                         serviceComponent.provideGetEmployeeActivity().handleRequest(request)
         );
     }

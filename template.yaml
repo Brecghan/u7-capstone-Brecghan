@@ -260,7 +260,7 @@ Resources:
 #    Type: AWS::Serverless::Function
 #    Properties:
 #      Role: !GetAtt AccessRole.Arn
-#      CodeUri: TrainingMatrixLambda
+#      CodeUri: TrainingMatrix
 #      Handler: com.nashss.se.trainingmatrix.lambda.GetEmployeeListLambda::handleRequest
 #      Runtime: java11
 #      Architectures:
@@ -276,31 +276,31 @@ Resources:
 #            Path: /employee
 #            Method: get
 #
-#  CreateEmployeeLambda:
-#    Type: AWS::Serverless::Function
-#    Properties:
-#      Role: !GetAtt AccessRole.Arn
-#      CodeUri: TrainingMatrixServiceLambda
-#      Handler: com.nashss.se.trainingmatrix.lambda.CreateEmployeeLambda::handleRequest
-#      Runtime: java11
-#      Architectures:
-#        - x86_64
-#      MemorySize: 512
-#      Environment:
-#        Variables:
-#          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
-#      Events:
-#        TrainingMatrixService:
-#          Type: Api
-#          Properties:
-#            Path: /employee
-#            Method: post
-#
+  CreateEmployeeLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: !GetAtt AccessRole.Arn
+      CodeUri: TrainingMatrix
+      Handler: com.nashss.se.trainingmatrix.lambda.CreateEmployeeLambda::handleRequest
+      Runtime: java11
+      Architectures:
+        - x86_64
+      MemorySize: 512
+      Environment:
+        Variables:
+          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+      Events:
+        TrainingMatrixService:
+          Type: Api
+          Properties:
+            Path: /employee
+            Method: post
+
 #  UpdateEmployeeLambda:
 #    Type: AWS::Serverless::Function
 #    Properties:
 #      Role: !GetAtt AccessRole.Arn
-#      CodeUri: TrainingMatrixLambda
+#      CodeUri: TrainingMatrix
 #      Handler: com.nashss.se.trainingmatrix.lambda.UpdateEmployeeLambda::handleRequest
 #      Runtime: java11
 #      Architectures:
@@ -320,7 +320,7 @@ Resources:
 #    Type: AWS::Serverless::Function
 #    Properties:
 #      Role: !GetAtt AccessRole.Arn
-#      CodeUri: TrainingMatrixLambda
+#      CodeUri: TrainingMatrix
 #      Handler: com.nashss.se.trainingmatrix.lambda.GetTrainingLambda::handleRequest
 #      Runtime: java11
 #      Architectures:
@@ -340,7 +340,7 @@ Resources:
 #    Type: AWS::Serverless::Function
 #    Properties:
 #      Role: !GetAtt AccessRole.Arn
-#      CodeUri: TrainingMatrixLambda
+#      CodeUri: TrainingMatrix
 #      Handler: com.nashss.se.trainingmatrix.lambda.GetTrainingListLambda::handleRequest
 #      Runtime: java11
 #      Architectures:
@@ -360,7 +360,7 @@ Resources:
 #    Type: AWS::Serverless::Function
 #    Properties:
 #      Role: !GetAtt AccessRole.Arn
-#      CodeUri: TrainingMatrixLambda
+#      CodeUri: TrainingMatrix
 #      Handler: com.nashss.se.trainingmatrix.lambda.CreateTrainingLambda::handleRequest
 #      Runtime: java11
 #      Architectures:
@@ -380,7 +380,7 @@ Resources:
 #    Type: AWS::Serverless::Function
 #    Properties:
 #      Role: !GetAtt AccessRole.Arn
-#      CodeUri: TrainingMatrixLambda
+#      CodeUri: TrainingMatrix
 #      Handler: com.nashss.se.trainingmatrix.lambda.UpdateTrainingLambda::handleRequest
 #      Runtime: java11
 #      Architectures:
@@ -400,7 +400,7 @@ Resources:
 #    Type: AWS::Serverless::Function
 #    Properties:
 #      Role: !GetAtt AccessRole.Arn
-#      CodeUri: TrainingMatrixLambda
+#      CodeUri: TrainingMatrix
 #      Handler: com.nashss.se.trainingmatrix.lambda.GetTestLambda::handleRequest
 #      Runtime: java11
 #      Architectures:
@@ -420,7 +420,7 @@ Resources:
 #    Type: AWS::Serverless::Function
 #    Properties:
 #      Role: !GetAtt AccessRole.Arn
-#      CodeUri: TrainingMatrixLambda
+#      CodeUri: TrainingMatrix
 #      Handler: com.nashss.se.trainingmatrix.lambda.GetTestListLambda::handleRequest
 #      Runtime: java11
 #      Architectures:
@@ -440,7 +440,7 @@ Resources:
 #    Type: AWS::Serverless::Function
 #    Properties:
 #      Role: !GetAtt AccessRole.Arn
-#      CodeUri: TrainingMatrixLambda
+#      CodeUri: TrainingMatrix
 #      Handler: com.nashss.se.trainingmatrix.lambda.CreateTestLambda::handleRequest
 #      Runtime: java11
 #      Architectures:
@@ -460,7 +460,7 @@ Resources:
 #    Type: AWS::Serverless::Function
 #    Properties:
 #      Role: !GetAtt AccessRole.Arn
-#      CodeUri: TrainingMatrixLambda
+#      CodeUri: TrainingMatrix
 #      Handler: com.nashss.se.trainingmatrix.lambda.UpdateTestLambda::handleRequest
 #      Runtime: java11
 #      Architectures:
@@ -480,7 +480,7 @@ Resources:
 #    Type: AWS::Serverless::Function
 #    Properties:
 #      Role: !GetAtt AccessRole.Arn
-#      CodeUri: TrainingMatrixLambda
+#      CodeUri: TrainingMatrix
 #      Handler: com.nashss.se.trainingmatrix.lambda.GetTrainingSeriesLambda::handleRequest
 #      Runtime: java11
 #      Architectures:
@@ -500,7 +500,7 @@ Resources:
 #    Type: AWS::Serverless::Function
 #    Properties:
 #      Role: !GetAtt AccessRole.Arn
-#      CodeUri: TrainingMatrixLambda
+#      CodeUri: TrainingMatrix
 #      Handler: com.nashss.se.trainingmatrix.lambda.CreateTrainingSeriesLambda::handleRequest
 #      Runtime: java11
 #      Architectures:

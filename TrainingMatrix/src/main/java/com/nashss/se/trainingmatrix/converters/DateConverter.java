@@ -5,7 +5,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.time.ZonedDateTime;
-import java.util.Date;
 
 public class DateConverter implements DynamoDBTypeConverter<String, ZonedDateTime> {
     private static final Gson GSON = new Gson();

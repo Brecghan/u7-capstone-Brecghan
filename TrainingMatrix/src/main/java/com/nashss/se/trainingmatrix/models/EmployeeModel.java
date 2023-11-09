@@ -13,11 +13,11 @@ public class EmployeeModel {
     private final String employeeName;
     private final Boolean isActive;
     private final Team team;
-    private final ZonedDateTime startDate;
+    private final String startDate;
     private final Set<String> trainingsTaken;
     private final Set<String> testsTaken;
     private final Status trainingStatus;
-    private EmployeeModel(String employeeId, String employeeName, Boolean isActive, Team team, ZonedDateTime startDate,
+    private EmployeeModel(String employeeId, String employeeName, Boolean isActive, Team team, String startDate,
                           Set<String> trainingsTaken, Set<String> testsTaken, Status trainingStatus) {
         this.employeeId = employeeId;
         this.employeeName = employeeName;
@@ -45,7 +45,7 @@ public class EmployeeModel {
         return team;
     }
 
-    public ZonedDateTime getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
@@ -97,7 +97,7 @@ public class EmployeeModel {
         private String employeeName;
         private Boolean isActive;
         private Team team;
-        private ZonedDateTime startDate;
+        private String startDate;
         private Set<String> trainingsTaken;
         private Set<String> testsTaken;
         private Status trainingStatus;
@@ -123,7 +123,7 @@ public class EmployeeModel {
         }
 
         public Builder withStartDate(ZonedDateTime startDate) {
-            this.startDate = startDate;
+            this.startDate = startDate.toString();
             return this;
         }
 

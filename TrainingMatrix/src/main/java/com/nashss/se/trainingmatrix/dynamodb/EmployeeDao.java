@@ -53,7 +53,7 @@ public class EmployeeDao {
      * @param employee The Employee to save
      * @return The Employee object that was saved
      */
-    public Employee saveRecipe(Employee employee) {
+    public Employee saveEmployee(Employee employee) {
         this.dynamoDbMapper.save(employee);
         return employee;
     }
@@ -69,19 +69,19 @@ public class EmployeeDao {
      * @return a List of Employee objects that match the search criteria.
      */
     public List<Employee> getEmployeeList(Boolean isActive, Team team) {
-        if (!isActive && team==null) {
+        if (!isActive && team == null) {
             DynamoDBScanExpression dynamoDBScanExpression = new DynamoDBScanExpression();
 
             return this.dynamoDbMapper.scan(Employee.class, dynamoDBScanExpression);
 
-        } else if (isActive && team==null) {
+        } else if (isActive && team == null) {
             Map<String, AttributeValue> valueMap = new HashMap<>();
             valueMap.put(":isActive", new AttributeValue().withBOOL(isActive));
             DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
                     .withFilterExpression("isActive = :isActive")
                     .withExpressionAttributeValues(valueMap);
 
-           return dynamoDbMapper.scan(Employee.class, scanExpression);
+            return dynamoDbMapper.scan(Employee.class, scanExpression);
 
         } else {
             Map<String, AttributeValue> valueMap = new HashMap<>();
