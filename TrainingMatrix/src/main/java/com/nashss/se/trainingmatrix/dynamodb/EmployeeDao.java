@@ -90,7 +90,8 @@ public class EmployeeDao {
             DynamoDBQueryExpression<Employee> queryExpression = new DynamoDBQueryExpression<Employee>()
                     .withIndexName(Employee.EMPLOYEES_BY_TEAM_INDEX)
                     .withConsistentRead(false)
-                    .withKeyConditionExpression("isActive = :isActive and team = :team")
+                    .withKeyConditionExpression("team = :team")
+                    .withFilterExpression("isActive = :isActive")
                     .withExpressionAttributeValues(valueMap);
 
             return dynamoDbMapper.query(Employee.class, queryExpression);

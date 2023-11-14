@@ -9,7 +9,7 @@ public class GetEmployeeResult {
         this.employee = employee;
     }
 
-    public EmployeeModel getPantry() {
+    public EmployeeModel getEmployee() {
         return employee;
     }
 
