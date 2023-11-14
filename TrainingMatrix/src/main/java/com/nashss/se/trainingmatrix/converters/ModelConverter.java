@@ -1,7 +1,9 @@
 package com.nashss.se.trainingmatrix.converters;
 
 import com.nashss.se.trainingmatrix.dynamodb.models.Employee;
+import com.nashss.se.trainingmatrix.dynamodb.models.Training;
 import com.nashss.se.trainingmatrix.models.EmployeeModel;
+import com.nashss.se.trainingmatrix.models.TrainingModel;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -54,5 +56,50 @@ public class ModelConverter {
         }
 
         return employeeModels;
+    }
+
+    /**
+     * Converts a provided {@link Training} into an {@link TrainingModel} representation.
+     *
+     * @param Training the Training to convert
+     * @return the converted Training
+     */
+    public TrainingModel toTrainingModel(Training Training) {
+        Set<String> employeesTrained = null;
+        Set<String> testsForTraining = null;
+        if (Training.getEmployeesTrained() != null) {
+            employeesTrained = new HashSet<>(Training.getEmployeesTrained());
+        }
+        if (Training.getTestsForTraining() != null) {
+            testsForTraining = new HashSet<>(Training.getTestsForTraining());
+        }
+
+        return TrainingModel.builder()
+                .withTrainingId(Training.getTrainingId())
+                .withTrainingName(Training.getTrainingName())
+                .withActive(Training.getIsActive())
+                .withMonthsTilExpire(Training.getMonthsTilExpire())
+                .withTrainingDate(Training.getTrainingDate())
+                .withEmployeesTrained(employeesTrained)
+                .withTestsForTraining(testsForTraining)
+                .withExpirationStatus(Training.getExpirationStatus())
+                .withTrainingSeries(Training.getTrainingSeries())
+                .build();
+    }
+
+    /**
+     * Converts a list of Trainings to a list of TrainingModels.
+     *
+     * @param Trainings The Trainings to convert to TrainingModels
+     * @return The converted list of TrainingModels
+     */
+    public List<TrainingModel> toTrainingModelList(List<Training> Trainings) {
+        List<TrainingModel> TrainingModels = new ArrayList<>();
+
+        for (Training Training : Trainings) {
+            TrainingModels.add(toTrainingModel(Training));
+        }
+
+        return TrainingModels;
     }
 }

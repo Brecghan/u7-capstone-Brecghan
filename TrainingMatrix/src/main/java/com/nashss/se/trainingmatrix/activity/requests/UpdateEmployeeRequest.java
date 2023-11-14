@@ -1,12 +1,10 @@
 package com.nashss.se.trainingmatrix.activity.requests;
 
-import com.nashss.se.trainingmatrix.dynamodb.models.enums.Status;
 import com.nashss.se.trainingmatrix.dynamodb.models.enums.Team;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
-import java.time.ZonedDateTime;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
