@@ -1,5 +1,7 @@
 package com.nashss.se.trainingmatrix.activity.requests;
 
+import com.nashss.se.trainingmatrix.utils.NameConverter;
+
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
@@ -9,6 +11,7 @@ public class CreateTrainingRequest {
     private final String trainingSeries;
     private final String trainingDate;
     private final Integer monthsTilExpire;
+    private static final NameConverter converter = new NameConverter();
 
     private CreateTrainingRequest(String trainingName, String trainingSeries, Integer monthsTilExpire, String trainingDate) {
         this.trainingName = trainingName;
@@ -56,12 +59,12 @@ public class CreateTrainingRequest {
         private Integer monthsTilExpire;
 
         public Builder withTrainingName(String trainingName) {
-            this.trainingName = trainingName;
+            this.trainingName = converter.nameConvert(trainingName);
             return this;
         }
 
         public Builder withTrainingSeries(String trainingSeries) {
-            this.trainingSeries = trainingSeries;
+            this.trainingSeries = converter.nameConvert(trainingSeries);
             return this;
         }
 
