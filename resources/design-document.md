@@ -1,6 +1,6 @@
 # Design Document
 
-## Instruction
+## Instructions
 
 ## Brecghan's Training Matrix(BTM) Design
 
@@ -204,7 +204,7 @@ String trainingSeriesName;
 ### 6.14. Create TrainingSeries Endpoint
 
 * Accepts `POST` requests to `trainingSeries`
-* Accepts data to create a new reoccurring TrainingSeries: a trainingSeriesName and returns a list of Training Series, 
+* Accepts data to create a new reoccurring TrainingSeries: a trainingSeriesName and returns a list of Training Series,
   containing the newly added Series.
 
 ### 6.15. Get TrainingSeries Endpoint
@@ -265,6 +265,7 @@ trainingSeriesName // partition key, string
 
 
 # 8. Pages
+
 ### Welcome/Login Screen
 ![Slide1.PNG](Images/Slide1.PNG)
 ### Welcome Screen Post Login
@@ -291,4 +292,3 @@ trainingSeriesName // partition key, string
 ![Slide12.PNG](Images/Slide12.PNG)
 ### View Test Page
 ![Slide13.PNG](Images/Slide13.PNG)
-

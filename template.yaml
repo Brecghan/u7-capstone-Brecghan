@@ -200,32 +200,48 @@ Resources:
                 - logs:PutLogEvents
                 - cloudwatch:PutMetricData
               Resource: '*'
-        - PolicyName: 'AccessPlaylistsTable'
+        - PolicyName: 'AccessEmployeesTable'
           PolicyDocument:
             Version: '2012-10-17'
             Statement:
             - Effect: Allow
               Action: dynamodb:*
-              Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/playlists"
+              Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/Employees"
                 
-        - PolicyName: 'AccessAlbumTracksTable'
+        - PolicyName: 'AccessTrainingsTable'
           PolicyDocument:
             Version: '2012-10-17'
             Statement:
             - Effect: Allow
               Action: dynamodb:*
-              Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/album_tracks"
+              Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/Trainings"
+
+        - PolicyName: 'AccessTestsTable'
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action: dynamodb:*
+                Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/Tests"
+
+        - PolicyName: 'AccessTrainingSeriesTable'
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action: dynamodb:*
+                Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/TrainingSeries"
 
   #-----------------------------------------------------
   # Lambda Functions Configuration
   #-----------------------------------------------------
 
-  GetPlaylistLambda:
+  GetEmployeeLambda:
     Type: AWS::Serverless::Function
     Properties:
       Role: !GetAtt AccessRole.Arn
-      CodeUri: MusicPlaylistServiceLambda
-      Handler: com.nashss.se.musicplaylistservice.lambda.GetPlaylistLambda::handleRequest
+      CodeUri: TrainingMatrix
+      Handler: com.nashss.se.trainingmatrix.lambda.GetEmployeeLambda::handleRequest
       Runtime: java11
       Architectures:
         - x86_64
@@ -234,20 +250,18 @@ Resources:
         Variables:
           JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
       Events:
-        MusicPlaylistService:
+        TrainingMatrix:
           Type: Api
           Properties:
-            Path: /playlists/{id}
+            Path: /employee/{id}
             Method: get
-            Auth:
-              Authorizer: 'NONE'
 
-  SearchPlaylistsLambda:
+  GetEmployeeListLambda:
     Type: AWS::Serverless::Function
     Properties:
       Role: !GetAtt AccessRole.Arn
-      CodeUri: MusicPlaylistServiceLambda
-      Handler: com.nashss.se.musicplaylistservice.lambda.SearchPlaylistsLambda::handleRequest
+      CodeUri: TrainingMatrix
+      Handler: com.nashss.se.trainingmatrix.lambda.GetEmployeeListLambda::handleRequest
       Runtime: java11
       Architectures:
         - x86_64
@@ -256,20 +270,18 @@ Resources:
         Variables:
           JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
       Events:
-        MusicPlaylistService:
+        TrainingMatrixService:
           Type: Api
           Properties:
-            Path: /playlists/search
+            Path: /employee
             Method: get
-            Auth:
-              Authorizer: 'NONE'
 
-  GetPlaylistSongsLambda:
+  CreateEmployeeLambda:
     Type: AWS::Serverless::Function
     Properties:
       Role: !GetAtt AccessRole.Arn
-      CodeUri: MusicPlaylistServiceLambda
-      Handler: com.nashss.se.musicplaylistservice.lambda.GetPlaylistSongsLambda::handleRequest
+      CodeUri: TrainingMatrix
+      Handler: com.nashss.se.trainingmatrix.lambda.CreateEmployeeLambda::handleRequest
       Runtime: java11
       Architectures:
         - x86_64
@@ -278,40 +290,18 @@ Resources:
         Variables:
           JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
       Events:
-        MusicPlaylistService:
+        TrainingMatrixService:
           Type: Api
           Properties:
-            Path: /playlists/{id}/songs
-            Method: get
-            Auth:
-              Authorizer: 'NONE'
-
-  CreatePlaylistLambda:
-    Type: AWS::Serverless::Function
-    Properties:
-      Role: !GetAtt AccessRole.Arn
-      CodeUri: MusicPlaylistServiceLambda
-      Handler: com.nashss.se.musicplaylistservice.lambda.CreatePlaylistLambda::handleRequest
-      Runtime: java11
-      Architectures:
-        - x86_64
-      MemorySize: 512
-      Environment:
-        Variables:
-          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
-      Events:
-        MusicPlaylistService:
-          Type: Api
-          Properties:
-            Path: /playlists
+            Path: /employee
             Method: post
 
-  UpdatePlaylistLambda:
+  UpdateEmployeeLambda:
     Type: AWS::Serverless::Function
     Properties:
       Role: !GetAtt AccessRole.Arn
-      CodeUri: MusicPlaylistServiceLambda
-      Handler: com.nashss.se.musicplaylistservice.lambda.UpdatePlaylistLambda::handleRequest
+      CodeUri: TrainingMatrix
+      Handler: com.nashss.se.trainingmatrix.lambda.UpdateEmployeeLambda::handleRequest
       Runtime: java11
       Architectures:
         - x86_64
@@ -320,18 +310,58 @@ Resources:
         Variables:
           JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
       Events:
-        MusicPlaylistService:
+        TrainingMatrixService:
           Type: Api
           Properties:
-            Path: /playlists/{id}
+            Path: /employee/{id}
             Method: put
 
-  AddSongToPlaylistLambda:
+#  GetTrainingLambda:
+#    Type: AWS::Serverless::Function
+#    Properties:
+#      Role: !GetAtt AccessRole.Arn
+#      CodeUri: TrainingMatrix
+#      Handler: com.nashss.se.trainingmatrix.lambda.GetTrainingLambda::handleRequest
+#      Runtime: java11
+#      Architectures:
+#        - x86_64
+#      MemorySize: 512
+#      Environment:
+#        Variables:
+#          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+#      Events:
+#        TrainingMatrixService:
+#          Type: Api
+#          Properties:
+#            Path: /training/{id}
+#            Method: get
+#
+#  GetTrainingListLambda:
+#    Type: AWS::Serverless::Function
+#    Properties:
+#      Role: !GetAtt AccessRole.Arn
+#      CodeUri: TrainingMatrix
+#      Handler: com.nashss.se.trainingmatrix.lambda.GetTrainingListLambda::handleRequest
+#      Runtime: java11
+#      Architectures:
+#        - x86_64
+#      MemorySize: 512
+#      Environment:
+#        Variables:
+#          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+#      Events:
+#        TrainingMatrixService:
+#          Type: Api
+#          Properties:
+#            Path: /training
+#            Method: get
+
+  CreateTrainingLambda:
     Type: AWS::Serverless::Function
     Properties:
       Role: !GetAtt AccessRole.Arn
-      CodeUri: MusicPlaylistServiceLambda
-      Handler: com.nashss.se.musicplaylistservice.lambda.AddSongToPlaylistLambda::handleRequest
+      CodeUri: TrainingMatrix
+      Handler: com.nashss.se.trainingmatrix.lambda.CreateTrainingLambda::handleRequest
       Runtime: java11
       Architectures:
         - x86_64
@@ -340,43 +370,232 @@ Resources:
         Variables:
           JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
       Events:
-        MusicPlaylistService:
+        TrainingMatrixService:
           Type: Api
           Properties:
-            Path: /playlists/{id}/songs
+            Path: /training
             Method: post
+
+#  UpdateTrainingLambda:
+#    Type: AWS::Serverless::Function
+#    Properties:
+#      Role: !GetAtt AccessRole.Arn
+#      CodeUri: TrainingMatrix
+#      Handler: com.nashss.se.trainingmatrix.lambda.UpdateTrainingLambda::handleRequest
+#      Runtime: java11
+#      Architectures:
+#        - x86_64
+#      MemorySize: 512
+#      Environment:
+#        Variables:
+#          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+#      Events:
+#        TrainingMatrixService:
+#          Type: Api
+#          Properties:
+#            Path: /training/{id}
+#            Method: put
+#
+#  GetTestLambda:
+#    Type: AWS::Serverless::Function
+#    Properties:
+#      Role: !GetAtt AccessRole.Arn
+#      CodeUri: TrainingMatrix
+#      Handler: com.nashss.se.trainingmatrix.lambda.GetTestLambda::handleRequest
+#      Runtime: java11
+#      Architectures:
+#        - x86_64
+#      MemorySize: 512
+#      Environment:
+#        Variables:
+#          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+#      Events:
+#        TrainingMatrixService:
+#          Type: Api
+#          Properties:
+#            Path: /test/{id}
+#            Method: get
+#
+#  GetTestListLambda:
+#    Type: AWS::Serverless::Function
+#    Properties:
+#      Role: !GetAtt AccessRole.Arn
+#      CodeUri: TrainingMatrix
+#      Handler: com.nashss.se.trainingmatrix.lambda.GetTestListLambda::handleRequest
+#      Runtime: java11
+#      Architectures:
+#        - x86_64
+#      MemorySize: 512
+#      Environment:
+#        Variables:
+#          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+#      Events:
+#        TrainingMatrixService:
+#          Type: Api
+#          Properties:
+#            Path: /test
+#            Method: get
+#
+#  CreateTestLambda:
+#    Type: AWS::Serverless::Function
+#    Properties:
+#      Role: !GetAtt AccessRole.Arn
+#      CodeUri: TrainingMatrix
+#      Handler: com.nashss.se.trainingmatrix.lambda.CreateTestLambda::handleRequest
+#      Runtime: java11
+#      Architectures:
+#        - x86_64
+#      MemorySize: 512
+#      Environment:
+#        Variables:
+#          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+#      Events:
+#        TrainingMatrixService:
+#          Type: Api
+#          Properties:
+#            Path: /test
+#            Method: post
+#
+#  UpdateTestLambda:
+#    Type: AWS::Serverless::Function
+#    Properties:
+#      Role: !GetAtt AccessRole.Arn
+#      CodeUri: TrainingMatrix
+#      Handler: com.nashss.se.trainingmatrix.lambda.UpdateTestLambda::handleRequest
+#      Runtime: java11
+#      Architectures:
+#        - x86_64
+#      MemorySize: 512
+#      Environment:
+#        Variables:
+#          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+#      Events:
+#        TrainingMatrixService:
+#          Type: Api
+#          Properties:
+#            Path: /test/{id}
+#            Method: put
+#
+#  GetTrainingSeriesLambda:
+#    Type: AWS::Serverless::Function
+#    Properties:
+#      Role: !GetAtt AccessRole.Arn
+#      CodeUri: TrainingMatrix
+#      Handler: com.nashss.se.trainingmatrix.lambda.GetTrainingSeriesLambda::handleRequest
+#      Runtime: java11
+#      Architectures:
+#        - x86_64
+#      MemorySize: 512
+#      Environment:
+#        Variables:
+#          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+#      Events:
+#        TrainingMatrixService:
+#          Type: Api
+#          Properties:
+#            Path: /trainingSeries
+#            Method: get
+#
+#  CreateTrainingSeriesLambda:
+#    Type: AWS::Serverless::Function
+#    Properties:
+#      Role: !GetAtt AccessRole.Arn
+#      CodeUri: TrainingMatrix
+#      Handler: com.nashss.se.trainingmatrix.lambda.CreateTrainingSeriesLambda::handleRequest
+#      Runtime: java11
+#      Architectures:
+#        - x86_64
+#      MemorySize: 512
+#      Environment:
+#        Variables:
+#          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+#      Events:
+#        TrainingMatrixService:
+#          Type: Api
+#          Properties:
+#            Path: /trainingSeries
+#            Method: post
 
   #-----------------------------------------------------
   # DynamoDB Configuration
   #-----------------------------------------------------
   
-  PlaylistsTable:
+  EmployeesTable:
     Type: AWS::DynamoDB::Table
     Properties:
       AttributeDefinitions:
-        - AttributeName: "id"
+        - AttributeName: "employeeId"
+          AttributeType: "S"
+        - AttributeName: "team"
           AttributeType: "S"
       KeySchema:
-        - AttributeName: "id"
+        - AttributeName: "employeeId"
           KeyType: "HASH"
       BillingMode: "PAY_PER_REQUEST"
-      TableName: "playlists"
+      TableName: "Employees"
+      GlobalSecondaryIndexes:
+        - IndexName: "EmployeesByTeamIndex"
+          KeySchema:
+            - AttributeName: "team"
+              KeyType: "HASH"
+          Projection:
+            ProjectionType: "ALL"
 
-  AlbumTracksTable:
+  TrainingsTable:
     Type: AWS::DynamoDB::Table
     Properties:
       AttributeDefinitions:
-        - AttributeName: "asin"
+        - AttributeName: "trainingId"
           AttributeType: "S"
-        - AttributeName: "track_number"
-          AttributeType: "N"
+        - AttributeName: "trainingSeries"
+          AttributeType: "S"
       KeySchema:
-        - AttributeName: "asin"
+        - AttributeName: "trainingId"
           KeyType: "HASH"
-        - AttributeName: "track_number"
+      BillingMode: "PAY_PER_REQUEST"
+      TableName: "Trainings"
+      GlobalSecondaryIndexes:
+        - IndexName: "TrainingsBySeriesIndex"
+          KeySchema:
+            - AttributeName: "trainingSeries"
+              KeyType: "HASH"
+          Projection:
+            ProjectionType: "ALL"
+
+  TestsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: "trainingId"
+          AttributeType: "S"
+        - AttributeName: "employeeId"
+          AttributeType: "S"
+      KeySchema:
+        - AttributeName: "trainingId"
+          KeyType: "HASH"
+        - AttributeName: "employeeId"
           KeyType: "RANGE"
       BillingMode: "PAY_PER_REQUEST"
-      TableName: "album_tracks"
+      TableName: "Tests"
+      GlobalSecondaryIndexes:
+        - IndexName: "TestsByEmployeeIndex"
+          KeySchema:
+            - AttributeName: "employeeId"
+              KeyType: "HASH"
+          Projection:
+            ProjectionType: "ALL"
+
+  TrainingSeriesTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: "trainingSeriesName"
+          AttributeType: "S"
+      KeySchema:
+        - AttributeName: "trainingSeriesName"
+          KeyType: "HASH"
+      BillingMode: "PAY_PER_REQUEST"
+      TableName: "TrainingSeries"
 
 #-----------------------------------------------------
 # The outputs defined below will be printed
