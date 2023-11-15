@@ -26,8 +26,8 @@ public class UpdateEmployeeActivity {
     }
 
     /**
-     * This method handles the incoming request by updating an employee
-     * with the provided employee name, employee ID, start date, team, isActive, trainingStatus, and trainingsTaken.
+     * This method handles the incoming request by retrieving an employee using the employee ID and updating
+     * with the provided employee name, team, isActive, trainingStatus, and trainingsTaken.
      * <p>
      * It then returns the newly updated employee.
      * <p>

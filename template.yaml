@@ -316,45 +316,45 @@ Resources:
             Path: /employee/{id}
             Method: put
 
-#  GetTrainingLambda:
-#    Type: AWS::Serverless::Function
-#    Properties:
-#      Role: !GetAtt AccessRole.Arn
-#      CodeUri: TrainingMatrix
-#      Handler: com.nashss.se.trainingmatrix.lambda.GetTrainingLambda::handleRequest
-#      Runtime: java11
-#      Architectures:
-#        - x86_64
-#      MemorySize: 512
-#      Environment:
-#        Variables:
-#          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
-#      Events:
-#        TrainingMatrixService:
-#          Type: Api
-#          Properties:
-#            Path: /training/{id}
-#            Method: get
-#
-#  GetTrainingListLambda:
-#    Type: AWS::Serverless::Function
-#    Properties:
-#      Role: !GetAtt AccessRole.Arn
-#      CodeUri: TrainingMatrix
-#      Handler: com.nashss.se.trainingmatrix.lambda.GetTrainingListLambda::handleRequest
-#      Runtime: java11
-#      Architectures:
-#        - x86_64
-#      MemorySize: 512
-#      Environment:
-#        Variables:
-#          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
-#      Events:
-#        TrainingMatrixService:
-#          Type: Api
-#          Properties:
-#            Path: /training
-#            Method: get
+  GetTrainingLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: !GetAtt AccessRole.Arn
+      CodeUri: TrainingMatrix
+      Handler: com.nashss.se.trainingmatrix.lambda.GetTrainingLambda::handleRequest
+      Runtime: java11
+      Architectures:
+        - x86_64
+      MemorySize: 512
+      Environment:
+        Variables:
+          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+      Events:
+        TrainingMatrixService:
+          Type: Api
+          Properties:
+            Path: /training/{id}
+            Method: get
+
+  GetTrainingListLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: !GetAtt AccessRole.Arn
+      CodeUri: TrainingMatrix
+      Handler: com.nashss.se.trainingmatrix.lambda.GetTrainingListLambda::handleRequest
+      Runtime: java11
+      Architectures:
+        - x86_64
+      MemorySize: 512
+      Environment:
+        Variables:
+          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+      Events:
+        TrainingMatrixService:
+          Type: Api
+          Properties:
+            Path: /training
+            Method: get
 
   CreateTrainingLambda:
     Type: AWS::Serverless::Function
@@ -376,26 +376,26 @@ Resources:
             Path: /training
             Method: post
 
-#  UpdateTrainingLambda:
-#    Type: AWS::Serverless::Function
-#    Properties:
-#      Role: !GetAtt AccessRole.Arn
-#      CodeUri: TrainingMatrix
-#      Handler: com.nashss.se.trainingmatrix.lambda.UpdateTrainingLambda::handleRequest
-#      Runtime: java11
-#      Architectures:
-#        - x86_64
-#      MemorySize: 512
-#      Environment:
-#        Variables:
-#          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
-#      Events:
-#        TrainingMatrixService:
-#          Type: Api
-#          Properties:
-#            Path: /training/{id}
-#            Method: put
-#
+  UpdateTrainingLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: !GetAtt AccessRole.Arn
+      CodeUri: TrainingMatrix
+      Handler: com.nashss.se.trainingmatrix.lambda.UpdateTrainingLambda::handleRequest
+      Runtime: java11
+      Architectures:
+        - x86_64
+      MemorySize: 512
+      Environment:
+        Variables:
+          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+      Events:
+        TrainingMatrixService:
+          Type: Api
+          Properties:
+            Path: /training/{id}
+            Method: put
+
 #  GetTestLambda:
 #    Type: AWS::Serverless::Function
 #    Properties:

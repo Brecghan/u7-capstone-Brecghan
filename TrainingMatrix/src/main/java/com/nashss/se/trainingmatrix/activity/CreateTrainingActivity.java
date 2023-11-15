@@ -27,12 +27,12 @@ public class CreateTrainingActivity {
 
     /**
      * This method handles the incoming request by persisting a new training
-     * with the provided training name, training ID, start date, and team.
+     * with the provided training name, monthsTilExpire, start date, and trainingSeries.
      * <p>
      * It then returns the newly created training.
      * <p>
      *
-     * @param createTrainingRequest request object containing the training name, training ID, start date, and team
+     * @param createTrainingRequest request object containing the training name, monthsTilExpire, start date, and trainingSeries
      *                              associated with it
      * @return createTrainingResult result object containing the API defined {@link TrainingModel}
      */
