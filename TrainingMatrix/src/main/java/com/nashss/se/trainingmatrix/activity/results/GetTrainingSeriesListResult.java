@@ -11,7 +11,7 @@ public class GetTrainingSeriesListResult {
         this.trainingSeriesList = trainingSeriesList;
     }
 
-    public List<TrainingSeriesModel> trainingSeriesList() {
+    public List<TrainingSeriesModel> getTrainingSeriesList() {
         return trainingSeriesList;
     }
 
