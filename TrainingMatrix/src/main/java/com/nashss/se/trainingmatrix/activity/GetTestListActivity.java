@@ -33,7 +33,7 @@ public class GetTestListActivity {
      * @return getTestListResult result object containing the tests that matched the passed parameters
      */
     public GetTestListResult handleRequest(final GetTestListRequest getTestListRequest) {
-        List<Test> results = new ArrayList<>();
+        List<Test> results;
         if (getTestListRequest.getHasPassed() == null) {
             results = testDao.getTestList(getTestListRequest.getTrainingId(), getTestListRequest.getEmployeeId());
         } else {
