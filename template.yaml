@@ -396,26 +396,26 @@ Resources:
             Path: /training/{id}
             Method: put
 
-#  GetTestLambda:
-#    Type: AWS::Serverless::Function
-#    Properties:
-#      Role: !GetAtt AccessRole.Arn
-#      CodeUri: TrainingMatrix
-#      Handler: com.nashss.se.trainingmatrix.lambda.GetTestLambda::handleRequest
-#      Runtime: java11
-#      Architectures:
-#        - x86_64
-#      MemorySize: 512
-#      Environment:
-#        Variables:
-#          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
-#      Events:
-#        TrainingMatrixService:
-#          Type: Api
-#          Properties:
-#            Path: /test/{id}
-#            Method: get
-#
+  GetTestLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: !GetAtt AccessRole.Arn
+      CodeUri: TrainingMatrix
+      Handler: com.nashss.se.trainingmatrix.lambda.GetTestLambda::handleRequest
+      Runtime: java11
+      Architectures:
+        - x86_64
+      MemorySize: 512
+      Environment:
+        Variables:
+          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+      Events:
+        TrainingMatrixService:
+          Type: Api
+          Properties:
+            Path: /test/{id}
+            Method: get
+
 #  GetTestListLambda:
 #    Type: AWS::Serverless::Function
 #    Properties:
