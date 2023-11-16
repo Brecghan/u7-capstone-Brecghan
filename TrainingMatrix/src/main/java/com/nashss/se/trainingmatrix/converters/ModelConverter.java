@@ -3,9 +3,11 @@ package com.nashss.se.trainingmatrix.converters;
 import com.nashss.se.trainingmatrix.dynamodb.models.Employee;
 import com.nashss.se.trainingmatrix.dynamodb.models.Test;
 import com.nashss.se.trainingmatrix.dynamodb.models.Training;
+import com.nashss.se.trainingmatrix.dynamodb.models.TrainingSeries;
 import com.nashss.se.trainingmatrix.models.EmployeeModel;
 import com.nashss.se.trainingmatrix.models.TestModel;
 import com.nashss.se.trainingmatrix.models.TrainingModel;
+import com.nashss.se.trainingmatrix.models.TrainingSeriesModel;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -141,5 +143,34 @@ public class ModelConverter {
         }
 
         return TestModels;
+    }
+
+    /**
+     * Converts a provided {@link TrainingSeries} into an {@link TrainingSeriesModel} representation.
+     *
+     * @param trainingSeries the trainingSeries to convert
+     * @return the converted trainingSeries
+     */
+    public TrainingSeriesModel toTrainingSeriesModel(TrainingSeries trainingSeries) {
+
+        return TrainingSeriesModel.builder()
+                .withTrainingSeriesName(trainingSeries.getTrainingSeriesName())
+                .build();
+    }
+
+    /**
+     * Converts a list of TrainingSeriess to a list of TrainingSeriesModels.
+     *
+     * @param trainingSeriesList The TrainingSeries to convert to TrainingSeriesModels
+     * @return The converted list of TrainingSeriesModels
+     */
+    public List<TrainingSeriesModel> toTrainingSeriesModelList(List<TrainingSeries> trainingSeriesList) {
+        List<TrainingSeriesModel> trainingSeriesModels = new ArrayList<>();
+
+        for (TrainingSeries trainingSeries : trainingSeriesList) {
+            trainingSeriesModels.add(toTrainingSeriesModel(trainingSeries));
+        }
+
+        return trainingSeriesModels;
     }
 }

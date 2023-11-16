@@ -476,45 +476,45 @@ Resources:
             Path: /test/{id}
             Method: put
 
-#  GetTrainingSeriesLambda:
-#    Type: AWS::Serverless::Function
-#    Properties:
-#      Role: !GetAtt AccessRole.Arn
-#      CodeUri: TrainingMatrix
-#      Handler: com.nashss.se.trainingmatrix.lambda.GetTrainingSeriesLambda::handleRequest
-#      Runtime: java11
-#      Architectures:
-#        - x86_64
-#      MemorySize: 512
-#      Environment:
-#        Variables:
-#          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
-#      Events:
-#        TrainingMatrixService:
-#          Type: Api
-#          Properties:
-#            Path: /trainingSeries
-#            Method: get
-#
-#  CreateTrainingSeriesLambda:
-#    Type: AWS::Serverless::Function
-#    Properties:
-#      Role: !GetAtt AccessRole.Arn
-#      CodeUri: TrainingMatrix
-#      Handler: com.nashss.se.trainingmatrix.lambda.CreateTrainingSeriesLambda::handleRequest
-#      Runtime: java11
-#      Architectures:
-#        - x86_64
-#      MemorySize: 512
-#      Environment:
-#        Variables:
-#          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
-#      Events:
-#        TrainingMatrixService:
-#          Type: Api
-#          Properties:
-#            Path: /trainingSeries
-#            Method: post
+  GetTrainingSeriesListLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: !GetAtt AccessRole.Arn
+      CodeUri: TrainingMatrix
+      Handler: com.nashss.se.trainingmatrix.lambda.GetTrainingSeriesListLambda::handleRequest
+      Runtime: java11
+      Architectures:
+        - x86_64
+      MemorySize: 512
+      Environment:
+        Variables:
+          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+      Events:
+        TrainingMatrixService:
+          Type: Api
+          Properties:
+            Path: /trainingSeries
+            Method: get
+
+  CreateTrainingSeriesLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: !GetAtt AccessRole.Arn
+      CodeUri: TrainingMatrix
+      Handler: com.nashss.se.trainingmatrix.lambda.CreateTrainingSeriesLambda::handleRequest
+      Runtime: java11
+      Architectures:
+        - x86_64
+      MemorySize: 512
+      Environment:
+        Variables:
+          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+      Events:
+        TrainingMatrixService:
+          Type: Api
+          Properties:
+            Path: /trainingSeries
+            Method: post
 
   #-----------------------------------------------------
   # DynamoDB Configuration

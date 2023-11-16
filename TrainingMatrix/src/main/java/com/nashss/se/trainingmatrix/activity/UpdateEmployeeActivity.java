@@ -5,8 +5,6 @@ import com.nashss.se.trainingmatrix.activity.results.UpdateEmployeeResult;
 import com.nashss.se.trainingmatrix.converters.ModelConverter;
 import com.nashss.se.trainingmatrix.dynamodb.EmployeeDao;
 import com.nashss.se.trainingmatrix.dynamodb.models.Employee;
-import com.nashss.se.trainingmatrix.dynamodb.models.Training;
-import com.nashss.se.trainingmatrix.dynamodb.models.enums.Status;
 import com.nashss.se.trainingmatrix.models.EmployeeModel;
 
 import javax.inject.Inject;
