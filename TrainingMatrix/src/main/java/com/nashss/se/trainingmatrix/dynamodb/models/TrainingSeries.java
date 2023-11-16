@@ -9,7 +9,7 @@ import java.util.Objects;
 public class TrainingSeries {
     private String trainingSeriesName;
 
-    @DynamoDBHashKey(attributeName = "trainingId")
+    @DynamoDBHashKey(attributeName = "trainingSeriesName")
     public String getTrainingSeriesName() {
         return trainingSeriesName;
     }
