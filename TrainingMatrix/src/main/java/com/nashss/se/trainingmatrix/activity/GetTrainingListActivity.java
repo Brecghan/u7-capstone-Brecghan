@@ -7,8 +7,8 @@ import com.nashss.se.trainingmatrix.dynamodb.TrainingDao;
 import com.nashss.se.trainingmatrix.dynamodb.models.Training;
 import com.nashss.se.trainingmatrix.models.TrainingModel;
 
-import javax.inject.Inject;
 import java.util.List;
+import javax.inject.Inject;
 
 public class GetTrainingListActivity {
     private final TrainingDao trainingDao;

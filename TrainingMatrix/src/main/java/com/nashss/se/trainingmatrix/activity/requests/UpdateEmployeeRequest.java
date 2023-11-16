@@ -18,7 +18,8 @@ public class UpdateEmployeeRequest {
     private final Set<String> trainingsTaken;
     private final Set<String> testsTaken;
 
-    private UpdateEmployeeRequest(String employeeName, String employeeId, Team team, Boolean isActive, Set<String> trainingsTaken, Set<String> testsTaken) {
+    private UpdateEmployeeRequest(String employeeName, String employeeId, Team team,
+                                  Boolean isActive, Set<String> trainingsTaken, Set<String> testsTaken) {
         this.employeeName = employeeName;
         this.isActive = isActive;
         this.employeeId = employeeId;

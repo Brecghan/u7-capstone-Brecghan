@@ -7,13 +7,15 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 @JsonDeserialize(builder = CreateTrainingRequest.Builder.class)
 public class CreateTrainingRequest {
+
+    private static final NameConverter converter = new NameConverter();
     private final String trainingName;
     private final String trainingSeries;
     private final String trainingDate;
     private final Integer monthsTilExpire;
-    private static final NameConverter converter = new NameConverter();
 
-    private CreateTrainingRequest(String trainingName, String trainingSeries, Integer monthsTilExpire, String trainingDate) {
+    private CreateTrainingRequest(String trainingName, String trainingSeries,
+                                  Integer monthsTilExpire, String trainingDate) {
         this.trainingName = trainingName;
         this.trainingSeries = trainingSeries;
         this.monthsTilExpire = monthsTilExpire;

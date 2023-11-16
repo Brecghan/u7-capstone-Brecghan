@@ -7,8 +7,8 @@ import com.nashss.se.trainingmatrix.dynamodb.TrainingSeriesDao;
 import com.nashss.se.trainingmatrix.dynamodb.models.TrainingSeries;
 import com.nashss.se.trainingmatrix.models.TrainingSeriesModel;
 
-import javax.inject.Inject;
 import java.util.List;
+import javax.inject.Inject;
 
 public class GetTrainingSeriesListActivity {
     private final TrainingSeriesDao trainingSeriesDao;
@@ -29,7 +29,8 @@ public class GetTrainingSeriesListActivity {
      * It then returns the matching TrainingSeries, or an empty result list if none are found.
      *
      * @param getTrainingSeriesListRequest request object containing the Parameters of isActive & Team
-     * @return getTrainingSeriesListResult result object containing the TrainingSeries that matched the passed parameters
+     * @return getTrainingSeriesListResult result object containing the TrainingSeries
+     * that matched the passed parameters
      */
     public GetTrainingSeriesListResult handleRequest(final GetTrainingSeriesListRequest getTrainingSeriesListRequest) {
 

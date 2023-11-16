@@ -48,8 +48,12 @@ public class TestModel {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         TestModel testModel = (TestModel) o;
         return Objects.equals(trainingId, testModel.trainingId) &&
                 Objects.equals(employeeId, testModel.employeeId) &&

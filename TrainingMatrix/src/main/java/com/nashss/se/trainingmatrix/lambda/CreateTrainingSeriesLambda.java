@@ -10,7 +10,8 @@ public class CreateTrainingSeriesLambda
         extends LambdaActivityRunner<CreateTrainingSeriesRequest, CreateTrainingSeriesResult>
         implements RequestHandler<AuthenticatedLambdaRequest<CreateTrainingSeriesRequest>, LambdaResponse> {
     @Override
-    public LambdaResponse handleRequest(AuthenticatedLambdaRequest<CreateTrainingSeriesRequest> input, Context context) {
+    public LambdaResponse handleRequest(AuthenticatedLambdaRequest<CreateTrainingSeriesRequest> input,
+                                        Context context) {
         return super.runActivity(
 
             () -> input.fromBody(CreateTrainingSeriesRequest.class),

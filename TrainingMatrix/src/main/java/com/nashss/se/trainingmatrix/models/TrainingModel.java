@@ -70,8 +70,12 @@ public class TrainingModel {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         TrainingModel that = (TrainingModel) o;
         return Objects.equals(trainingId, that.trainingId) &&
                 Objects.equals(trainingName, that.trainingName) &&

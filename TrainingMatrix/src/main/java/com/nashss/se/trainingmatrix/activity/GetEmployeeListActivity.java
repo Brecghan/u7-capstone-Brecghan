@@ -7,8 +7,8 @@ import com.nashss.se.trainingmatrix.dynamodb.EmployeeDao;
 import com.nashss.se.trainingmatrix.dynamodb.models.Employee;
 import com.nashss.se.trainingmatrix.models.EmployeeModel;
 
-import javax.inject.Inject;
 import java.util.List;
+import javax.inject.Inject;
 
 public class GetEmployeeListActivity {
     private final EmployeeDao employeeDao;
@@ -33,7 +33,8 @@ public class GetEmployeeListActivity {
      */
     public GetEmployeeListResult handleRequest(final GetEmployeeListRequest getEmployeeListRequest) {
 
-        List<Employee> results = employeeDao.getEmployeeList(getEmployeeListRequest.getIsActive(),getEmployeeListRequest.getTeam());
+        List<Employee> results = employeeDao.getEmployeeList(getEmployeeListRequest.getIsActive(),
+                getEmployeeListRequest.getTeam());
         List<EmployeeModel> employeeModels = new ModelConverter().toEmployeeModelList(results);
 
         return GetEmployeeListResult.builder()

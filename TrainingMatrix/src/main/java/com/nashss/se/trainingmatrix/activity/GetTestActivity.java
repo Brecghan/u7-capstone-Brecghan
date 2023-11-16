@@ -11,8 +11,9 @@ import com.nashss.se.trainingmatrix.utils.NameConverter;
 import javax.inject.Inject;
 
 public class GetTestActivity {
+
+    private static final NameConverter converter = new NameConverter();
     private final TestDao testDao;
-    private final static NameConverter converter = new NameConverter();
 
     /**
      * Instantiates a new GetTestActivity object.
@@ -34,7 +35,7 @@ public class GetTestActivity {
      */
     public GetTestResult handleRequest(final GetTestRequest getTestRequest) {
         String[] testName = converter.testNameSplit(getTestRequest.getTestId());
-        Test result = testDao.getTest(testName[0],testName[1]);
+        Test result = testDao.getTest(testName[0], testName[1]);
         TestModel testModel = new ModelConverter().toTestModel(result);
 
         return GetTestResult.builder()

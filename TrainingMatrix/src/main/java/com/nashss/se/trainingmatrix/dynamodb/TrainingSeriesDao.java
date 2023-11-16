@@ -5,9 +5,9 @@ import com.nashss.se.trainingmatrix.dynamodb.models.TrainingSeries;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 
+import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import java.util.List;
 
 /**
  * Accesses data for a TrainingSeries using {@link TrainingSeries} to represent the model in DynamoDB.

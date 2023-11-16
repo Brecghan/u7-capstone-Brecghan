@@ -5,12 +5,9 @@ import com.nashss.se.trainingmatrix.activity.results.CreateTrainingSeriesResult;
 import com.nashss.se.trainingmatrix.converters.ModelConverter;
 import com.nashss.se.trainingmatrix.dynamodb.TrainingSeriesDao;
 import com.nashss.se.trainingmatrix.dynamodb.models.TrainingSeries;
-import com.nashss.se.trainingmatrix.dynamodb.models.enums.Status;
 import com.nashss.se.trainingmatrix.models.TrainingSeriesModel;
 
 import javax.inject.Inject;
-import java.time.ZonedDateTime;
-import java.util.HashSet;
 
 public class CreateTrainingSeriesActivity {
     private final TrainingSeriesDao trainingSeriesDao;
@@ -32,8 +29,8 @@ public class CreateTrainingSeriesActivity {
      * It then returns the newly created trainingSeries.
      * <p>
      *
-     * @param createTrainingSeriesRequest request object containing the trainingSeries name, trainingSeries ID, start date, and team
-     *                              associated with it
+     * @param createTrainingSeriesRequest request object containing the trainingSeries name,
+     *                                    trainingSeries ID, start date, and team associated with it
      * @return createTrainingSeriesResult result object containing the API defined {@link TrainingSeriesModel}
      */
     public CreateTrainingSeriesResult handleRequest(final CreateTrainingSeriesRequest createTrainingSeriesRequest) {
