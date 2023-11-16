@@ -10,7 +10,7 @@ import com.nashss.se.trainingmatrix.activity.GetTestActivity;
 import com.nashss.se.trainingmatrix.activity.GetTestListActivity;
 import com.nashss.se.trainingmatrix.activity.GetTrainingActivity;
 import com.nashss.se.trainingmatrix.activity.GetTrainingListActivity;
-import com.nashss.se.trainingmatrix.activity.GetTrainingSeriesActivity;
+import com.nashss.se.trainingmatrix.activity.GetTrainingSeriesListActivity;
 import com.nashss.se.trainingmatrix.activity.UpdateEmployeeActivity;
 import com.nashss.se.trainingmatrix.activity.UpdateTestActivity;
 import com.nashss.se.trainingmatrix.activity.UpdateTrainingActivity;
@@ -103,7 +103,7 @@ public interface ServiceComponent {
 
     /**
      * Provides the relevant activity.
-     * @return GetTrainingSeriesActivity
+     * @return GetTrainingSeriesListActivity
      */
-    GetTrainingSeriesActivity provideGetTrainingSeriesActivity();
+    GetTrainingSeriesListActivity provideGetTrainingSeriesListActivity();
 }
