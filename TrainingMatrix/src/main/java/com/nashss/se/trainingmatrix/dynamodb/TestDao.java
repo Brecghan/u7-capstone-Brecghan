@@ -70,13 +70,8 @@ public class TestDao {
      * @param employeeId the employee ID
      * @return a List of Test objects that match the search criteria.
      */
-    public List<Test> getTestList(Boolean hasPassed, String trainingId, String employeeId) {
-        if (!hasPassed && trainingId == null && employeeId == null) {
-            DynamoDBScanExpression dynamoDBScanExpression = new DynamoDBScanExpression();
-
-            return this.dynamoDbMapper.scan(Test.class, dynamoDBScanExpression);
-
-        } else if (hasPassed && trainingId == null && employeeId == null) {
+    public List<Test> getTestListPassSpecific(Boolean hasPassed, String trainingId, String employeeId) {
+        if (trainingId == null && employeeId == null) {
             Map<String, AttributeValue> valueMap = new HashMap<>();
             valueMap.put(":hasPassed", new AttributeValue().withBOOL(hasPassed));
             DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
@@ -85,15 +80,17 @@ public class TestDao {
 
             return dynamoDbMapper.scan(Test.class, scanExpression);
 
-        } else if (hasPassed && trainingId != null && employeeId == null) {
+        } else if (trainingId != null && employeeId == null) {
+            Test test = new Test();
+            test.setTrainingId(trainingId);
             Map<String, AttributeValue> valueMap = new HashMap<>();
             valueMap.put(":hasPassed", new AttributeValue().withBOOL(hasPassed));
-            valueMap.put(":trainingId", new AttributeValue().withS(String.valueOf(trainingId)));
-            DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
-                    .withFilterExpression("hasPassed = :hasPassed AND trainingId = :trainingId")
+            DynamoDBQueryExpression<Test> queryExpression = new DynamoDBQueryExpression<Test>()
+                    .withHashKeyValues(test)
+                    .withFilterExpression("hasPassed = :hasPassed")
                     .withExpressionAttributeValues(valueMap);
 
-            return dynamoDbMapper.scan(Test.class, scanExpression);
+            return dynamoDbMapper.query(Test.class, queryExpression);
 
         } else {
             Map<String, AttributeValue> valueMap = new HashMap<>();
@@ -104,6 +101,43 @@ public class TestDao {
                     .withConsistentRead(false)
                     .withKeyConditionExpression("employeeId = :employeeId")
                     .withFilterExpression("hasPassed = :hasPassed")
+                    .withExpressionAttributeValues(valueMap);
+
+            return dynamoDbMapper.query(Test.class, queryExpression);
+        }
+    }
+    /**
+     * Perform a search (via a "scan") of the Test table for tests matching the given criteria.
+     * <p>
+     * The criteria options are trainingId, in which only tests that match the training will be returned,
+     * and employeeId, in which only tests that match the employee will be returned
+     * If no criteria is specified, all tests will be returned
+     *
+     * @param trainingId the training ID
+     * @param employeeId the employee ID
+     * @return a List of Test objects that match the search criteria.
+     */
+    public List<Test> getTestList(String trainingId, String employeeId) {
+        if (trainingId == null && employeeId == null) {
+            DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
+
+            return dynamoDbMapper.scan(Test.class, scanExpression);
+
+        } else if (trainingId != null && employeeId == null) {
+            Test test = new Test();
+            test.setTrainingId(trainingId);
+            DynamoDBQueryExpression<Test> queryExpression = new DynamoDBQueryExpression<Test>()
+                    .withHashKeyValues(test);
+
+            return dynamoDbMapper.query(Test.class, queryExpression);
+
+        } else {
+            Map<String, AttributeValue> valueMap = new HashMap<>();
+            valueMap.put(":employeeId", new AttributeValue().withS(employeeId));
+            DynamoDBQueryExpression<Test> queryExpression = new DynamoDBQueryExpression<Test>()
+                    .withIndexName(Test.TESTS_BY_EMPLOYEE_INDEX)
+                    .withConsistentRead(false)
+                    .withKeyConditionExpression("employeeId = :employeeId")
                     .withExpressionAttributeValues(valueMap);
 
             return dynamoDbMapper.query(Test.class, queryExpression);
