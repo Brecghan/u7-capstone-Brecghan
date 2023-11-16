@@ -27,8 +27,8 @@ public class GetEmployeeActivity {
      * <p>
      * It then returns the matching employee.
      *
-     * @param getEmployeeRequest request object containing the User ID & the Employee Id
-     * @return getEmployeeResult result object containing the Employee requested that were created by that User ID
+     * @param getEmployeeRequest request object containing the User ID & the Employee ID
+     * @return getEmployeeResult result object containing the Employee requested
      */
     public GetEmployeeResult handleRequest(final GetEmployeeRequest getEmployeeRequest) {
 

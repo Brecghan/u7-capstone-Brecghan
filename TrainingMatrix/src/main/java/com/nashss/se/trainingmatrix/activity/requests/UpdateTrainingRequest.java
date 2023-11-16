@@ -95,7 +95,7 @@ public class UpdateTrainingRequest {
         }
 
         public Builder withEmployeesTrained(Set<String> employeesTrained) {
-            this.employeesTrained = new HashSet<>(employeesTrained);
+            this.employeesTrained = employeesTrained;
             return this;
         }
 

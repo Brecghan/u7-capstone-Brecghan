@@ -1,8 +1,10 @@
 package com.nashss.se.trainingmatrix.converters;
 
 import com.nashss.se.trainingmatrix.dynamodb.models.Employee;
+import com.nashss.se.trainingmatrix.dynamodb.models.Test;
 import com.nashss.se.trainingmatrix.dynamodb.models.Training;
 import com.nashss.se.trainingmatrix.models.EmployeeModel;
+import com.nashss.se.trainingmatrix.models.TestModel;
 import com.nashss.se.trainingmatrix.models.TrainingModel;
 
 import java.util.ArrayList;
@@ -101,5 +103,43 @@ public class ModelConverter {
         }
 
         return TrainingModels;
+    }
+
+    /**
+     * Converts a provided {@link Test} into an {@link TestModel} representation.
+     *
+     * @param Test the Test to convert
+     * @return the converted Test
+     */
+    public TestModel toTestModel(Test Test) {
+        List<String> testAttempts = null;
+        if (Test.getTestAttempts() != null) {
+            testAttempts = new ArrayList<>(Test.getTestAttempts());
+        }
+
+        return TestModel.builder()
+                .withTrainingId(Test.getTrainingId())
+                .withEmployeeId(Test.getEmployeeId())
+                .withHasPassed(Test.getHasPassed())
+                .withScoreToPass(Test.getScoreToPass())
+                .withLatestScore(Test.getLatestScore())
+                .withTestAttempts(testAttempts)
+                .build();
+    }
+
+    /**
+     * Converts a list of Tests to a list of TestModels.
+     *
+     * @param Tests The Tests to convert to TestModels
+     * @return The converted list of TestModels
+     */
+    public List<TestModel> toTestModelList(List<Test> Tests) {
+        List<TestModel> TestModels = new ArrayList<>();
+
+        for (Test Test : Tests) {
+            TestModels.add(toTestModel(Test));
+        }
+
+        return TestModels;
     }
 }
