@@ -7,9 +7,8 @@ import com.nashss.se.trainingmatrix.dynamodb.TestDao;
 import com.nashss.se.trainingmatrix.dynamodb.models.Test;
 import com.nashss.se.trainingmatrix.models.TestModel;
 
-import javax.inject.Inject;
-import java.util.ArrayList;
 import java.util.List;
+import javax.inject.Inject;
 
 public class GetTestListActivity {
     private final TestDao testDao;

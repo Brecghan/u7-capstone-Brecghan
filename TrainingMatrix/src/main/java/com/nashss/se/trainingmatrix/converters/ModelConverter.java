@@ -65,66 +65,66 @@ public class ModelConverter {
     /**
      * Converts a provided {@link Training} into an {@link TrainingModel} representation.
      *
-     * @param Training the Training to convert
+     * @param training the Training to convert
      * @return the converted Training
      */
-    public TrainingModel toTrainingModel(Training Training) {
+    public TrainingModel toTrainingModel(Training training) {
         Set<String> employeesTrained = null;
         Set<String> testsForTraining = null;
-        if (Training.getEmployeesTrained() != null) {
-            employeesTrained = new HashSet<>(Training.getEmployeesTrained());
+        if (training.getEmployeesTrained() != null) {
+            employeesTrained = new HashSet<>(training.getEmployeesTrained());
         }
-        if (Training.getTestsForTraining() != null) {
-            testsForTraining = new HashSet<>(Training.getTestsForTraining());
+        if (training.getTestsForTraining() != null) {
+            testsForTraining = new HashSet<>(training.getTestsForTraining());
         }
 
         return TrainingModel.builder()
-                .withTrainingId(Training.getTrainingId())
-                .withTrainingName(Training.getTrainingName())
-                .withActive(Training.getIsActive())
-                .withMonthsTilExpire(Training.getMonthsTilExpire())
-                .withTrainingDate(Training.getTrainingDate())
+                .withTrainingId(training.getTrainingId())
+                .withTrainingName(training.getTrainingName())
+                .withActive(training.getIsActive())
+                .withMonthsTilExpire(training.getMonthsTilExpire())
+                .withTrainingDate(training.getTrainingDate())
                 .withEmployeesTrained(employeesTrained)
                 .withTestsForTraining(testsForTraining)
-                .withExpirationStatus(Training.getExpirationStatus())
-                .withTrainingSeries(Training.getTrainingSeries())
+                .withExpirationStatus(training.getExpirationStatus())
+                .withTrainingSeries(training.getTrainingSeries())
                 .build();
     }
 
     /**
      * Converts a list of Trainings to a list of TrainingModels.
      *
-     * @param Trainings The Trainings to convert to TrainingModels
+     * @param trainings The Trainings to convert to TrainingModels
      * @return The converted list of TrainingModels
      */
-    public List<TrainingModel> toTrainingModelList(List<Training> Trainings) {
-        List<TrainingModel> TrainingModels = new ArrayList<>();
+    public List<TrainingModel> toTrainingModelList(List<Training> trainings) {
+        List<TrainingModel> trainingModels = new ArrayList<>();
 
-        for (Training Training : Trainings) {
-            TrainingModels.add(toTrainingModel(Training));
+        for (Training training : trainings) {
+            trainingModels.add(toTrainingModel(training));
         }
 
-        return TrainingModels;
+        return trainingModels;
     }
 
     /**
      * Converts a provided {@link Test} into an {@link TestModel} representation.
      *
-     * @param Test the Test to convert
+     * @param test the Test to convert
      * @return the converted Test
      */
-    public TestModel toTestModel(Test Test) {
+    public TestModel toTestModel(Test test) {
         List<String> testAttempts = null;
-        if (Test.getTestAttempts() != null) {
-            testAttempts = new ArrayList<>(Test.getTestAttempts());
+        if (test.getTestAttempts() != null) {
+            testAttempts = new ArrayList<>(test.getTestAttempts());
         }
 
         return TestModel.builder()
-                .withTrainingId(Test.getTrainingId())
-                .withEmployeeId(Test.getEmployeeId())
-                .withHasPassed(Test.getHasPassed())
-                .withScoreToPass(Test.getScoreToPass())
-                .withLatestScore(Test.getLatestScore())
+                .withTrainingId(test.getTrainingId())
+                .withEmployeeId(test.getEmployeeId())
+                .withHasPassed(test.getHasPassed())
+                .withScoreToPass(test.getScoreToPass())
+                .withLatestScore(test.getLatestScore())
                 .withTestAttempts(testAttempts)
                 .build();
     }
@@ -132,17 +132,17 @@ public class ModelConverter {
     /**
      * Converts a list of Tests to a list of TestModels.
      *
-     * @param Tests The Tests to convert to TestModels
+     * @param tests The Tests to convert to TestModels
      * @return The converted list of TestModels
      */
-    public List<TestModel> toTestModelList(List<Test> Tests) {
-        List<TestModel> TestModels = new ArrayList<>();
+    public List<TestModel> toTestModelList(List<Test> tests) {
+        List<TestModel> testModels = new ArrayList<>();
 
-        for (Test Test : Tests) {
-            TestModels.add(toTestModel(Test));
+        for (Test test : tests) {
+            testModels.add(toTestModel(test));
         }
 
-        return TestModels;
+        return testModels;
     }
 
     /**

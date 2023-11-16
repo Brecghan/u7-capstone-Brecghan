@@ -8,9 +8,9 @@ import com.nashss.se.trainingmatrix.dynamodb.models.Training;
 import com.nashss.se.trainingmatrix.dynamodb.models.enums.Status;
 import com.nashss.se.trainingmatrix.models.TrainingModel;
 
-import javax.inject.Inject;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
+import javax.inject.Inject;
 
 public class CreateTrainingActivity {
     private final TrainingDao trainingDao;
@@ -32,17 +32,19 @@ public class CreateTrainingActivity {
      * It then returns the newly created training.
      * <p>
      *
-     * @param createTrainingRequest request object containing the training name, monthsTilExpire, start date, and trainingSeries
-     *                              associated with it
+     * @param createTrainingRequest request object containing the training name, monthsTilExpire,
+     *                              start date, and trainingSeries associated with it
      * @return createTrainingResult result object containing the API defined {@link TrainingModel}
      */
     public CreateTrainingResult handleRequest(final CreateTrainingRequest createTrainingRequest) {
         Training newTraining = new Training();
         newTraining.setTrainingName(createTrainingRequest.getTrainingName());
         if (createTrainingRequest.getTrainingSeries().equals("null")) {
-            newTraining.setTrainingId(createTrainingRequest.getTrainingName() + ":" + createTrainingRequest.getTrainingDate().substring(0,10));
+            newTraining.setTrainingId(createTrainingRequest.getTrainingName() + ":" +
+                    createTrainingRequest.getTrainingDate().substring(0, 10));
         } else {
-            newTraining.setTrainingId(createTrainingRequest.getTrainingSeries() + ":" + createTrainingRequest.getTrainingDate());
+            newTraining.setTrainingId(createTrainingRequest.getTrainingSeries() +
+                    ":" + createTrainingRequest.getTrainingDate());
         }
         newTraining.setIsActive(true);
         newTraining.setMonthsTilExpire(createTrainingRequest.getMonthsTilExpire());

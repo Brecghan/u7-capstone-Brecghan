@@ -1,7 +1,7 @@
 package com.nashss.se.trainingmatrix.dynamodb;
 
-import com.nashss.se.trainingmatrix.dynamodb.models.enums.Status;
 import com.nashss.se.trainingmatrix.dynamodb.models.Training;
+import com.nashss.se.trainingmatrix.dynamodb.models.enums.Status;
 import com.nashss.se.trainingmatrix.exceptions.TrainingNotFoundException;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
@@ -9,11 +9,11 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
 /**
  * Accesses data for a Training using {@link Training} to represent the model in DynamoDB.

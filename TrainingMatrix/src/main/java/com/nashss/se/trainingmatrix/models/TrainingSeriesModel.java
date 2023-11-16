@@ -15,8 +15,12 @@ public class TrainingSeriesModel {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         TrainingSeriesModel that = (TrainingSeriesModel) o;
         return Objects.equals(trainingSeriesName, that.trainingSeriesName);
     }

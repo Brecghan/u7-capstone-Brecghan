@@ -5,7 +5,6 @@ import com.nashss.se.trainingmatrix.dynamodb.models.enums.Status;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
-import java.util.HashSet;
 import java.util.Set;
 
 @JsonDeserialize(builder = UpdateTrainingRequest.Builder.class)
@@ -18,8 +17,8 @@ public class UpdateTrainingRequest {
     private final Status expirationStatus;
 
 
-    private UpdateTrainingRequest(String trainingId, Boolean isActive, Integer monthsTilExpire, Set<String> employeesTrained,
-                                  Set<String> testsForTraining, Status expirationStatus) {
+    private UpdateTrainingRequest(String trainingId, Boolean isActive, Integer monthsTilExpire,
+                                  Set<String> employeesTrained, Set<String> testsForTraining, Status expirationStatus) {
         this.trainingId = trainingId;
         this.isActive = isActive;
         this.monthsTilExpire = monthsTilExpire;

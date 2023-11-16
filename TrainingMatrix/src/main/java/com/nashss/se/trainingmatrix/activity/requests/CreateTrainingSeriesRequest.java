@@ -7,8 +7,9 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 @JsonDeserialize(builder = CreateTrainingSeriesRequest.Builder.class)
 public class CreateTrainingSeriesRequest {
-    private final String trainingSeriesName;
+
     private static final NameConverter converter = new NameConverter();
+    private final String trainingSeriesName;
 
     private CreateTrainingSeriesRequest(String trainingSeriesName) {
         this.trainingSeriesName = trainingSeriesName;

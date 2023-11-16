@@ -7,8 +7,8 @@ import com.nashss.se.trainingmatrix.dynamodb.EmployeeDao;
 import com.nashss.se.trainingmatrix.dynamodb.models.Employee;
 import com.nashss.se.trainingmatrix.models.EmployeeModel;
 
-import javax.inject.Inject;
 import java.util.Set;
+import javax.inject.Inject;
 
 public class UpdateEmployeeActivity {
     private final EmployeeDao employeeDao;
@@ -37,9 +37,15 @@ public class UpdateEmployeeActivity {
     public UpdateEmployeeResult handleRequest(final UpdateEmployeeRequest updateEmployeeRequest) {
         Employee employee = employeeDao.getEmployee(updateEmployeeRequest.getEmployeeId());
 
-        if (updateEmployeeRequest.getEmployeeName()!=null) { employee.setEmployeeName(updateEmployeeRequest.getEmployeeName()); }
-        if (updateEmployeeRequest.getIsActive()!=null) { employee.setIsActive(updateEmployeeRequest.getIsActive()); }
-        if (updateEmployeeRequest.getTeam()!=null) { employee.setTeam(updateEmployeeRequest.getTeam()); }
+        if (updateEmployeeRequest.getEmployeeName() != null) {
+            employee.setEmployeeName(updateEmployeeRequest.getEmployeeName());
+        }
+        if (updateEmployeeRequest.getIsActive() != null) {
+            employee.setIsActive(updateEmployeeRequest.getIsActive());
+        }
+        if (updateEmployeeRequest.getTeam() != null) {
+            employee.setTeam(updateEmployeeRequest.getTeam());
+        }
 
         Set<String> updateTests = employee.getTestsTaken();
         updateTests.addAll(updateEmployeeRequest.getTestsTaken());

@@ -79,15 +79,19 @@ public class Test {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Test test = (Test) o;
-        return Objects.equals(trainingId, test.trainingId)
-                && Objects.equals(employeeId, test.employeeId)
-                && Objects.equals(hasPassed, test.hasPassed)
-                && Objects.equals(scoreToPass, test.scoreToPass)
-                && Objects.equals(latestScore, test.latestScore)
-                && Objects.equals(testAttempts, test.testAttempts);
+        return Objects.equals(trainingId, test.trainingId) &&
+                Objects.equals(employeeId, test.employeeId) &&
+                Objects.equals(hasPassed, test.hasPassed) &&
+                Objects.equals(scoreToPass, test.scoreToPass) &&
+                Objects.equals(latestScore, test.latestScore) &&
+                Objects.equals(testAttempts, test.testAttempts);
     }
 
     @Override

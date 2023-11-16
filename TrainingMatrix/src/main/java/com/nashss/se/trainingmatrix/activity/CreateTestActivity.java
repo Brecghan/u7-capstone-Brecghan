@@ -12,11 +12,11 @@ import com.nashss.se.trainingmatrix.dynamodb.models.Training;
 import com.nashss.se.trainingmatrix.models.TestModel;
 import com.nashss.se.trainingmatrix.utils.NameConverter;
 
-import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import javax.inject.Inject;
 
 public class CreateTestActivity {
     private final TestDao testDao;
@@ -61,7 +61,7 @@ public class CreateTestActivity {
             newTest.setLatestScore(null);
             newTest.setTestAttempts(new ArrayList<>());
 
-            String testName = converter.testNameCreate(createTestRequest.getTrainingId(),employee);
+            String testName = converter.testNameCreate(createTestRequest.getTrainingId(), employee);
             addTestToEmployee(employee, testName);
             createdTestNames.add(testName);
             testDao.saveTest(newTest);
@@ -77,7 +77,7 @@ public class CreateTestActivity {
 
 
     /**
-     * This method updates the Employees that the test have been created for
+     * This method updates the Employees that the test have been created for.
      * <p>
      *
      * @param employeeId The employeeId that the test was created for
@@ -92,7 +92,7 @@ public class CreateTestActivity {
     }
 
     /**
-     * This method updates the training that the tests were created for
+     * This method updates the training that the tests were created for.
      * <p>
      *
      * @param createdTests The List of Tests added to the training

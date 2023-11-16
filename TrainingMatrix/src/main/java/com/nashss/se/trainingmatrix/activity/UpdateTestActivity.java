@@ -7,9 +7,8 @@ import com.nashss.se.trainingmatrix.dynamodb.TestDao;
 import com.nashss.se.trainingmatrix.dynamodb.models.Test;
 import com.nashss.se.trainingmatrix.models.TestModel;
 
-import javax.inject.Inject;
 import java.util.List;
-import java.util.Set;
+import javax.inject.Inject;
 
 public class UpdateTestActivity {
     private final TestDao testDao;
@@ -43,7 +42,7 @@ public class UpdateTestActivity {
             test.setHasPassed(true);
         }
         List<String> updateAttempts = test.getTestAttempts();
-        int attemptNumber = updateAttempts.size()+1;
+        int attemptNumber = updateAttempts.size() + 1;
         updateAttempts.add("Attempt " + attemptNumber + " had a score of: " + test.getLatestScore());
         test.setTestAttempts(updateAttempts);
         testDao.saveTest(test);

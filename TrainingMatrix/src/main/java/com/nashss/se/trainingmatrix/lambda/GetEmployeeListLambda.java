@@ -2,7 +2,6 @@ package com.nashss.se.trainingmatrix.lambda;
 
 import com.nashss.se.trainingmatrix.activity.requests.GetEmployeeListRequest;
 import com.nashss.se.trainingmatrix.activity.results.GetEmployeeListResult;
-import com.nashss.se.trainingmatrix.dynamodb.models.enums.Team;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;

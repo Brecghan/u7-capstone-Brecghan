@@ -8,10 +8,9 @@ import com.nashss.se.trainingmatrix.dynamodb.TrainingDao;
 import com.nashss.se.trainingmatrix.dynamodb.models.Employee;
 import com.nashss.se.trainingmatrix.dynamodb.models.Training;
 import com.nashss.se.trainingmatrix.models.TrainingModel;
-import com.nashss.se.trainingmatrix.utils.NameConverter;
 
-import javax.inject.Inject;
 import java.util.Set;
+import javax.inject.Inject;
 
 public class UpdateTrainingActivity {
     private final TrainingDao trainingDao;
@@ -21,7 +20,7 @@ public class UpdateTrainingActivity {
      * Instantiates a new UpdateTrainingActivity object.
      *
      * @param trainingDao   TrainingDao to access the Training table.
-     * @param trainingDao   TrainingDao to access the Training table.
+     * @param employeeDao   EmployeeDao to access the Employee table.
      */
     @Inject
     public UpdateTrainingActivity(TrainingDao trainingDao, EmployeeDao employeeDao) {
@@ -31,7 +30,8 @@ public class UpdateTrainingActivity {
 
     /**
      * This method handles the incoming request by retrieving a training using the
-     * provided training ID and updating the isActive, monthsTilExpire, expirationStatus, testsForTraining, and employeesTrained.
+     * provided training ID and updating the isActive, monthsTilExpire, expirationStatus,
+     * testsForTraining, and employeesTrained.
      * <p>
      * It then returns the newly updated training.
      * <p>
@@ -43,20 +43,28 @@ public class UpdateTrainingActivity {
     public UpdateTrainingResult handleRequest(final UpdateTrainingRequest updateTrainingRequest) {
         Training training = trainingDao.getTraining(updateTrainingRequest.getTrainingId());
 
-        if (updateTrainingRequest.getMonthsTilExpire()!=null) { training.setMonthsTilExpire(updateTrainingRequest.getMonthsTilExpire()); }
-        if (updateTrainingRequest.getIsActive()!=null) { training.setIsActive(updateTrainingRequest.getIsActive()); }
-        if (updateTrainingRequest.getExpirationStatus()!=null) { training.setExpirationStatus(updateTrainingRequest.getExpirationStatus()); }
+        if (updateTrainingRequest.getMonthsTilExpire() != null) {
+            training.setMonthsTilExpire(updateTrainingRequest.getMonthsTilExpire());
+        }
+        if (updateTrainingRequest.getIsActive() != null) {
+            training.setIsActive(updateTrainingRequest.getIsActive());
+        }
+        if (updateTrainingRequest.getExpirationStatus() != null) {
+            training.setExpirationStatus(updateTrainingRequest.getExpirationStatus());
+        }
 
         if (!updateTrainingRequest.getTestsForTraining().isEmpty()) {
-        Set<String> updateTests = training.getTestsForTraining();
-        updateTests.addAll(updateTrainingRequest.getTestsForTraining());
-        training.setTestsForTraining(updateTests); }
+            Set<String> updateTests = training.getTestsForTraining();
+            updateTests.addAll(updateTrainingRequest.getTestsForTraining());
+            training.setTestsForTraining(updateTests);
+        }
 
         if (!updateTrainingRequest.getEmployeesTrained().isEmpty()) {
-        Set<String> updateEmployees = training.getEmployeesTrained();
-        updateEmployees.addAll(updateTrainingRequest.getEmployeesTrained());
-        training.setEmployeesTrained(updateEmployees);
-        addTrainingToEmployee(updateEmployees,updateTrainingRequest.getTrainingId());}
+            Set<String> updateEmployees = training.getEmployeesTrained();
+            updateEmployees.addAll(updateTrainingRequest.getEmployeesTrained());
+            training.setEmployeesTrained(updateEmployees);
+            addTrainingToEmployee(updateEmployees, updateTrainingRequest.getTrainingId());
+        }
 
         trainingDao.saveTraining(training);
 
@@ -67,7 +75,7 @@ public class UpdateTrainingActivity {
     }
 
     /**
-     * This method updates all the Employees that have been added to the training
+     * This method updates all the Employees that have been added to the training.
      * <p>
      *
      * @param employees The set of employees added to the training
