@@ -4,6 +4,8 @@ import com.nashss.se.trainingmatrix.activity.CreateEmployeeActivity;
 import com.nashss.se.trainingmatrix.activity.CreateTestActivity;
 import com.nashss.se.trainingmatrix.activity.CreateTrainingActivity;
 import com.nashss.se.trainingmatrix.activity.CreateTrainingSeriesActivity;
+import com.nashss.se.trainingmatrix.activity.DeleteEmployeeActivity;
+import com.nashss.se.trainingmatrix.activity.DeleteTrainingActivity;
 import com.nashss.se.trainingmatrix.activity.GetEmployeeActivity;
 import com.nashss.se.trainingmatrix.activity.GetEmployeeListActivity;
 import com.nashss.se.trainingmatrix.activity.GetTestActivity;
@@ -106,4 +108,16 @@ public interface ServiceComponent {
      * @return GetTrainingSeriesListActivity
      */
     GetTrainingSeriesListActivity provideGetTrainingSeriesListActivity();
+
+    /**
+     * Provides the relevant activity.
+     * @return DeleteEmployeeActivity
+     */
+    DeleteEmployeeActivity provideDeleteEmployeeActivity();
+
+    /**
+     * Provides the relevant activity.
+     * @return DeleteTrainingActivity
+     */
+    DeleteTrainingActivity provideDeleteTrainingActivity();
 }
