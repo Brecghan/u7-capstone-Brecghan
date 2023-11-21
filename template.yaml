@@ -516,6 +516,46 @@ Resources:
             Path: /trainingSeries
             Method: post
 
+  DeleteTrainingLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: !GetAtt AccessRole.Arn
+      CodeUri: TrainingMatrix
+      Handler: com.nashss.se.trainingmatrix.lambda.DeleteTrainingLambda::handleRequest
+      Runtime: java11
+      Architectures:
+        - x86_64
+      MemorySize: 512
+      Environment:
+        Variables:
+          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+      Events:
+        TrainingMatrixService:
+          Type: Api
+          Properties:
+            Path: /training/{id}
+            Method: delete
+
+  DeleteEmployeeLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: !GetAtt AccessRole.Arn
+      CodeUri: TrainingMatrix
+      Handler: com.nashss.se.trainingmatrix.lambda.DeleteEmployeeLambda::handleRequest
+      Runtime: java11
+      Architectures:
+        - x86_64
+      MemorySize: 512
+      Environment:
+        Variables:
+          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+      Events:
+        TrainingMatrixService:
+          Type: Api
+          Properties:
+            Path: /employee/{id}
+            Method: delete
+
   #-----------------------------------------------------
   # DynamoDB Configuration
   #-----------------------------------------------------
