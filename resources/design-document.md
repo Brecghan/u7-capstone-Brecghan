@@ -212,6 +212,10 @@ String trainingSeriesName;
 * Accepts `GET` requests to `/trainingSeries/`
 * Returns a list of corresponding TrainingSeries.
 
+### 6.16. Get TrainingSeries Endpoint
+
+* Accepts `GET` requests to `/trainingSeries/`
+* Returns a list of corresponding TrainingSeries.
 
 # 7. Tables
 

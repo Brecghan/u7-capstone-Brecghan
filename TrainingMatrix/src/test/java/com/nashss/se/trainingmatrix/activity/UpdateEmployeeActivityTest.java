@@ -41,7 +41,7 @@ class UpdateEmployeeActivityTest {
         String trainingId = "trainingId";
         Employee employee = new Employee();
         employee.setEmployeeId(employeeId);
-        employee.setEmployeeName(employeeName);
+        employee.setEmployeeName("Original Name");
         employee.setTestsTaken(new HashSet<>());
         employee.setTrainingsTaken(new HashSet<>());
         employee.setTeam(Team.INNOVATION);

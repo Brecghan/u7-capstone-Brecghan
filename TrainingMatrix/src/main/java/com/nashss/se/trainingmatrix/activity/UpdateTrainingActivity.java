@@ -84,7 +84,6 @@ public class UpdateTrainingActivity {
     private void addTrainingToEmployee(Set<String> employees, String trainingId) {
         for (String employeeId : employees) {
             Employee employee = employeeDao.getEmployee(employeeId);
-            System.out.println("***********************************LOOK HERE***********************");
             Set<String> trainingsTaken = employee.getTrainingsTaken();
             trainingsTaken.add(trainingId);
             employee.setTrainingsTaken(trainingsTaken);
