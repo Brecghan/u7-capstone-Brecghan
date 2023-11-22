@@ -59,7 +59,7 @@ class DeleteEmployeeActivityTest {
 
         // THEN
         assertEquals(employeeId, result.getEmployee().getEmployeeId());
-        assertFalse(result.getEmployee().getActive());
+        assertFalse(result.getEmployee().getIsActive());
     }
 
 }

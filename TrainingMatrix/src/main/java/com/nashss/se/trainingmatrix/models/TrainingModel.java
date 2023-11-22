@@ -40,7 +40,7 @@ public class TrainingModel {
         return trainingName;
     }
 
-    public Boolean getActive() {
+    public Boolean getIsActive() {
         return isActive;
     }
 
@@ -120,8 +120,8 @@ public class TrainingModel {
             return this;
         }
 
-        public Builder withActive(Boolean active) {
-            isActive = active;
+        public Builder withIsActive(Boolean isActive) {
+            this.isActive = isActive;
             return this;
         }
 
