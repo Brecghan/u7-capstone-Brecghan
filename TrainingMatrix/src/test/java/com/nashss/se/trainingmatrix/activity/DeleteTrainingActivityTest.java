@@ -67,7 +67,7 @@ class DeleteTrainingActivityTest {
 
         // THEN
         assertEquals(trainingId, result.getTraining().getTrainingId());
-        assertFalse(result.getTraining().getActive());
+        assertFalse(result.getTraining().getIsActive());
     }
 
 }

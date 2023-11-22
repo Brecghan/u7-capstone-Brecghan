@@ -80,7 +80,7 @@ class GetEmployeeListActivityTest {
         assertEquals(expectedTeam, result.getEmployees().get(0).getTeam());
         assertEquals(expectedStatus, result.getEmployees().get(0).getTrainingStatus());
         assertEquals(String.valueOf(expectedDate), result.getEmployees().get(0).getStartDate());
-        assertEquals(true, result.getEmployees().get(0).getActive());
-        assertEquals(false, result.getEmployees().get(1).getActive());
+        assertEquals(true, result.getEmployees().get(0).getIsActive());
+        assertEquals(false, result.getEmployees().get(1).getIsActive());
     }
 }

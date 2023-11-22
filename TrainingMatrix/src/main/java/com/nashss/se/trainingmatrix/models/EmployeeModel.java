@@ -37,7 +37,7 @@ public class EmployeeModel {
         return employeeName;
     }
 
-    public Boolean getActive() {
+    public Boolean getIsActive() {
         return isActive;
     }
 
@@ -112,8 +112,8 @@ public class EmployeeModel {
             return this;
         }
 
-        public Builder withActive(Boolean active) {
-            isActive = active;
+        public Builder withIsActive(Boolean isActive) {
+            this.isActive = isActive;
             return this;
         }
 
