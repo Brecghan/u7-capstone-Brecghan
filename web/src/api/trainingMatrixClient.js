@@ -17,7 +17,7 @@ export default class TrainingMatrixClient extends BindingClass {
 
         const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'getEmployee', 'getTraining', 'getTest', 'getTestList',
         'getTrainingList', 'getEmployeeList', 'getTrainingSeries', 'createEmployee', 'createTraining', 'createTest', 'createTrainingSeries',
-      ];
+        'updateEmployee', 'updateTraining', 'updateTest', 'deleteEmployee', 'deleteTraining'];
         this.bindClassMethods(methodsToBind, this);
 
         this.authenticator = new Authenticator();;
@@ -285,6 +285,126 @@ export default class TrainingMatrixClient extends BindingClass {
                 }
             });
             return response.data.traingSeries;
+        } catch (error) {
+            this.handleError(error, errorCallback)
+        }
+    }
+
+    /**
+     * Update an employee.
+     * @param employeeName The name of the employee to update.
+     * @param employeeId The ID of the employee to update.
+     * @param team The team of the employee to update.
+     * @param isActive The active status of the employee to update.
+     * @param trainingsTaken The trainings of the employee to update.
+     * @param testsTaken The tests of the employee to update.
+     * @param errorCallback (Optional) A function to execute if the call fails.
+     * @returns The employee that has been updated.
+     */
+    async updateEmployee(employeeName, employeeId, team, isActive, trainingsTaken, testsTaken, errorCallback) {
+        try {
+            const token = await this.getTokenOrThrow("Only authenticated users can update employees.");
+            const response = await this.axiosClient.put(`employee/${id}`, {
+                employeeName: employeeName,
+                employeeId: employeeId,
+                team: team,
+                isActive: isActive,
+                trainingsTaken: trainingsTaken,
+                testsTaken: testsTaken
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            return response.data.employee;
+        } catch (error) {
+            this.handleError(error, errorCallback)
+        }
+    }
+
+    /**
+     * Update a training.
+     * @param trainingId The name of the training to update.
+     * @param isActive The sctive status of the training to update.
+     * @param monthsTilExpire The months until the training expires.
+     * @param employeesTrained The employees of the training to update.
+     * @param testsForTraining The tests of the training to update.
+     * @param expirationStatus The expiration status of the employee to update.
+     * @param errorCallback (Optional) A function to execute if the call fails.
+     * @returns The training that has been updated.
+     */
+    async updateTraining(trainingId, isActive, monthsTilExpire, employeesTrained, testsForTraining, expirationStatus, errorCallback) {
+        try {
+            const token = await this.getTokenOrThrow("Only authenticated users can update trainings.");
+            const response = await this.axiosClient.put(`training/${id}`, {
+                trainingId: trainingId,
+                isActive: isActive,
+                monthsTilExpire: monthsTilExpire,
+                employeesTrained: employeesTrained,
+                testsForTraining: testsForTraining,
+                expirationStatus: expirationStatus
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            return response.data.training;
+        } catch (error) {
+            this.handleError(error, errorCallback)
+        }
+    }
+
+    /**
+     * Update a test
+     * @param trainingId The Id of the training for the test to update.
+     * @param employeeId The Id of the Employees for the test to update.
+     * @param latestScore The score of the test attempt
+     * @param errorCallback (Optional) A function to execute if the call fails.
+     * @returns The tests that have been created.
+     */
+    async updateTest(trainingId, employeeId, latestScore, errorCallback) {
+        try {
+            const token = await this.getTokenOrThrow("Only authenticated users can create tests.");
+            const response = await this.axiosClient.put(`test/${id}`, {
+                trainingId: trainingId,
+                employeeId: employeeId,
+                latestScore: latestScore
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            return response.data.tests;
+        } catch (error) {
+            this.handleError(error, errorCallback)
+        }
+    }
+
+    /**
+     * Deletes the employee for the given ID.
+     * @param id Unique identifier for an employee
+     * @param errorCallback (Optional) A function to execute if the call fails.
+     * @returns The employee's metadata.
+     */
+    async deleteEmployee(id, errorCallback) {
+        try {
+            const response = await this.axiosClient.delete(`employee/${id}`);
+            return response.data.employee;
+        } catch (error) {
+            this.handleError(error, errorCallback)
+        }
+    }
+
+    /**
+     * Delete the training for the given ID.
+     * @param id Unique identifier for a training
+     * @param errorCallback (Optional) A function to execute if the call fails.
+     * @returns The training's metadata.
+     */
+    async deleteTraining(id, errorCallback) {
+        try {
+            const response = await this.axiosClient.delete(`training/${id}`);
+            return response.data.training;
         } catch (error) {
             this.handleError(error, errorCallback)
         }
