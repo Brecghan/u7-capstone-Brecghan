@@ -75,7 +75,7 @@ class TrainingMatrixHome extends BindingClass {
             trainingButton.innerText = "Trainings";
             trainingButton.className = "button";
             trainingButton.type = "submit";
-            trainingButton.name = "employees-btn";
+            trainingButton.name = "trainings-btn";
             trainingButton.classList.add("button");
 
             trainingButton.addEventListener("click", () => {
@@ -83,6 +83,19 @@ class TrainingMatrixHome extends BindingClass {
             });
 
             buttonZoneContainer.appendChild(trainingButton);
+
+            const testButton = document.createElement("button");
+            testButton.innerText = "Tests";
+            testButton.className = "button";
+            testButton.type = "submit";
+            testButton.name = "tests-btn";
+            testButton.classList.add("button");
+
+            testButton.addEventListener("click", () => {
+                window.location.href="testsHome.html"
+            });
+
+            buttonZoneContainer.appendChild(testButton);
         }
 
     }

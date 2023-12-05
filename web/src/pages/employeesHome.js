@@ -26,7 +26,7 @@ class EmployeesHome extends BindingClass {
     constructor() {
         super();
 
-        this.bindClassMethods(['mount', 'clientLoaded'], this);
+        this.bindClassMethods(['mount', 'clientLoaded', 'addFieldsToPage', 'getEmployees', 'displayEmployees', 'redirectToEmployeeView'], this);
 
         // Create a new datastore with an initial "empty" state.
         this.dataStore = new DataStore(EMPTY_DATASTORE_STATE);
@@ -43,19 +43,23 @@ class EmployeesHome extends BindingClass {
         this.header.addHeaderToPage();
         this.client = new TrainingMatrixClient();
 
+        document.getElementById('employees-btn').addEventListener('click', this.getEmployees);
+        document.getElementById('employee-ID-btn').addEventListener('click', this.redirectToEmployeeView);
+        document.getElementById('Team-Search-btn').addEventListener('click', this.getEmployees);
+
+        this.dataStore.set("isActive", "true");
+        this.dataStore.set("team", "null");
+
         this.clientLoaded();
     }
 
     async clientLoaded() {
         document.getElementById("employee-home-page").innerText = 'Employees';
-        const teamList = this.client.getTeamList();
         
         this.addFieldsToPage();
-        this.addButtonsToPage();        
-
     }
 
-    addFieldsToPage() {
+    async addFieldsToPage() {
         const fieldZoneContainer = document.getElementById("field-zone");
         fieldZoneContainer.className = "selection-group";
         
@@ -72,63 +76,111 @@ class EmployeesHome extends BindingClass {
         radioZone.appendChild(viewAllRadio);
         radioZone.appendChild(viewAllRadioTextNode);
 
+        viewAllRadio.addEventListener("click", () => {
+            this.dataStore.set("isActive", "false");
+        });
+
         fieldZoneContainer.appendChild(radioZone);
         
         const searchByIdField = document.createElement("input");
         searchByIdField.type = "text";
         searchByIdField.placeholder = "Enter ID Number";
+        searchByIdField.size = 25;
 
         fieldZoneContainer.appendChild(searchByIdField);
 
+        const teamList = this.client.getTeamList();
+
         const searchByTeam = document.createElement("select");
+
+        let optionTeamList = searchByTeam.options;
+        optionTeamList.length = 0;
+
+        teamList.forEach(function(value, key) {
+            optionTeamList.add(
+            new Option(key, value)
+          )});
+    
+        searchByTeam.addEventListener("click", () => {
+            this.dataStore.set("team", searchByTeam.value);
+        });
+
 
         fieldZoneContainer.appendChild(searchByTeam);
     }
 
-    addButtonsToPage() {
-        const buttonZoneContainer = document.getElementById("button-zone");
-        buttonZoneContainer.className = "selection-group";
-
-        const viewAllButton = document.createElement("button");
-        viewAllButton.innerText = "View All";
-        viewAllButton.className = "button";
-        viewAllButton.type = "submit";
-        viewAllButton.name = "employees-btn";
-        viewAllButton.classList.add("button");
-
-        viewAllButton.addEventListener("click", () => {
-            window.location.href="employeesHome.html"
-        });
-
-        buttonZoneContainer.appendChild(viewAllButton);
-
-        const searchByIdButton = document.createElement("button");
-        searchByIdButton.innerText = "Search by ID";
-        searchByIdButton.className = "button";
-        searchByIdButton.type = "submit";
-        searchByIdButton.name = "employees-btn";
-        searchByIdButton.classList.add("button");
-
-        searchByIdButton.addEventListener("click", () => {
-            window.location.href="trainingsHome.html"
-        });
-
-        buttonZoneContainer.appendChild(searchByIdButton);
-
-        const searchByTeamButton = document.createElement("button");
-        searchByTeamButton.innerText = "Search By Team";
-        searchByTeamButton.className = "button";
-        searchByTeamButton.type = "submit";
-        searchByTeamButton.name = "employees-btn";
-        searchByTeamButton.classList.add("button");
-
-        searchByTeamButton.addEventListener("click", () => {
-            window.location.href="trainingsHome.html"
-        });
-
-        buttonZoneContainer.appendChild(searchByTeamButton);
+    async getEmployees(){
+        const team = this.dataStore.get("team");
+        const isActive = this.dataStore.get("isActive");
+        const employeeList = await this.client.getEmployeeList(team, isActive);
+        this.displayEmployees(employeeList);
     }
 
+    async displayEmployees(employeeList) {
+        const aboveEmployeesDisplayZoneContainer = document.getElementById("above-employees-display-zone");
+        aboveEmployeesDisplayZoneContainer.innerHTML = "Click an Employee to View Details/Update";
+
+        const employeesDisplayZoneContainer = document.getElementById("employees-display-zone");
+        employeesDisplayZoneContainer.className = "employee-table";
+
+        const tableHeaders = ["Employee Id", "Employee Name", "Employee Team", "Training Status", "Active Status"]
+
+        const tbl = document.getElementById("employees-table");
+        while (tbl.firstChild) {
+            tbl.removeChild(tbl.firstChild)
+        }
+        let thead = tbl.createTHead();
+        let row = thead.insertRow();
+        tableHeaders.forEach(function (item, index) {
+            let th = document.createElement("th");
+            let text = document.createTextNode(item);
+            th.appendChild(text);
+            row.appendChild(th);
+        });
+
+        let employee;
+        for (employee of employeeList) {
+            let row = tbl.insertRow();
+            let cell1 = row.insertCell();
+            let text1 = document.createTextNode(employee.employeeId);
+            cell1.appendChild(text1);
+            let cell2 = row.insertCell();
+            let text2 = document.createTextNode(employee.employeeName);
+            cell2.appendChild(text2);
+            let cell3 = row.insertCell();
+            let text3 = document.createTextNode(employee.team);
+            cell3.appendChild(text3);
+            let cell4 = row.insertCell();
+            let text4 = document.createTextNode(employee.trainingStatus);
+            cell4.appendChild(text4);
+            let cell5 = row.insertCell();
+            let text5 = document.createTextNode(employee.isActive);
+            cell5.appendChild(text5);
+        }
+        employeesDisplayZoneContainer.appendChild(tbl);
+
+        
+        var table = document.getElementById("employees-table");
+        var rows = table.getElementsByTagName("tr");
+        for (var i = 0; i < rows.length; i++) {
+           var currentRow = table.rows[i];
+           var createClickHandler = function(row) {
+              return function() {
+                 var cell1 = row.getElementsByTagName("td")[0];
+                 if (cell1) {
+                    var employeeId = cell1.innerHTML;
+                    window.location.href = `/employee.html?id=${employeeId}`
+                 }
+              };
+           };
+           currentRow.onclick = createClickHandler(currentRow);
+        }
+    }
+
+    async redirectToEmployeeView() {
+        const employeeId = document.getElementById('field-zone').children[1].value;
+        window.location.href = `/employee.html?id=${employeeId}`;
+    }
 }
 
 /**

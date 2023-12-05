@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script type="text/javascript" src="assets/employee.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/TrainingMatrix.css">
+</head>
+
+<body class="background">
+    <header class="header" id="header"></header>
+    <br>
+    <button class='button' id="deactivate-employee-btn" style="float: left;">Deactivate Employee</button>
+    <button class='button' id="update-employee-btn" style="float: right;">Update Employee</button>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+        <p class="form-field">
+            <label>Employee Name</label>
+            <input type="text" id="employee-name" placeholder="Employee Name"
+                autofocus>
+        </p>
+        <p class="form-field" id = "employee-team-field" >
+            <label>Employee Team</label>
+        </p>
+        <button class='button' id="submit-update-btn" >Update</button>
+    </div>
+    </div>
+    <div class="card">
+        <h1 id="employee-view-page"></h1>
+    </div>
+    <div id = "field-zone1">
+    </div><br>
+    <div id = "field-zone2">
+    </div><br><br>
+    <div id = "field-zone3">
+        <table id = "trainings-table"></table>
+        <table id = "tests-table"></table>
+    </div>
+    <p></p>
+    </div>
+    </body>
+    </html>

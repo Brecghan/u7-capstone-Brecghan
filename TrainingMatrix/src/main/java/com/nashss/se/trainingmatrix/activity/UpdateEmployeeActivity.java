@@ -47,13 +47,15 @@ public class UpdateEmployeeActivity {
             employee.setTeam(updateEmployeeRequest.getTeam());
         }
 
+        if (updateEmployeeRequest.getTestsTaken() != null) {
         Set<String> updateTests = employee.getTestsTaken();
         updateTests.addAll(updateEmployeeRequest.getTestsTaken());
-        employee.setTestsTaken(updateTests);
+        employee.setTestsTaken(updateTests); }
 
+        if (updateEmployeeRequest.getTrainingsTaken() != null) {
         Set<String> updateTrainings = employee.getTrainingsTaken();
         updateTrainings.addAll(updateEmployeeRequest.getTrainingsTaken());
-        employee.setTrainingsTaken(updateTrainings);
+        employee.setTrainingsTaken(updateTrainings); }
 
         employeeDao.saveEmployee(employee);
 

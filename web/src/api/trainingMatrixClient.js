@@ -17,7 +17,7 @@ export default class TrainingMatrixClient extends BindingClass {
 
         const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'getEmployee', 'getTraining', 'getTest', 'getTestList',
         'getTrainingList', 'getEmployeeList', 'getTrainingSeries', 'createEmployee', 'createTraining', 'createTest', 'createTrainingSeries',
-        'updateEmployee', 'updateTraining', 'updateTest', 'deleteEmployee', 'deleteTraining', 'getTeamList'];
+        'updateEmployee', 'updateTraining', 'updateTest', 'deleteEmployee', 'deleteTraining', 'getTeamList', 'getStatusList'];
         this.bindClassMethods(methodsToBind, this);
 
         this.authenticator = new Authenticator();;
@@ -120,16 +120,15 @@ export default class TrainingMatrixClient extends BindingClass {
 
      /**
      * Gets the test list with the passed criteria.
-     * @param criteria A string containing search criteria to pass to the API.
+     * @param trainingId A string containing the trainingId to pass to the API.
+     * @param employeeId A string containing the employeeId status to pass to the API.
+     * @param hasPassed A string containing the hasPassed status to pass to the API.
      * @param errorCallback (Optional) A function to execute if the call fails.
      * @returns The tests that match the search criteria.
      */
-    async getTestList(criteria, errorCallback) {
+    async getTestList(trainingId, employeeId, hasPassed, errorCallback) {
         try {
-            const queryParams = new URLSearchParams({ q: criteria })
-            const queryString = queryParams.toString();
-
-            const response = await this.axiosClient.get(`test?${queryString}`);
+            const response = await this.axiosClient.get(`test?trainingId=${trainingId}&employeeId=${employeeId}&hasPassed=${hasPassed}`);
             return response.data.tests;
         } catch (error) {
             this.handleError(error, errorCallback)
@@ -138,16 +137,15 @@ export default class TrainingMatrixClient extends BindingClass {
 
      /**
      * Gets the training list with the passed criteria.
-     * @param criteria A string containing search criteria to pass to the API.
+     * @param trainingSeries A string containing the trainingSeries to pass to the API.
+     * @param isActive A string containing the isActive status to pass to the API.
+     * @param Status A string containing the trainingStatus status to pass to the API.
      * @param errorCallback (Optional) A function to execute if the call fails.
      * @returns The trainings that match the search criteria.
      */
-     async getTrainingList(criteria, errorCallback) {
+     async getTrainingList(trainingSeries, isActive, status, errorCallback) {
         try {
-            const queryParams = new URLSearchParams({ q: criteria })
-            const queryString = queryParams.toString();
-
-            const response = await this.axiosClient.get(`training?${queryString}`);
+            const response = await this.axiosClient.get(`training?trainingSeries=${trainingSeries}&isActive=${isActive}&status=${status}`)
             return response.data.trainings;
         } catch (error) {
             this.handleError(error, errorCallback)
@@ -156,16 +154,14 @@ export default class TrainingMatrixClient extends BindingClass {
 
      /**
      * Gets the employee list with the passed criteria.
-     * @param criteria A string containing search criteria to pass to the API.
+     * @param team A string containing the team to pass to the API.
+     * @param isActive A string containing the isActive status to pass to the API.
      * @param errorCallback (Optional) A function to execute if the call fails.
      * @returns The employees that match the search criteria.
      */
-     async getEmployeeList(criteria, errorCallback) {
+     async getEmployeeList(team, isActive, errorCallback) {
         try {
-            const queryParams = new URLSearchParams({ q: criteria })
-            const queryString = queryParams.toString();
-
-            const response = await this.axiosClient.get(`employee?${queryString}`);
+            const response = await this.axiosClient.get(`employee?team=${team}&isActive=${isActive}`);
             return response.data.employees;
         } catch (error) {
             this.handleError(error, errorCallback)
@@ -180,7 +176,7 @@ export default class TrainingMatrixClient extends BindingClass {
     async getTrainingSeries(errorCallback) {
         try {
             const response = await this.axiosClient.get(`trainingSeries`);
-            return response.data.trainingSeries;
+            return response.data.trainingSeriesList;
         } catch (error) {
             this.handleError(error, errorCallback)
         }
@@ -208,7 +204,7 @@ export default class TrainingMatrixClient extends BindingClass {
                     Authorization: `Bearer ${token}`
                 }
             });
-            return response.data.emnployee;
+            return response.data.employee;
         } catch (error) {
             this.handleError(error, errorCallback)
         }
@@ -284,7 +280,7 @@ export default class TrainingMatrixClient extends BindingClass {
                     Authorization: `Bearer ${token}`
                 }
             });
-            return response.data.traingSeries;
+            return response.data.trainingSeries;
         } catch (error) {
             this.handleError(error, errorCallback)
         }
@@ -304,7 +300,7 @@ export default class TrainingMatrixClient extends BindingClass {
     async updateEmployee(employeeName, employeeId, team, isActive, trainingsTaken, testsTaken, errorCallback) {
         try {
             const token = await this.getTokenOrThrow("Only authenticated users can update employees.");
-            const response = await this.axiosClient.put(`employee/${id}`, {
+            const response = await this.axiosClient.put(`employee/${employeeId}`, {
                 employeeName: employeeName,
                 employeeId: employeeId,
                 team: team,
@@ -324,8 +320,8 @@ export default class TrainingMatrixClient extends BindingClass {
 
     /**
      * Update a training.
-     * @param trainingId The name of the training to update.
-     * @param isActive The sctive status of the training to update.
+     * @param trainingId The Id of the training to update.
+     * @param isActive The active status of the training to update.
      * @param monthsTilExpire The months until the training expires.
      * @param employeesTrained The employees of the training to update.
      * @param testsForTraining The tests of the training to update.
@@ -336,7 +332,7 @@ export default class TrainingMatrixClient extends BindingClass {
     async updateTraining(trainingId, isActive, monthsTilExpire, employeesTrained, testsForTraining, expirationStatus, errorCallback) {
         try {
             const token = await this.getTokenOrThrow("Only authenticated users can update trainings.");
-            const response = await this.axiosClient.put(`training/${id}`, {
+            const response = await this.axiosClient.put(`training/${trainingId}`, {
                 trainingId: trainingId,
                 isActive: isActive,
                 monthsTilExpire: monthsTilExpire,
@@ -365,7 +361,7 @@ export default class TrainingMatrixClient extends BindingClass {
     async updateTest(trainingId, employeeId, latestScore, errorCallback) {
         try {
             const token = await this.getTokenOrThrow("Only authenticated users can create tests.");
-            const response = await this.axiosClient.put(`test/${id}`, {
+            const response = await this.axiosClient.put(`test/${trainingId}`, {
                 trainingId: trainingId,
                 employeeId: employeeId,
                 latestScore: latestScore
@@ -374,7 +370,7 @@ export default class TrainingMatrixClient extends BindingClass {
                     Authorization: `Bearer ${token}`
                 }
             });
-            return response.data.tests;
+            return response.data.test;
         } catch (error) {
             this.handleError(error, errorCallback)
         }
@@ -414,9 +410,57 @@ export default class TrainingMatrixClient extends BindingClass {
      * Gets the Team List
      * @returns The team list.
      */
-       async getTeamList() {
-        const teamList = ["Saab", "Volvo", "BMW"];
+    getTeamList() {
+        const teamList = new Map();
+        teamList.set('Select Team' ,'null');
+        teamList.set('HR Team' ,'HUMAN_RESOURCES');
+        teamList.set('Innovation/Admin Team' ,'INNOVATION');
+        teamList.set('SHEE: Facilities Team' ,'SHEE_FACILITIES');
+        teamList.set('SHEE: Safety Team' ,'SHEE_SAFETY');
+        teamList.set('MFG: Washtower Section' ,'MANUFACTURING_WASHTOWER');
+        teamList.set('MFG: Dryer Main Section' ,'MANUFACTURING_DRYER_MAIN');
+        teamList.set('MFG: FL Main: Front Section Section' ,'MANUFACTURING_FRONT_LOAD_MAIN_FRONT');
+        teamList.set('MFG: FL Main: Rear Section' ,'MANUFACTURING_FRONT_LOAD_MAIN_REAR');
+        teamList.set('MFG: TL Main Section' ,'MANUFACTURING_TOP_LOAD_MAIN');
+        teamList.set('MFG: Dryer Sub Section' ,'MANUFACTURING_DRYER_SUB');
+        teamList.set('MFG: FL Sub: CC Section' ,'MANUFACTURING_FRONT_LOAD_SUB_CC');
+        teamList.set('MFG: FL Sub: ID/TA Section' ,'MANUFACTURING_FRONT_LOAD_SUB_ID');
+        teamList.set('MFG: TL Sub: TC Section' ,'MANUFACTURING_TOP_LOAD_SUB_TC');
+        teamList.set('MFG: TL Sub: IT/OT/AB Section' ,'MANUFACTURING_TOP_LOAD_SUB_OT');
+        teamList.set('MFG: FIT Section' ,'MANUFACTURING_FIT');
+        teamList.set('MFG PM Section' ,'MANUFACTURING_PM');
+        teamList.set('PE Team' ,'PE_PM');
+        teamList.set('Quality: IQC Section' ,'QUALITY_IQC');
+        teamList.set('Quality: OQC Section' ,'QUALITY_OQC');
+        teamList.set('Quality: LQC Section' ,'QUALITY_LQC');
+        teamList.set('Injection Team' ,'INJECTION');
+        teamList.set('Press Team' ,'PRESS');
+        teamList.set('EPS Team' ,'EPS');
+        teamList.set('Paint Team' ,'PAINT');
+        teamList.set('SCM/PP Team' ,'SCM_PP');
+        teamList.set('Procurement Team' ,'PROCUREMENT');
+        teamList.set('Materials: 1F Section' ,'MATERIALS_1F');
+        teamList.set('Materials: 2F Section' ,'MATERIALS_2F');
+        teamList.set('Materials: Receiving Section' ,'MATERIALS_RECEIVING');
+        teamList.set('Materials: Improvement Section' ,'MATERIALS_IMPROVEMENT');
+        teamList.set('Logistics Section' ,'SFT_LOGISTICS');
+        teamList.set('IT  Section' ,'SFT_IT');
+        teamList.set('Accouting/Legal Team' ,'ACCOUNTING_LEGAL');
+        teamList.set('R&D Team' ,'RESEARCH_AND_DEVELOPMENT');
         return teamList;
+    } 
+
+       /**
+     * Gets the Status possibilities
+     * @returns the Status possibilities.
+     */
+       getStatusList() {
+        const statusList = new Map();
+        statusList.set('Select Status' ,'null');
+        statusList.set('Up to Date' ,'UP_TO_DATE,');
+        statusList.set('Expiring Soon' ,'SOON_TO_EXPIRE');
+        statusList.set('Expired' ,'EXPIRED');
+        return statusList;
     } 
 
     /**

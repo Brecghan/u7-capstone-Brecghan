@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script type="text/javascript" src="assets/createEmployee.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/TrainingMatrix.css">
+</head>
+
+<body class="background">
+    <header class="header" id="header"></header>
+    <div class="card">
+        <h2>Create Employee</h2>
+        </div>
+        <div class="selection-group">
+        <form class="card-content" id="create-playlist-form">
+            <p class="hidden error" id="error-message"> </p>
+            <p class="form-field">
+                <label>Employee Name</label>
+                <input type="text" required class="validated-field" id="employee-name" placeholder="Employee Name"
+                    autofocus>
+            </p>
+            <p class="form-field">
+                <label>Employee Id</label>
+                <input type="text" required class="validated-field" id="employee-id" placeholder="Employee Id"
+                    autofocus>
+            </p>
+            <p class="form-field">
+                <label>Start Date</label>
+                <input type="datetime-local" id="startdate" placeholder="Enter Start Date" required class="validated-field">
+            </p>
+
+            <p class="form-field" id = "employee-team-field" >
+                <label>Employee Team</label>
+            </p>
+            <p>
+                <a href="#" class="button" id="create">Create Employee</a>
+            </p>
+        </form>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script type="text/javascript" src="assets/training.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/TrainingMatrix.css">
+</head>
+
+<body class="background">
+    <header class="header" id="header"></header>
+    <br>
+    <button class='button' id="deactivate-training-btn" style="float: left;">Deactivate Training</button>
+    <button class='button' id="update-training-btn" style="float: right;">Update Training</button>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+        <p class="form-field">
+            <label>Months Til Expiration</label>
+            <input type="number" id="months-til" placeholder="Months until expiration"
+                autofocus>
+        </p>
+        <p class="form-field" id = "training-status-field" >
+            <label>Expiration Status</label>
+        </p>
+        <button class='button' id="submit-update-btn" >Update</button>
+    </div>
+    </div>
+    <div class="card">
+        <h1 id="training-view-page"></h1>
+    </div>
+    <div id = "field-zone1">
+    </div><br>
+    <div id = "field-zone2">
+    </div><br>
+    <button class='button' id="add-employee-btn" style="float: left;">Add Employees for Training</button>
+    <div id="myModal3" class="modal">
+        <div class="modal-content">
+        <p class="form-field">
+                <div id="employeeList"></div>
+        </p>
+        <button class='button' id="submit-add-employees-btn" >Add Employees</button>
+    </div>
+    </div>
+    <button class='button' id="create-tests-btn" style="float: right;">Create Tests for Training</button>
+    <div id="myModal2" class="modal">
+        <div class="modal-content">
+        <p class="form-field">
+            <label>Score To Pass</label>
+            <input type="number" id="score-to-pass" placeholder="Score to Pass"
+                autofocus>
+        </p>
+        <button class='button' id="submit-test-create-btn" >Create</button>
+    </div>
+    </div>
+    <br>
+    <br>
+    <div id = "field-zone3">
+        <table id = "trainings-table"></table>
+        <table id = "tests-table"></table>
+    </div>
+    <p></p>
+    </div>
+    </body>
+    </html>
