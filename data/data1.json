@@ -1,0 +1,348 @@
+{
+  "Employees": [
+    {
+      "PutRequest": {
+        "Item": {
+          "employeeId": { "S": "US12321" },
+          "employeeName": { "S": "Scott Griffin" },
+          "isActive": { "BOOL": true },
+          "startDate": { "S": "\"2023-03-27T09:00Z[UTC]\"" },
+          "team": { "S": "INNOVATION" },
+          "testsTaken": { "S": "[\"Idea_Generation:2024-07-10T13:58Z[UTC]~US12321\"]" },
+          "trainingsTaken": { "S": "[\"Twerking_for_all_ages:2021-08-17\",\"Idea_Generation:2024-07-10T13:58Z[UTC]\"]" },
+          "trainingStatus": { "S": "UP_TO_DATE" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "employeeId": { "S": "US12345" },
+          "employeeName": { "S": "MarK Bond" },
+          "isActive": { "BOOL": true },
+          "startDate": { "S": "\"2023-03-27T09:00Z[UTC]\"" },
+          "team": { "S": "INNOVATION" },
+          "testsTaken": { "S": "[\"Idea_Generation:2024-07-10T13:58Z[UTC]~US12345\"]" },
+          "trainingsTaken": { "S": "[\"Twerking_for_all_ages:2021-08-17\",\"Idea_Generation:2024-07-10T13:58Z[UTC]\"]" },
+          "trainingStatus": { "S": "UP_TO_DATE" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "employeeId": { "S": "US54321" },
+          "employeeName": { "S": "Adrian Braugh" },
+          "isActive": { "BOOL": true },
+          "startDate": { "S": "\"2023-03-27T09:00Z[UTC]\"" },
+          "team": { "S": "INNOVATION" },
+          "testsTaken": { "S": "[\"Idea_Generation:2024-07-10T13:58Z[UTC]~US54321\"]" },
+          "trainingsTaken": { "S": "[\"Twerking_for_all_ages:2021-08-17\",\"Idea_Generation:2024-07-10T13:58Z[UTC]\"]" },
+          "trainingStatus": { "S": "UP_TO_DATE" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "employeeId": { "S": "US54345" },
+          "employeeName": { "S": "Brecghan Ryan" },
+          "isActive": { "BOOL": true },
+          "startDate": { "S": "\"2023-03-27T09:00Z[UTC]\"" },
+          "team": { "S": "INNOVATION" },
+          "testsTaken": { "S": "[\"Idea_Generation:2024-07-10T13:58Z[UTC]~US54345\"]" },
+          "trainingsTaken": { "S": "[\"Twerking_for_all_ages:2021-08-17\",\"Idea_Generation:2024-07-10T13:58Z[UTC]\"]" },
+          "trainingStatus": { "S": "UP_TO_DATE" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "employeeId": { "S": "US51315" },
+          "employeeName": { "S": "Justin Locke" },
+          "isActive": { "BOOL": true },
+          "startDate": { "S": "\"2023-03-27T09:00Z[UTC]\"" },
+          "team": { "S": "HUMAN_RESOURCES" },
+          "testsTaken": { "S": "[\"Idea_Generation:2024-07-10T13:58Z[UTC]~US51315\"]" },
+          "trainingsTaken": { "S": "[\"Twerking_for_all_ages:2021-08-17\",\"Idea_Generation:2024-07-10T13:58Z[UTC]\"]" },
+          "trainingStatus": { "S": "UP_TO_DATE" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "employeeId": { "S": "US21312" },
+          "employeeName": { "S": "Charlie Penner" },
+          "isActive": { "BOOL": false },
+          "startDate": { "S": "\"2023-03-27T09:00Z[UTC]\"" },
+          "team": { "S": "RESEARCH_AND_DEVELOPMENT" },
+          "testsTaken": { "S": "[]" },
+          "trainingsTaken": { "S": "[]" },
+          "trainingStatus": { "S": "UP_TO_DATE" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "employeeId": { "S": "US31313" },
+          "employeeName": { "S": "Jean Soderkvist" },
+          "isActive": { "BOOL": true },
+          "startDate": { "S": "\"2023-03-27T09:00Z[UTC]\"" },
+          "team": { "S": "QUALITY_IQC" },
+          "testsTaken": { "S": "[]" },
+          "trainingsTaken": { "S": "[\"Twerking_for_all_ages:2021-08-17\"]" },
+          "trainingStatus": { "S": "UP_TO_DATE" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "employeeId": { "S": "US98765" },
+          "employeeName": { "S": "Alice Johnson" },
+          "isActive": { "BOOL": true },
+          "startDate": { "S": "\"2023-04-10T08:30Z[UTC]\"" },
+          "team": { "S": "RESEARCH_AND_DEVELOPMENT" },
+          "testsTaken": { "S": "[]" },
+          "trainingsTaken": { "S": "[]" },
+          "trainingStatus": { "S": "UP_TO_DATE" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "employeeId": { "S": "US85678" },
+          "employeeName": { "S": "Bob Smith" },
+          "isActive": { "BOOL": true },
+          "startDate": { "S": "\"2023-05-15T10:45Z[UTC]\"" },
+          "team": { "S": "SCM_PP" },
+          "testsTaken": { "S": "[]" },
+          "trainingsTaken": { "S": "[]" },
+          "trainingStatus": { "S": "UP_TO_DATE" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "employeeId": { "S": "US56789" },
+          "employeeName": { "S": "Eva Rodriguez" },
+          "isActive": { "BOOL": true },
+          "startDate": { "S": "\"2023-06-20T11:15Z[UTC]\"" },
+          "team": { "S": "SFT_LOGISTICS" },
+          "testsTaken": { "S": "[]" },
+          "trainingsTaken": { "S": "[]" },
+          "trainingStatus": { "S": "UP_TO_DATE" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "employeeId": { "S": "US78901" },
+          "employeeName": { "S": "Michael Chang" },
+          "isActive": { "BOOL": true },
+          "startDate": { "S": "\"2023-07-05T09:30Z[UTC]\"" },
+          "team": { "S": "MANUFACTURING_DRYER_MAIN" },
+          "testsTaken": { "S": "[]" },
+          "trainingsTaken": { "S": "[]" },
+          "trainingStatus": { "S": "UP_TO_DATE" }
+        }
+      }
+    }
+  ],
+  "TrainingSeries": [
+    {
+      "PutRequest": {
+        "Item": {
+          "trainingSeriesName": { "S": "Forklift_Training" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+            "trainingSeriesName": { "S": "FI-11_Supervisor_Academy" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+            "trainingSeriesName": { "S": "Bob_Ross_Fundamentals" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+            "trainingSeriesName": { "S": "Irish_Dancing" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+            "trainingSeriesName": { "S": "Idea_Generation" }
+        }
+      }
+    }
+  ],
+  "Trainings": [
+    {
+      "PutRequest": {
+        "Item": {
+          "trainingId": { "S": "Irish_Dancing:2023-12-08T15:26Z[UTC]" },
+          "employeesTrained": { "S": "[]" },
+          "expirationStatus": { "S": "UP_TO_DATE" },
+          "isActive": { "BOOL": true },
+          "monthsTilExpire": { "N": "3" },
+          "testsForTraining": { "S": "[]" },
+          "trainingDate": { "S": "\"2023-07-07T15:26Z[UTC]\"" },
+          "trainingName": { "S": "July_Dance_Theater" },
+          "trainingSeries": { "S": "Irish_Dancing" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+            "trainingId": { "S": "Idea_Generation:2024-07-10T13:58Z[UTC]" },
+            "employeesTrained": { "S": "[\"US54345\",\"US54321\",\"US51315\",\"US12345\",\"US12321\"]" },
+            "expirationStatus": { "S": "SOON_TO_EXPIRE" },
+            "isActive": { "BOOL": true },
+            "monthsTilExpire": { "N": "1" },
+            "testsForTraining": { "S": "[\"Idea_Generation:2024-07-10T13:58Z[UTC]~US54321\",\"Idea_Generation:2024-07-10T13:58Z[UTC]~US54345\",\"Idea_Generation:2024-07-10T13:58Z[UTC]~US51315\",\"Idea_Generation:2024-07-10T13:58Z[UTC]~US12345\",\"Idea_Generation:2024-07-10T13:58Z[UTC]~US12321\"]" },
+            "trainingDate": { "S": "\"2024-07-10T13:58Z[UTC]\"" },
+            "trainingName": { "S": "Idea_Gen_July_2024" },
+            "trainingSeries": { "S": "Idea_Generation" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+            "trainingId": { "S": "Sleeping:2021-07-17" },
+            "employeesTrained": { "S": "[]" },
+            "expirationStatus": { "S": "UP_TO_DATE" },
+            "isActive": { "BOOL": false },
+            "monthsTilExpire": { "N": "99" },
+            "testsForTraining": { "S": "[]" },
+            "trainingDate": { "S": "\"2021-07-17T14:30Z[UTC]\"" },
+            "trainingName": { "S": "Sleeping" },
+            "trainingSeries": { "S": "null" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+            "trainingId": { "S": "Twerking_for_all_ages:2021-08-17" },
+            "employeesTrained": { "S": "[\"US54345\",\"US31313\",\"US54321\",\"US51315\",\"US12345\",\"US12321\"]" },
+            "expirationStatus": { "S": "UP_TO_DATE" },
+            "isActive": { "BOOL": true },
+            "monthsTilExpire": { "N": "99" },
+            "testsForTraining": { "S": "[]" },
+            "trainingDate": { "S": "\"2021-08-17T14:30Z[UTC]\"" },
+            "trainingName": { "S": "Twerking_for_all_ages" },
+            "trainingSeries": { "S": "null" }
+        }
+      }
+    }
+  ],
+  "Tests": [
+    {
+      "PutRequest": {
+        "Item": {
+          "trainingId": { "S": "Idea_Generation:2024-07-10T13:58Z[UTC]" },
+          "employeeId": { "S": "US12321" },
+          "hasPassed": { "BOOL": true },
+          "latestScore": { "N": "90" },
+          "scoreToPass": { "N": "90" },
+          "testAttempts": { "L": [
+              {
+                "S": "Attempt 1 had a score of: 85"
+              },
+              {
+                "S": "Attempt 2 had a score of: 90"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "trainingId": { "S": "Idea_Generation:2024-07-10T13:58Z[UTC]" },
+          "employeeId": { "S": "US12345" },
+          "hasPassed": { "BOOL": false },
+          "latestScore": { "N": "80" },
+          "scoreToPass": { "N": "90" },
+          "testAttempts": { "L": [
+              {
+                "S": "Attempt 1 had a score of: 80"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "trainingId": { "S": "Idea_Generation:2024-07-10T13:58Z[UTC]" },
+          "employeeId": { "S": "US51315" },
+          "hasPassed": { "BOOL": false },
+          "scoreToPass": { "N": "90" },
+          "testAttempts": { "L": []
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "trainingId": { "S": "Idea_Generation:2024-07-10T13:58Z[UTC]" },
+          "employeeId": { "S": "US54321" },
+          "hasPassed": { "BOOL": true },
+          "latestScore": { "N": "90" },
+          "scoreToPass": { "N": "90" },
+          "testAttempts": { "L": [
+            {
+              "S": "Attempt 1 had a score of: 89"
+            },
+            {
+              "S": "Attempt 2 had a score of: 89"
+            },
+            {
+              "S": "Attempt 3 had a score of: 90"
+            }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "trainingId": { "S": "Idea_Generation:2024-07-10T13:58Z[UTC]" },
+          "employeeId": { "S": "US54345" },
+          "hasPassed": { "BOOL": true },
+          "latestScore": { "N": "100" },
+          "scoreToPass": { "N": "90" },
+          "testAttempts": { "L": [
+              {
+                "S": "Attempt 1 had a score of: 100"
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}
