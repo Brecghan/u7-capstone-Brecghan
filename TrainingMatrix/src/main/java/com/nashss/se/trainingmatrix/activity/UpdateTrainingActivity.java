@@ -53,13 +53,13 @@ public class UpdateTrainingActivity {
             training.setExpirationStatus(updateTrainingRequest.getExpirationStatus());
         }
 
-        if (!updateTrainingRequest.getTestsForTraining().isEmpty()) {
+        if (updateTrainingRequest.getTestsForTraining() != null && !updateTrainingRequest.getTestsForTraining().isEmpty()) {
             Set<String> updateTests = training.getTestsForTraining();
             updateTests.addAll(updateTrainingRequest.getTestsForTraining());
             training.setTestsForTraining(updateTests);
         }
 
-        if (!updateTrainingRequest.getEmployeesTrained().isEmpty()) {
+        if (updateTrainingRequest.getEmployeesTrained() != null && !updateTrainingRequest.getEmployeesTrained().isEmpty()) {
             Set<String> updateEmployees = training.getEmployeesTrained();
             updateEmployees.addAll(updateTrainingRequest.getEmployeesTrained());
             training.setEmployeesTrained(updateEmployees);

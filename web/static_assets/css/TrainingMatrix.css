@@ -1,0 +1,193 @@
+:root {
+    /* css variables: https://developer.mozilla.org/en-US/docs/Web/CSS/var */
+    --primary-color: #70AD47;
+    --secondary-color: #ffffff;
+    --tertiary-color: #70AD47;
+    --quaternary-color: rgba(112, 173, 71, 0.3);
+    --error-color: #EE3A23;
+}
+
+.background {
+    background-color: var(--quaternary-color);
+    margin: 0;
+    counter-reset: section;
+    font-family: "Helvetica Neue",Helvetica,sans-serif;
+}
+
+.header {
+    /* Flexbox: https://css-tricks.com/snippets/css/a-guide-to-flexbox/ */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    padding: 4px 20px;
+}
+
+.button {
+  font-family: "Times New Roman", Times, serif;
+  background-color: #808080;
+  border: none;
+  color: var(--secondary-color);
+  padding: 6px 10px 6px 10px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 20px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.selection-group {
+    font-family: "Times New Roman", Times, serif;
+    text-align: center;
+    display: flex;
+    justify-content: space-around;
+}
+
+.display-group {
+    font-family: "Times New Roman", Times, serif;
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.header_home {
+    font-size: 40px;
+    line-height: 50px;
+    height: 100px;
+    text-decoration: none;
+    color: var(--secondary-color);
+}
+
+.card {
+    font-family: "Lucida Handwriting", "Courier New", cursive;
+    margin: 20px;
+    padding: 10px 20px;
+    text-align: center;
+    font-size: 40px;
+}
+
+.error {
+    color: var(--error-color);
+    border: 1px solid var(--error-color);
+    padding: 8px;
+}
+
+.validated-field:invalid {
+    outline: 2px solid var(--error-color);
+}
+.validated-field:focus:invalid {
+    color: var(--error-color);
+}
+
+.card-content {
+    max-width: 500px;
+    text-align: center;
+}
+
+.card-content .form-field {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    width:250px;
+    text-align: center;
+}
+
+.text-input[type=text] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    background-color: white;
+    background-image: url('searchicon.png');
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+    padding-left: 40px;
+    resize: none;
+  }
+
+.tags {
+    display: flex;
+    flex-direction: row;
+}
+
+.employee-table {
+    margin: 20px;
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    font-size: 15px;
+}
+.modal {
+    display: none;
+    position: fixed; 
+    padding-top: 50px;
+    left: 0; 
+    top: 0;
+    width: 100%;
+    height: 100%; 
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  .modal-content {
+    position: relative; 
+    background-color: white;
+    padding: 20px; 
+    margin: auto; 
+    width: 75%;  
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s
+  }
+  .close-btn {
+    float: right; 
+    color: lightgray; 
+    font-size: 24px;  
+    font-weight: bold;
+  }
+  .close-btn:hover {
+    color: darkgray;
+  }
+  @-webkit-keyframes animatetop {
+    from {top:-300px; opacity:0} 
+    to {top:0; opacity:1}
+  }
+  @keyframes animatetop {
+    from {top:-300px; opacity:0}
+    to {top:0; opacity:1}
+  }
+
+.action-item {
+    margin-bottom: 20px;
+    text-align: center;
+}
+/*
+Flexbox on a lists removes the numbers. We use a counter here to add them back.
+https://stackoverflow.com/a/34316093
+https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Lists_and_Counters/Using_CSS_counters
+*/
+
+.hidden {
+    display: none;
+}
+
+/* table styles */
+
+th, td {
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid var(--primary-color);
+}
+
+th {
+    border-bottom: 1px solid var(--primary-color);
+}
+
+a {
+    color: var(--tertiary-color);
+    text-decoration: none;
+}

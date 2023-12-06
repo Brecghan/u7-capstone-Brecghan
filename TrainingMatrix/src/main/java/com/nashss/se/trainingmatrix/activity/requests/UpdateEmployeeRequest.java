@@ -90,11 +90,17 @@ public class UpdateEmployeeRequest {
         }
 
         public Builder withTrainingsTaken(String trainingsTaken) {
+            if (trainingsTaken == null) {
+                return null;
+            }
             this.trainingsTaken = new HashSet<>(Collections.singleton(trainingsTaken));
             return this;
         }
 
         public Builder withTestsTaken(String testsTaken) {
+            if (testsTaken == null) {
+                return null;
+            }
             this.testsTaken = new HashSet<>(Collections.singleton(testsTaken));
             return this;
         }

@@ -1,4 +1,4 @@
-import MusicPlaylistClient from '../api/musicPlaylistClient';
+import TrainingMatrixClient from '../api/trainingMatrixClient';
 import BindingClass from "../util/bindingClass";
 
 /**
@@ -14,7 +14,7 @@ export default class Header extends BindingClass {
         ];
         this.bindClassMethods(methodsToBind, this);
 
-        this.client = new MusicPlaylistClient();
+        this.client = new TrainingMatrixClient();
     }
 
     /**
@@ -35,7 +35,7 @@ export default class Header extends BindingClass {
         const homeButton = document.createElement('a');
         homeButton.classList.add('header_home');
         homeButton.href = 'index.html';
-        homeButton.innerText = 'Playlists';
+        homeButton.innerText = 'Training Matrix';
 
         const siteTitle = document.createElement('div');
         siteTitle.classList.add('site-title');
