@@ -196,7 +196,7 @@
     {
       "PutRequest": {
         "Item": {
-          "trainingId": { "S": "Irish_Dancing:2023-12-08T15:26Z[UTC]" },
+          "trainingId": { "S": "Irish_Dancing:2023-12-08T15:26" },
           "employeesTrained": { "S": "[]" },
           "expirationStatus": { "S": "UP_TO_DATE" },
           "isActive": { "BOOL": true },
@@ -211,12 +211,12 @@
     {
       "PutRequest": {
         "Item": {
-            "trainingId": { "S": "Idea_Generation:2024-07-10T13:58Z[UTC]" },
+            "trainingId": { "S": "Idea_Generation:2024-07-10T13:58" },
             "employeesTrained": { "S": "[\"US54345\",\"US54321\",\"US51315\",\"US12345\",\"US12321\"]" },
             "expirationStatus": { "S": "SOON_TO_EXPIRE" },
             "isActive": { "BOOL": true },
             "monthsTilExpire": { "N": "1" },
-            "testsForTraining": { "S": "[\"Idea_Generation:2024-07-10T13:58Z[UTC]~US54321\",\"Idea_Generation:2024-07-10T13:58Z[UTC]~US54345\",\"Idea_Generation:2024-07-10T13:58Z[UTC]~US51315\",\"Idea_Generation:2024-07-10T13:58Z[UTC]~US12345\",\"Idea_Generation:2024-07-10T13:58Z[UTC]~US12321\"]" },
+            "testsForTraining": { "S": "[\"Idea_Generation:2024-07-10T13:58~US54321\",\"Idea_Generation:2024-07-10T13:58~US54345\",\"Idea_Generation:2024-07-10T13:58~US51315\",\"Idea_Generation:2024-07-10T13:58~US12345\",\"Idea_Generation:2024-07-10T13:58~US12321\"]" },
             "trainingDate": { "S": "\"2024-07-10T13:58Z[UTC]\"" },
             "trainingName": { "S": "Idea_Gen_July_2024" },
             "trainingSeries": { "S": "Idea_Generation" }
@@ -258,7 +258,7 @@
     {
       "PutRequest": {
         "Item": {
-          "trainingId": { "S": "Idea_Generation:2024-07-10T13:58Z[UTC]" },
+          "trainingId": { "S": "Idea_Generation:2024-07-10T13:58" },
           "employeeId": { "S": "US12321" },
           "hasPassed": { "BOOL": true },
           "latestScore": { "N": "90" },
@@ -278,7 +278,7 @@
     {
       "PutRequest": {
         "Item": {
-          "trainingId": { "S": "Idea_Generation:2024-07-10T13:58Z[UTC]" },
+          "trainingId": { "S": "Idea_Generation:2024-07-10T13:58" },
           "employeeId": { "S": "US12345" },
           "hasPassed": { "BOOL": false },
           "latestScore": { "N": "80" },
@@ -295,7 +295,7 @@
     {
       "PutRequest": {
         "Item": {
-          "trainingId": { "S": "Idea_Generation:2024-07-10T13:58Z[UTC]" },
+          "trainingId": { "S": "Idea_Generation:2024-07-10T13:58" },
           "employeeId": { "S": "US51315" },
           "hasPassed": { "BOOL": false },
           "scoreToPass": { "N": "90" },
@@ -307,7 +307,7 @@
     {
       "PutRequest": {
         "Item": {
-          "trainingId": { "S": "Idea_Generation:2024-07-10T13:58Z[UTC]" },
+          "trainingId": { "S": "Idea_Generation:2024-07-10T13:58" },
           "employeeId": { "S": "US54321" },
           "hasPassed": { "BOOL": true },
           "latestScore": { "N": "90" },
@@ -330,7 +330,7 @@
     {
       "PutRequest": {
         "Item": {
-          "trainingId": { "S": "Idea_Generation:2024-07-10T13:58Z[UTC]" },
+          "trainingId": { "S": "Idea_Generation:2024-07-10T13:58" },
           "employeeId": { "S": "US54345" },
           "hasPassed": { "BOOL": true },
           "latestScore": { "N": "100" },

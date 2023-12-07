@@ -262,6 +262,8 @@ Resources:
           Properties:
             Path: /employee/{id}
             Method: get
+            Auth:
+              Authorizer: 'NONE'
 
   GetEmployeeListLambda:
     Type: AWS::Serverless::Function
@@ -282,6 +284,8 @@ Resources:
           Properties:
             Path: /employee
             Method: get
+            Auth:
+              Authorizer: 'NONE'
 
   CreateEmployeeLambda:
     Type: AWS::Serverless::Function
@@ -342,6 +346,8 @@ Resources:
           Properties:
             Path: /training/{id}
             Method: get
+            Auth:
+              Authorizer: 'NONE'
 
   GetTrainingListLambda:
     Type: AWS::Serverless::Function
@@ -362,6 +368,8 @@ Resources:
           Properties:
             Path: /training
             Method: get
+            Auth:
+              Authorizer: 'NONE'
 
   CreateTrainingLambda:
     Type: AWS::Serverless::Function
@@ -422,6 +430,8 @@ Resources:
           Properties:
             Path: /test/{id}
             Method: get
+            Auth:
+              Authorizer: 'NONE'
 
   GetTestListLambda:
     Type: AWS::Serverless::Function
@@ -442,6 +452,8 @@ Resources:
           Properties:
             Path: /test
             Method: get
+            Auth:
+              Authorizer: 'NONE'
 
   CreateTestLambda:
     Type: AWS::Serverless::Function
@@ -502,6 +514,8 @@ Resources:
           Properties:
             Path: /trainingSeries
             Method: get
+            Auth:
+              Authorizer: 'NONE'
 
   CreateTrainingSeriesLambda:
     Type: AWS::Serverless::Function
@@ -542,6 +556,8 @@ Resources:
           Properties:
             Path: /training/{id}
             Method: delete
+            Auth:
+              Authorizer: 'NONE'
 
   DeleteEmployeeLambda:
     Type: AWS::Serverless::Function
@@ -562,6 +578,8 @@ Resources:
           Properties:
             Path: /employee/{id}
             Method: delete
+            Auth:
+              Authorizer: 'NONE'
 
   #-----------------------------------------------------
   # DynamoDB Configuration
