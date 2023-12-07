@@ -58,7 +58,7 @@ class CreateTrainingActivityTest {
         String expectedName = "expectedName";
         String trainingDate = String.valueOf(ZonedDateTime.now());
         String trainingSeries = "Idea_Gen";
-        String expectedTrainingId = trainingSeries + ":" + trainingDate;
+        String expectedTrainingId = trainingSeries + ":" + trainingDate.substring(0, 16);
 
         CreateTrainingRequest request = CreateTrainingRequest.builder()
                 .withTrainingName(expectedName)

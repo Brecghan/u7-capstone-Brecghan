@@ -44,7 +44,7 @@ public class CreateTrainingActivity {
                     createTrainingRequest.getTrainingDate().substring(0, 10));
         } else {
             newTraining.setTrainingId(createTrainingRequest.getTrainingSeries() +
-                    ":" + createTrainingRequest.getTrainingDate().substring(0,16));
+                    ":" + createTrainingRequest.getTrainingDate().substring(0, 16));
         }
         newTraining.setIsActive(true);
         newTraining.setMonthsTilExpire(createTrainingRequest.getMonthsTilExpire());
