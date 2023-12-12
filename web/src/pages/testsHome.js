@@ -103,8 +103,8 @@ class TestsHome extends BindingClass {
         document.getElementById("searchByEmployeeIdField").value = '';
         document.getElementById("searchByTrainingIdField").value = '';
         console.log('testsList = ' + testsList)
-        if (!testsList) {
-            console.log('AM I HITTING THIS?')
+        if (testsList.length === 0) {
+            console.log('AM I HITTING THIS?length check')
             document.getElementById("tests-table").innerHTML = "No tests associated with ID: " + idSearched;
         }
     }

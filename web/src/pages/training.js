@@ -50,7 +50,6 @@ class Training extends BindingClass {
         document.getElementById('add-employee-btn').addEventListener('click', this.addEmployeesModalShow);
         document.getElementById('submit-add-employees-btn').addEventListener('click', this.addEmployees);
 
-
         this.clientLoaded();
     }
 
@@ -157,6 +156,9 @@ class Training extends BindingClass {
         } else {
         for (test of testList) {
             let row = tblTest.insertRow();
+            row.style["color"] = "blue";
+            row.style["text-decoration"] = "underline";
+            row.style["cursor"] = "pointer";
             let cell1 = row.insertCell();
             let text1 = document.createTextNode(test.employeeId);
             cell1.appendChild(text1);
@@ -165,8 +167,27 @@ class Training extends BindingClass {
             cell2.appendChild(text2);
         }
         fieldZoneContainer3.appendChild(tblTest);
-    }
-    }
+
+        var table = document.getElementById("tests-table");
+        var rows = table.getElementsByTagName("tr");
+        for (var i = 0; i < rows.length; i++) {
+           var currentRow = table.rows[i];
+           var createClickHandler = function(row) {
+              return function() {
+                 var cell1 = row.getElementsByTagName("td")[0];
+                 var cell2 = row.getElementsByTagName("td")[1];
+                 if (cell1 && cell2) {
+                    var trainingId = training.trainingId;
+                    var employeeId = cell1.innerHTML;
+                    var testId = trainingId + '~' + employeeId;
+                    window.location.href = `/test.html?id=${testId}`;
+                 }
+              };
+           };
+           currentRow.onclick = createClickHandler(currentRow);
+            }
+            }
+        }
 
     updateTraining(){
         var modal = document.getElementById("myModal");

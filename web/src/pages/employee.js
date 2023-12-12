@@ -151,25 +151,38 @@ class Employee extends BindingClass {
         } else {
         let test;
         for (test of testList) {
-            const testArray = test.trainingId.toString().split(":");
-            if (testArray.length > 2) {
-                for (var i = 1; i < 3; i++) {
-                    testArray[0] += ':' + testArray[i];
-                }
-            } else {
-                for (var i = 1; i < 2; i++) {
-                    testArray[0] += ':' + testArray[i];
-                }
-            }
+            const testTrainingId = test.trainingId;
             let row = tblTest.insertRow();
+            row.style["color"] = "blue";
+            row.style["text-decoration"] = "underline";
+            row.style["cursor"] = "pointer";
             let cell1 = row.insertCell();
-            let text1 = document.createTextNode(testArray[0]);
+            let text1 = document.createTextNode(testTrainingId);
             cell1.appendChild(text1);
             let cell2 = row.insertCell();
             let text2 = document.createTextNode(test.hasPassed);
             cell2.appendChild(text2);
         }
         fieldZoneContainer3.appendChild(tblTest);
+
+        var table = document.getElementById("tests-table");
+        var rows = table.getElementsByTagName("tr");
+        for (var i = 0; i < rows.length; i++) {
+           var currentRow = table.rows[i];
+           var createClickHandler = function(row) {
+              return function() {
+                 var cell1 = row.getElementsByTagName("td")[0];
+                 var cell2 = row.getElementsByTagName("td")[1];
+                 if (cell1 && cell2) {
+                    var trainingId = cell1.innerHTML;
+                    var employeeId = employee.employeeId;
+                    var testId = trainingId + '~' + employeeId;
+                    window.location.href = `/test.html?id=${testId}`;
+                 }
+              };
+           };
+           currentRow.onclick = createClickHandler(currentRow);
+            }
     }
     }
 
