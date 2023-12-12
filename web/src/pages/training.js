@@ -118,6 +118,10 @@ class Training extends BindingClass {
         });
 
         let employee;
+        if (training.employeesTrained.length === 0) {
+            console.log("SHOULD SHOW EMPTY TABLE");
+            document.getElementById("trainings-table").innerHTML = 'No employees have been added to the training';
+        } else {
         for (employee of training.employeesTrained) {
             const employeeInfo = await this.client.getEmployee(employee);
             let row = tblTrain.insertRow();
@@ -129,6 +133,7 @@ class Training extends BindingClass {
             cell2.appendChild(text2);
         }
         fieldZoneContainer3.appendChild(tblTrain);
+    }
 
         const testTableHeaders = ["Employee Id", "Test Pass Status"]
         const tblTest = document.getElementById("tests-table");
@@ -145,6 +150,11 @@ class Training extends BindingClass {
 
         const testList = this.dataStore.get('trainingTests')
         let test;
+        if (testList.length === 0) {
+            console.log("SHOULD SHOW EMPTY Test TABLE");
+            fieldZoneContainer3.appendChild(tblTest);
+            document.getElementById("tests-table").innerHTML = 'No tests have been created for this training';
+        } else {
         for (test of testList) {
             let row = tblTest.insertRow();
             let cell1 = row.insertCell();
@@ -156,28 +166,41 @@ class Training extends BindingClass {
         }
         fieldZoneContainer3.appendChild(tblTest);
     }
+    }
 
     updateTraining(){
         var modal = document.getElementById("myModal");
         modal.style.display = "block";
 
         const statusList = this.dataStore.get('statusList');
+        const training = this.dataStore.get('training');
 
         const searchByTeam = document.getElementById("training-status-field");
 
         let selectTag = document.createElement('select');
         statusList.forEach(function(value, key) {
             let opt = document.createElement("option");
-            opt.value = value; // the index
-            opt.innerHTML = key;
+            opt.id = 'trainingSelectOptions';
+            opt.value = key; // the index
+            opt.innerHTML = value;
             selectTag.append(opt);
         });
         searchByTeam.appendChild(selectTag);
+        console.table(training);
+        document.getElementById("trainingSelectOptions").value = training.expirationStatus;
+        document.getElementById("trainingSelectOptions").innerHTML = training.expirationStatus;
+        document.getElementById("months-til").value = training.monthsTilExpire;
+
     }
     
     async submitUpdate(){    
         var updateMonths = document.getElementById("months-til").value;
         var updateExpiration = document.getElementById('training-status-field').children[1].value;
+        console.log('updateMonths= '+ updateMonths);
+        console.log('updateExpiration= '+ updateExpiration);
+        if (updateMonths === '' || updateExpiration === 'null') {
+            alert("Please populate both fields when updating");
+        } else {
 
         const training = this.dataStore.get('training');
         const updatedTraining = await this.client.updateTraining(training.trainingId, training.isActive, updateMonths, null, null, updateExpiration)    
@@ -185,6 +208,7 @@ class Training extends BindingClass {
         if (updatedTraining != null) {
             window.location.href = `/training.html?id=${updatedTraining.trainingId}`;
         }
+    }
     }
 
     async deactivateTraining(){    

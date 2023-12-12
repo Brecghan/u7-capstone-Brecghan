@@ -412,41 +412,41 @@ export default class TrainingMatrixClient extends BindingClass {
      */
     getTeamList() {
         const teamList = new Map();
-        teamList.set('Select Team' ,'null');
-        teamList.set('HR Team' ,'HUMAN_RESOURCES');
-        teamList.set('Innovation/Admin Team' ,'INNOVATION');
-        teamList.set('SHEE: Facilities Team' ,'SHEE_FACILITIES');
-        teamList.set('SHEE: Safety Team' ,'SHEE_SAFETY');
-        teamList.set('MFG: Washtower Section' ,'MANUFACTURING_WASHTOWER');
-        teamList.set('MFG: Dryer Main Section' ,'MANUFACTURING_DRYER_MAIN');
-        teamList.set('MFG: FL Main: Front Section Section' ,'MANUFACTURING_FRONT_LOAD_MAIN_FRONT');
-        teamList.set('MFG: FL Main: Rear Section' ,'MANUFACTURING_FRONT_LOAD_MAIN_REAR');
-        teamList.set('MFG: TL Main Section' ,'MANUFACTURING_TOP_LOAD_MAIN');
-        teamList.set('MFG: Dryer Sub Section' ,'MANUFACTURING_DRYER_SUB');
-        teamList.set('MFG: FL Sub: CC Section' ,'MANUFACTURING_FRONT_LOAD_SUB_CC');
-        teamList.set('MFG: FL Sub: ID/TA Section' ,'MANUFACTURING_FRONT_LOAD_SUB_ID');
-        teamList.set('MFG: TL Sub: TC Section' ,'MANUFACTURING_TOP_LOAD_SUB_TC');
-        teamList.set('MFG: TL Sub: IT/OT/AB Section' ,'MANUFACTURING_TOP_LOAD_SUB_OT');
-        teamList.set('MFG: FIT Section' ,'MANUFACTURING_FIT');
-        teamList.set('MFG PM Section' ,'MANUFACTURING_PM');
-        teamList.set('PE Team' ,'PE_PM');
-        teamList.set('Quality: IQC Section' ,'QUALITY_IQC');
-        teamList.set('Quality: OQC Section' ,'QUALITY_OQC');
-        teamList.set('Quality: LQC Section' ,'QUALITY_LQC');
-        teamList.set('Injection Team' ,'INJECTION');
-        teamList.set('Press Team' ,'PRESS');
-        teamList.set('EPS Team' ,'EPS');
-        teamList.set('Paint Team' ,'PAINT');
-        teamList.set('SCM/PP Team' ,'SCM_PP');
-        teamList.set('Procurement Team' ,'PROCUREMENT');
-        teamList.set('Materials: 1F Section' ,'MATERIALS_1F');
-        teamList.set('Materials: 2F Section' ,'MATERIALS_2F');
-        teamList.set('Materials: Receiving Section' ,'MATERIALS_RECEIVING');
-        teamList.set('Materials: Improvement Section' ,'MATERIALS_IMPROVEMENT');
-        teamList.set('Logistics Section' ,'SFT_LOGISTICS');
-        teamList.set('IT  Section' ,'SFT_IT');
-        teamList.set('Accouting/Legal Team' ,'ACCOUNTING_LEGAL');
-        teamList.set('R&D Team' ,'RESEARCH_AND_DEVELOPMENT');
+        teamList.set('null' , 'Select Team');
+        teamList.set('HUMAN_RESOURCES', 'HR Team' );
+        teamList.set('INNOVATION', 'Innovation/Admin Team' );
+        teamList.set('SHEE_FACILITIES' , 'SHEE: Facilities Team' );
+        teamList.set('SHEE_SAFETY', 'SHEE: Safety Team');
+        teamList.set('MANUFACTURING_WASHTOWER', 'MFG: Washtower Section');
+        teamList.set('MANUFACTURING_DRYER_MAIN', 'MFG: Dryer Main Section');
+        teamList.set('MANUFACTURING_FRONT_LOAD_MAIN_FRONT', 'MFG: FL Main: Front Section Section');
+        teamList.set('MANUFACTURING_FRONT_LOAD_MAIN_REAR', 'MFG: FL Main: Rear Section');
+        teamList.set('MANUFACTURING_TOP_LOAD_MAIN', 'MFG: TL Main Section');
+        teamList.set('MANUFACTURING_DRYER_SUB', 'MFG: Dryer Sub Section');
+        teamList.set('MANUFACTURING_FRONT_LOAD_SUB_CC', 'MFG: FL Sub: CC Section');
+        teamList.set('MANUFACTURING_FRONT_LOAD_SUB_ID', 'MFG: FL Sub: ID/TA Section');
+        teamList.set('MANUFACTURING_TOP_LOAD_SUB_TC', 'MFG: TL Sub: TC Section');
+        teamList.set('MANUFACTURING_TOP_LOAD_SUB_OT', 'MFG: TL Sub: IT/OT/AB Section');
+        teamList.set('MANUFACTURING_FIT', 'MFG: FIT Section');
+        teamList.set('MANUFACTURING_PM', 'MFG PM Section');
+        teamList.set('PE_PM', 'PE Team');
+        teamList.set('QUALITY_IQC', 'Quality: IQC Section');
+        teamList.set('QUALITY_OQC', 'Quality: OQC Section');
+        teamList.set('QUALITY_LQC', 'Quality: LQC Section');
+        teamList.set('INJECTION', 'Injection Team');
+        teamList.set('PRESS', 'Press Team');
+        teamList.set('EPS', 'EPS Team');
+        teamList.set('PAINT', 'Paint Team');
+        teamList.set('SCM_PP', 'SCM/PP Team');
+        teamList.set('PROCUREMENT', 'Procurement Team');
+        teamList.set('MATERIALS_1F', 'Materials: 1F Section');
+        teamList.set('MATERIALS_2F', 'Materials: 2F Section');
+        teamList.set('MATERIALS_RECEIVING', 'Materials: Receiving Section');
+        teamList.set('MATERIALS_IMPROVEMENT', 'Materials: Improvement Section');
+        teamList.set('SFT_LOGISTICS', 'Logistics Section');
+        teamList.set('SFT_IT', 'IT Section');
+        teamList.set('ACCOUNTING_LEGAL', 'Accouting/Legal Team');
+        teamList.set('RESEARCH_AND_DEVELOPMENT', 'R&D Team');
         return teamList;
     } 
 
@@ -456,10 +456,10 @@ export default class TrainingMatrixClient extends BindingClass {
      */
        getStatusList() {
         const statusList = new Map();
-        statusList.set('Select Status' ,'null');
-        statusList.set('Up to Date' ,'UP_TO_DATE,');
-        statusList.set('Expiring Soon' ,'SOON_TO_EXPIRE');
-        statusList.set('Expired' ,'EXPIRED');
+        statusList.set('null', 'Select Status');
+        statusList.set('UP_TO_DATE', 'Up to Date');
+        statusList.set('SOON_TO_EXPIRE', 'Expiring Soon');
+        statusList.set('EXPIRED', 'Expired');
         return statusList;
     } 
 

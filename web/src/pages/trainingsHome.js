@@ -45,7 +45,10 @@ class TrainingsHome extends BindingClass {
 
         document.getElementById('trainings-btn').addEventListener('click', this.getTrainings);
         document.getElementById('training-ID-btn').addEventListener('click', this.redirectToTrainingView);
-        document.getElementById('TrainingSeries-Search-btn').addEventListener('click', this.getTrainings);
+        document.getElementById('TrainingSeries-Search-btn').addEventListener("click", () => {
+            this.dataStore.set("trainingSeries", document.getElementById('trainingSelectDropDown').value);
+            this.getTrainings();
+        });
 
         this.dataStore.set("isActive", "true");
         this.dataStore.set("trainingSeries", "null");
@@ -92,6 +95,7 @@ class TrainingsHome extends BindingClass {
         const trainingSeriesList = await this.client.getTrainingSeries();
 
         const searchByTraining = document.createElement("select");
+        searchByTraining.id = 'trainingSelectDropDown';
 
         let optionTrainingList = searchByTraining.options;
         optionTrainingList.length = 0;
@@ -105,11 +109,6 @@ class TrainingsHome extends BindingClass {
             optionTrainingList.add(
             new Option(tsl.trainingSeriesName, tsl.trainingSeriesName)
           ));
-    
-         searchByTraining.addEventListener("click", () => {
-            this.dataStore.set("trainingSeries", searchByTraining.value);
-        });
-
 
         fieldZoneContainer.appendChild(searchByTraining);
     }
@@ -145,9 +144,17 @@ class TrainingsHome extends BindingClass {
             row.appendChild(th);
         });
 
+
+        const trainingSeriesChosen = this.dataStore.get("trainingSeries");
         let training;
+        if (trainingsList.length === 0){
+            document.getElementById("trainings-table").innerHTML = '' + `\n` + "No trainings assigned to this Training Series: " + trainingSeriesChosen;
+        } else {
         for (training of trainingsList) {
             let row = tbl.insertRow();
+            row.style["color"] = "blue";
+            row.style["text-decoration"] = "underline";
+            row.style["cursor"] = "pointer";
             let cell1 = row.insertCell();
             let text1 = document.createTextNode(training.trainingId);
             cell1.appendChild(text1);
@@ -181,6 +188,9 @@ class TrainingsHome extends BindingClass {
            };
            currentRow.onclick = createClickHandler(currentRow);
         }
+    }
+    document.getElementById("trainingSelectDropDown").selectedIndex = 0;
+    this.dataStore.set("trainingSeries", 'null');
     }
 
     async redirectToTrainingView() {

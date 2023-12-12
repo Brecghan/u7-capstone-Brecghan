@@ -110,6 +110,10 @@ class Test extends BindingClass {
 
 
         const testList = this.dataStore.get('testAttempts')
+        if (testList.length === 0) {
+            console.log("SHOULD SHOW EMPTY TABLE");
+            document.getElementById("attempts-table").innerHTML = 'No test attempts have been taken';
+        } else {
         let testAttempt;
         for (testAttempt of testList) {
             let row = tblTest.insertRow();
@@ -118,6 +122,7 @@ class Test extends BindingClass {
             cell1.appendChild(text1);
         }
         fieldZoneContainer3.appendChild(tblTest);
+    }
     }
 
     updateTest(){

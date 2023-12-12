@@ -107,7 +107,11 @@ class Employee extends BindingClass {
             thTrain.appendChild(textTrain);
             rowTrain.appendChild(thTrain);
         });
-
+        
+        if (employee.trainingsTaken.length === 0) {
+            console.log("SHOULD SHOW EMPTY TABLE");
+            document.getElementById("trainings-table").innerHTML = 'No trainings have been taken';
+        } else {
         let training;
         for (training of employee.trainingsTaken) {
             const trainingArray = training.toString().split(":")
@@ -125,6 +129,7 @@ class Employee extends BindingClass {
             cell2.appendChild(text2);
         }
         fieldZoneContainer3.appendChild(tblTrain);
+    }
 
         const testTableHeaders = ["Test for Training", "Test Pass Status"]
         const tblTest = document.getElementById("tests-table");
@@ -140,6 +145,10 @@ class Employee extends BindingClass {
 
 
         const testList = this.dataStore.get('employeeTests')
+        if (testList.length === 0) {
+            console.log("SHOULD SHOW EMPTY TABLE");
+            document.getElementById("tests-table").innerHTML = 'No tests have been taken';
+        } else {
         let test;
         for (test of testList) {
             const testArray = test.trainingId.toString().split(":");
@@ -162,34 +171,45 @@ class Employee extends BindingClass {
         }
         fieldZoneContainer3.appendChild(tblTest);
     }
+    }
 
     updateEmployee(){
         var modal = document.getElementById("myModal");
         modal.style.display = "block";
 
         const teamList = this.dataStore.get('teamList');
+        const employee = this.dataStore.get('employee');
 
         const searchByTeam = document.getElementById("employee-team-field");
 
         let selectTag = document.createElement('select');
+        selectTag.id = "employeeCreateDropDown";
         teamList.forEach(function(value, key) {
             let opt = document.createElement("option");
-            opt.value = value; // the index
-            opt.innerHTML = key;
+            opt.id = 'teamSelectOptions';
+            opt.value = key; // the index
+            opt.innerHTML = value;
             selectTag.append(opt);
         });
         searchByTeam.appendChild(selectTag);
+        console.table(employee);
+        document.getElementById("teamSelectOptions").value = employee.team;
+        document.getElementById("teamSelectOptions").innerHTML = employee.team;
+        document.getElementById("employee-name").value = employee.employeeName;
     }
     
     async submitUpdate(){    
         var updateName = document.getElementById("employee-name").value;
         var updateTeam = document.getElementById('employee-team-field').children[1].value;
-
+        if (updateName === '' || updateTeam === 'null') {
+            alert("Please populate both fields when updating");
+        } else {
         const employee = this.dataStore.get('employee');
         const updatedEmployee = await this.client.updateEmployee(updateName, employee.employeeId, updateTeam, employee.isActive, null, null)    
-
-        if (updatedEmployee != null) {
-            window.location.href = `/employee.html?id=${updatedEmployee.employeeId}`;
+    
+            if (updatedEmployee != null) {
+                window.location.href = `/employee.html?id=${updatedEmployee.employeeId}`;
+            }
         }
     }
 

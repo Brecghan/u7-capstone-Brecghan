@@ -43,12 +43,15 @@ class EmployeesHome extends BindingClass {
         this.header.addHeaderToPage();
         this.client = new TrainingMatrixClient();
 
-        document.getElementById('employees-btn').addEventListener('click', this.getEmployees);
-        document.getElementById('employee-ID-btn').addEventListener('click', this.redirectToEmployeeView);
-        document.getElementById('Team-Search-btn').addEventListener('click', this.getEmployees);
-
         this.dataStore.set("isActive", "true");
         this.dataStore.set("team", "null");
+
+        document.getElementById('employees-btn').addEventListener('click', this.getEmployees);
+        document.getElementById('employee-ID-btn').addEventListener('click', this.redirectToEmployeeView);
+        document.getElementById('Team-Search-btn').addEventListener('click', () => {
+            this.dataStore.set("team", document.getElementById('teamListSelectDropDown').value);
+            this.getEmployees();
+        });
 
         this.clientLoaded();
     }
@@ -92,19 +95,15 @@ class EmployeesHome extends BindingClass {
         const teamList = this.client.getTeamList();
 
         const searchByTeam = document.createElement("select");
+        searchByTeam.id = 'teamListSelectDropDown';
 
         let optionTeamList = searchByTeam.options;
         optionTeamList.length = 0;
 
         teamList.forEach(function(value, key) {
             optionTeamList.add(
-            new Option(key, value)
+            new Option(value, key)
           )});
-    
-        searchByTeam.addEventListener("click", () => {
-            this.dataStore.set("team", searchByTeam.value);
-        });
-
 
         fieldZoneContainer.appendChild(searchByTeam);
     }
@@ -138,9 +137,16 @@ class EmployeesHome extends BindingClass {
             row.appendChild(th);
         });
 
+        const teamChosen = this.dataStore.get("team");
         let employee;
+        if (employeeList.length === 0){
+            document.getElementById("employees-table").innerHTML = "No employees assigned to this team: " + teamChosen;
+        } else {
         for (employee of employeeList) {
             let row = tbl.insertRow();
+            row.style["color"] = "blue";
+            row.style["text-decoration"] = "underline";
+            row.style["cursor"] = "pointer";
             let cell1 = row.insertCell();
             let text1 = document.createTextNode(employee.employeeId);
             cell1.appendChild(text1);
@@ -175,6 +181,9 @@ class EmployeesHome extends BindingClass {
            };
            currentRow.onclick = createClickHandler(currentRow);
         }
+    }
+    document.getElementById("teamListSelectDropDown").selectedIndex = 0;
+    this.dataStore.set("team", 'null');
     }
 
     async redirectToEmployeeView() {

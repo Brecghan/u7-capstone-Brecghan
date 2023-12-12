@@ -76,8 +76,8 @@ class CreateEmployee extends BindingClass {
         let selectTag = document.createElement('select');
         teamList.forEach(function(value, key) {
             let opt = document.createElement("option");
-            opt.value = value; // the index
-            opt.innerHTML = key;
+            opt.value = key; // the index
+            opt.innerHTML = value;
             selectTag.append(opt);
         });
         searchByTeam.appendChild(selectTag);

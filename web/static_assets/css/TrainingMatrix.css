@@ -53,6 +53,14 @@
     justify-content: space-around;
 }
 
+.table-display {
+    font-family: "Times New Roman", Times, serif;
+    font-weight: bold;
+    font-size: 20px;
+    display: flex;
+    justify-content: space-around;
+}
+
 .header_home {
     font-size: 40px;
     line-height: 50px;

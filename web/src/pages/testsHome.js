@@ -87,16 +87,26 @@ class TestsHome extends BindingClass {
         console.log('employeeId= ' + employeeId);
         console.log('trainingId= ' + trainingId);
         var testsList;
+        var idSearched;
         if (employeeId) {
+            console.log('AM I HITTING THIS?employee');
             testsList = await this.client.getTestList(null, employeeId, null);
+            idSearched = employeeId;
+            this.displayTests(testsList);
         } if (trainingId) {
             testsList = await this.client.getTestList(trainingId, null, null);
+            idSearched = trainingId;
+            this.displayTests(testsList);
         } else if (!employeeId && !trainingId) {
             window.alert("Enter an ID to continue");
         }
-        this.displayTests(testsList);
         document.getElementById("searchByEmployeeIdField").value = '';
         document.getElementById("searchByTrainingIdField").value = '';
+        console.log('testsList = ' + testsList)
+        if (!testsList) {
+            console.log('AM I HITTING THIS?')
+            document.getElementById("tests-table").innerHTML = "No tests associated with ID: " + idSearched;
+        }
     }
 
     async displayTests(testsList) {
@@ -122,8 +132,12 @@ class TestsHome extends BindingClass {
         });
 
         let test;
+
         for (test of testsList) {
             let row = tbl.insertRow();
+            row.style["color"] = "blue";
+            row.style["text-decoration"] = "underline";
+            row.style["cursor"] = "pointer";
             let cell1 = row.insertCell();
             let text1 = document.createTextNode(test.trainingId);
             cell1.appendChild(text1);
