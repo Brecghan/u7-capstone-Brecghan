@@ -64,6 +64,12 @@ class Employee extends BindingClass {
 
         document.getElementById("employee-view-page").innerText = employee.employeeName;
         this.addFieldsToPage();
+        window.onclick = function(event) {
+            if (event.target === document.getElementById("myModal")) {
+                document.getElementById("myModal").style.display = "none";
+                document.getElementById("employee-team-field").removeChild(document.getElementById("employee-team-field").lastChild)
+            }
+        }
     }
 
     async addFieldsToPage() {
@@ -188,6 +194,7 @@ class Employee extends BindingClass {
             }
     }
     this.LoadingSpinner.hideLoadingSpinner();
+    
     }
 
     updateEmployee(){

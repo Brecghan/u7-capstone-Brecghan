@@ -11,19 +11,29 @@
     <br>
     <button class='button' id="deactivate-training-btn" style="float: left;">Deactivate Training</button>
     <button class='button' id="update-training-btn" style="float: right;">Update Training</button>
+    <form class="card-content">
     <div id="myModal" class="modal">
         <div class="modal-content">
         <p class="form-field">
             <label>Months Til Expiration</label>
+            <br>
             <input type="number" id="months-til" placeholder="Months until expiration"
                 autofocus>
         </p>
+        <br>
+        <label>Expiration Status</label>
+        <br>
         <p class="form-field" id = "training-status-field" >
-            <label>Expiration Status</label>
+            <br>
+         
         </p>
+        <br>
+        <p>
         <button class='button' id="submit-update-btn" >Update</button>
+    </p>
     </div>
     </div>
+</form>
     <div class="card">
         <h1 id="training-view-page"></h1>
     </div>

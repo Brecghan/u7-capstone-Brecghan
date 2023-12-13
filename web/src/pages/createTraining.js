@@ -35,6 +35,11 @@ class CreateTraining extends BindingClass {
         this.client = new TrainingMatrixClient();
         this.LoadingSpinner.showLoadingSpinner("Loading Page");
         this.addTrainingSelect();
+        window.onclick = function(event) {
+            if (event.target === document.getElementById("myModal")) {
+                document.getElementById("myModal").style.display = "none";
+            }
+        }
     }
 
     /**

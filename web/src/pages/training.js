@@ -71,6 +71,12 @@ class Training extends BindingClass {
 
         document.getElementById("training-view-page").innerText = training.trainingName;
         this.addFieldsToPage();
+        window.onclick = function(event) {
+            if (event.target === document.getElementById("myModal")) {
+                document.getElementById("myModal").style.display = "none";
+                document.getElementById("training-status-field").removeChild(document.getElementById("training-status-field").lastChild)
+            }
+        }
     }
 
     async addFieldsToPage() {

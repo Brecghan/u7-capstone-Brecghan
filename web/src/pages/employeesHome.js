@@ -187,6 +187,7 @@ class EmployeesHome extends BindingClass {
     }
     document.getElementById("teamListSelectDropDown").selectedIndex = 0;
     this.dataStore.set("team", 'null');
+    document.getElementById("viewAllRadioSelector").checked = false;
     this.LoadingSpinner.hideLoadingSpinner();
     }
 

@@ -194,6 +194,7 @@ class TrainingsHome extends BindingClass {
     }
     document.getElementById("trainingSelectDropDown").selectedIndex = 0;
     this.dataStore.set("trainingSeries", 'null');
+    document.getElementById("viewAllRadioSelector").checked = false;
     this.LoadingSpinner.hideLoadingSpinner();
     }
 
