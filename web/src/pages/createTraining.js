@@ -2,6 +2,7 @@ import TrainingMatrixClient from '../api/trainingMatrixClient';
 import Header from '../components/header';
 import BindingClass from '../util/bindingClass';
 import DataStore from '../util/DataStore';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 /**
  * Logic needed for the create employee page of the website.
@@ -13,6 +14,7 @@ class CreateTraining extends BindingClass {
         this.dataStore = new DataStore();
         this.dataStore.addChangeListener(this.redirectToViewTraining);
         this.header = new Header(this.dataStore);
+        this.LoadingSpinner = new LoadingSpinner;
     }
 
     /**
@@ -21,12 +23,17 @@ class CreateTraining extends BindingClass {
     mount() {
         document.getElementById('create').addEventListener('click', this.submit);
         document.getElementById('createTrainingSeries').addEventListener('click', this.newTrainingSeries);
-        document.getElementById('submit-update-btn').addEventListener('click', this.submitTrainingSeries);
+        document.getElementById('submit-update-btn').addEventListener('click', () => {
+            if (!document.getElementById("series-name").value) {
+                alert('Please enter a Training Series name');
+            } else {
+            this.submitTrainingSeries();}
+        });
 
         this.header.addHeaderToPage();
 
         this.client = new TrainingMatrixClient();
-
+        this.LoadingSpinner.showLoadingSpinner("Loading Page");
         this.addTrainingSelect();
     }
 
@@ -36,34 +43,34 @@ class CreateTraining extends BindingClass {
      */
     async submit(evt) {
         evt.preventDefault();
-
+        this.LoadingSpinner.showLoadingSpinner('Creating Training');
         const errorMessageDisplay = document.getElementById('error-message');
         errorMessageDisplay.innerText = ``;
         errorMessageDisplay.classList.add('hidden');
 
-        const createButton = document.getElementById('create');
-        const origButtonText = createButton.innerText;
-        createButton.innerText = 'Loading...';
 
         const trainingName = document.getElementById('training-name').value;
         const monthsTilExpire = document.getElementById('months-til').value;
         var trainingDate = document.getElementById('trainingDate').value;
         trainingDate += 'Z[UTC]';
         const trainingSeries = document.getElementById('training-series-field').children[1].value;
-
+        if (!trainingName || !monthsTilExpire || !document.getElementById('trainingDate').value) {
+            alert('Please fill in all information')
+            this.LoadingSpinner.hideLoadingSpinner();
+        } else {
         const training = await this.client.createTraining(trainingName, trainingSeries, monthsTilExpire, trainingDate, (error) => {
-            createButton.innerText = origButtonText;
             errorMessageDisplay.innerText = `Error: ${error.message}`;
             errorMessageDisplay.classList.remove('hidden');
         });
         this.dataStore.set('training', training);
-        console.table(training);
+    }
     }
 
     /**
      * When the training is updated in the datastore, redirect to the view training page.
      */
     async redirectToViewTraining() {
+        this.LoadingSpinner.showLoadingSpinner("Redirecting to Training");
         const training = this.dataStore.get('training');
         if (training != null) {
             window.location.href = `/training.html?id=${training.trainingId}`;
@@ -87,6 +94,7 @@ class CreateTraining extends BindingClass {
             selectTag.append(opt);
     });
     searchByTraining.appendChild(selectTag);
+    this.LoadingSpinner.hideLoadingSpinner();
     }
 
     newTrainingSeries(){
@@ -96,6 +104,8 @@ class CreateTraining extends BindingClass {
 
     async submitTrainingSeries() {
         const newTrainingSeries = document.getElementById("series-name").value;
+        this.LoadingSpinner.showLoadingSpinner("Creating Training Series");
+        console.log(newTrainingSeries);
         const results = await this.client.createTrainingSeries(newTrainingSeries);
         if (results != null){
             window.location.href = `/createTraining.html`;

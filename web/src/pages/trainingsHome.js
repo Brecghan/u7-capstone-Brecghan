@@ -2,6 +2,7 @@ import TrainingMatrixClient from '../api/trainingMatrixClient';
 import Header from '../components/header';
 import BindingClass from "../util/bindingClass";
 import DataStore from "../util/DataStore";
+import LoadingSpinner from '../components/LoadingSpinner';
 
 /*
 The code below this comment is equivalent to...
@@ -31,6 +32,7 @@ class TrainingsHome extends BindingClass {
         // Create a new datastore with an initial "empty" state.
         this.dataStore = new DataStore(EMPTY_DATASTORE_STATE);
         this.header = new Header(this.dataStore);
+        this.LoadingSpinner = new LoadingSpinner;
         console.log("trainingsHome constructor");
     }
 
@@ -42,7 +44,7 @@ class TrainingsHome extends BindingClass {
 
         this.header.addHeaderToPage();
         this.client = new TrainingMatrixClient();
-
+        this.LoadingSpinner.showLoadingSpinner("Loading Page");
         document.getElementById('trainings-btn').addEventListener('click', this.getTrainings);
         document.getElementById('training-ID-btn').addEventListener('click', this.redirectToTrainingView);
         document.getElementById('TrainingSeries-Search-btn').addEventListener("click", () => {
@@ -58,7 +60,6 @@ class TrainingsHome extends BindingClass {
 
     async clientLoaded() {
         document.getElementById("trainings-home-page").innerText = 'Trainings';
-        
         this.addFieldsToPage();
     }
 
@@ -111,10 +112,12 @@ class TrainingsHome extends BindingClass {
           ));
 
         fieldZoneContainer.appendChild(searchByTraining);
+        this.LoadingSpinner.hideLoadingSpinner();
     }
 
     
     async getTrainings(){
+        this.LoadingSpinner.showLoadingSpinner("Loading Trainings");
         const trainingSeries = this.dataStore.get("trainingSeries");
         console.log('trainingSeries = ' + trainingSeries);
         const isActive = this.dataStore.get("isActive");
@@ -152,7 +155,7 @@ class TrainingsHome extends BindingClass {
         } else {
         for (training of trainingsList) {
             let row = tbl.insertRow();
-            row.style["color"] = "blue";
+            row.style["color"] = "#00a5f9";
             row.style["text-decoration"] = "underline";
             row.style["cursor"] = "pointer";
             let cell1 = row.insertCell();
@@ -191,9 +194,11 @@ class TrainingsHome extends BindingClass {
     }
     document.getElementById("trainingSelectDropDown").selectedIndex = 0;
     this.dataStore.set("trainingSeries", 'null');
+    this.LoadingSpinner.hideLoadingSpinner();
     }
 
     async redirectToTrainingView() {
+        this.LoadingSpinner.showLoadingSpinner("Redirecting to Training");
         const trainingId = document.getElementById('field-zone').children[1].value;
         window.location.href = `/training.html?id=${trainingId}`;
     }

@@ -16,27 +16,35 @@
             <p class="hidden error" id="error-message"> </p>
             <p class="form-field">
                 <label>Employee Name</label>
-                <input type="text" required class="validated-field" id="employee-name" placeholder="Employee Name"
+                <input type="text" id="employee-name" placeholder="Employee Name"
                     autofocus>
             </p>
+            <br>
             <p class="form-field">
                 <label>Employee Id</label>
-                <input type="text" required class="validated-field" id="employee-id" placeholder="Employee Id"
+                <input type="text" id="employee-id" placeholder="Employee Id"
                     autofocus>
             </p>
+            <br>
             <p class="form-field">
                 <label>Start Date</label>
-                <input type="datetime-local" id="startdate" placeholder="Enter Start Date" required class="validated-field">
+                <input type="datetime-local" id="startdate" placeholder="Enter Start Date">
             </p>
-
+            <br>
             <p class="form-field" id = "employee-team-field" >
                 <label>Employee Team</label>
             </p>
+            <br>
             <p>
                 <a href="#" class="button" id="create">Create Employee</a>
             </p>
         </form>
     </div>
+    <div id="loading-spinner" class="spinner-container">
+        <div class="spinner"></div>
+        <div id="loading-message" class="fast-appear"></div>
+        <div id="loading-message-sub" class="slow-appear"></div>
+        <canvas width="500" height="200" id="canv" ></canvas>
 </body>
 
 </html>

@@ -2,6 +2,7 @@ import TrainingMatrixClient from '../api/trainingMatrixClient';
 import Header from '../components/header';
 import BindingClass from "../util/bindingClass";
 import DataStore from "../util/DataStore";
+import LoadingSpinner from '../components/LoadingSpinner';
 
 /*
 The code below this comment is equivalent to...
@@ -31,6 +32,7 @@ class Training extends BindingClass {
         // Create a new datastore with an initial "empty" state.
         this.dataStore = new DataStore(EMPTY_DATASTORE_STATE);
         this.header = new Header(this.dataStore);
+        this.LoadingSpinner = new LoadingSpinner;
         console.log("trainingView constructor");
     }
 
@@ -41,7 +43,7 @@ class Training extends BindingClass {
 
         this.header.addHeaderToPage();
         this.client = new TrainingMatrixClient();
-
+        this.LoadingSpinner.showLoadingSpinner("Loading Training Info");
         document.getElementById('update-training-btn').addEventListener('click', this.updateTraining);
         document.getElementById('deactivate-training-btn').addEventListener('click', this.deactivateTraining);
         document.getElementById('submit-update-btn').addEventListener('click', this.submitUpdate);
@@ -110,7 +112,7 @@ class Training extends BindingClass {
         let rowTrain = theadTrain.insertRow();
         employeesTableHeaders.forEach(function (item, index) {
             let thTrain = document.createElement("th");
-            thTrain.style.background = '#70AD47';
+            thTrain.style.background = '#121212';
             let textTrain = document.createTextNode(item);
             thTrain.appendChild(textTrain);
             rowTrain.appendChild(thTrain);
@@ -140,7 +142,7 @@ class Training extends BindingClass {
         let rowTest = theadTest.insertRow();
         testTableHeaders.forEach(function (item, index) {
             let thTest = document.createElement("th");
-            thTest.style.background = '#70AD47';
+            thTest.style.background = '#121212';
             let textTest = document.createTextNode(item);
             thTest.appendChild(textTest);
             rowTest.appendChild(thTest);
@@ -156,7 +158,7 @@ class Training extends BindingClass {
         } else {
         for (test of testList) {
             let row = tblTest.insertRow();
-            row.style["color"] = "blue";
+            row.style["color"] = "#00a5f9";
             row.style["text-decoration"] = "underline";
             row.style["cursor"] = "pointer";
             let cell1 = row.insertCell();
@@ -187,6 +189,7 @@ class Training extends BindingClass {
            currentRow.onclick = createClickHandler(currentRow);
             }
             }
+            this.LoadingSpinner.hideLoadingSpinner();
         }
 
     updateTraining(){
@@ -215,6 +218,7 @@ class Training extends BindingClass {
     }
     
     async submitUpdate(){    
+        this.LoadingSpinner.showLoadingSpinner("Updating Training Info");
         var updateMonths = document.getElementById("months-til").value;
         var updateExpiration = document.getElementById('training-status-field').children[1].value;
         console.log('updateMonths= '+ updateMonths);
@@ -234,6 +238,7 @@ class Training extends BindingClass {
 
     async deactivateTraining(){    
         if (confirm("Are you sure you wish to Deactivate?")) {
+        this.LoadingSpinner.showLoadingSpinner("Deactivating Training");
         const training = this.dataStore.get('training');
         const deactiveTraining = await this.client.deleteTraining(training.trainingId)    
 
@@ -246,9 +251,15 @@ class Training extends BindingClass {
     createTests(){
         var modal = document.getElementById("myModal2");
         modal.style.display = "block";
+        const testList = this.dataStore.get('trainingTests')
+        if (testList.length != 0) {
+            var test = testList[0]
+            document.getElementById('score-to-pass').value = test.scoreToPass;
+        }
     }
 
     async submitTestCreate(){
+        this.LoadingSpinner.showLoadingSpinner("Creating Tests for Training");
         var scoreToPass = document.getElementById('score-to-pass').value;
         const training = this.dataStore.get('training');
         var newTestsNeeded = [];
@@ -292,6 +303,7 @@ class Training extends BindingClass {
     }
     
     async addEmployees() {
+        this.LoadingSpinner.showLoadingSpinner("Adding Employees to Training");
         const employeeList = document.querySelectorAll('#employeeSelection option:checked');
         const values = Array.from(employeeList).map(el => el.value);
         const training = this.dataStore.get('training');

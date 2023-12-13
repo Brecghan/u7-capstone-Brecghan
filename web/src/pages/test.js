@@ -2,6 +2,7 @@ import TrainingMatrixClient from '../api/trainingMatrixClient';
 import Header from '../components/header';
 import BindingClass from "../util/bindingClass";
 import DataStore from "../util/DataStore";
+import LoadingSpinner from '../components/LoadingSpinner';
 
 /*
 The code below this comment is equivalent to...
@@ -31,6 +32,7 @@ class Test extends BindingClass {
         // Create a new datastore with an initial "empty" state.
         this.dataStore = new DataStore(EMPTY_DATASTORE_STATE);
         this.header = new Header(this.dataStore);
+        this.LoadingSpinner = new LoadingSpinner;
         console.log("trainingView constructor");
     }
 
@@ -41,7 +43,7 @@ class Test extends BindingClass {
 
         this.header.addHeaderToPage();
         this.client = new TrainingMatrixClient();
-
+        this.LoadingSpinner.showLoadingSpinner("Loading Test Info");
         document.getElementById('update-test-btn').addEventListener('click', this.updateTest);
         document.getElementById('submit-update-btn').addEventListener('click', this.submitUpdate);
 
@@ -102,7 +104,7 @@ class Test extends BindingClass {
         let rowTest = theadTest.insertRow();
         testTableHeaders.forEach(function (item, index) {
             let thTest = document.createElement("th");
-            thTest.style.background = '#70AD47';
+            thTest.style.background = '#121212';
             let textTest = document.createTextNode(item);
             thTest.appendChild(textTest);
             rowTest.appendChild(thTest);
@@ -123,6 +125,7 @@ class Test extends BindingClass {
         }
         fieldZoneContainer3.appendChild(tblTest);
     }
+    this.LoadingSpinner.hideLoadingSpinner();
     }
 
     updateTest(){
@@ -132,6 +135,7 @@ class Test extends BindingClass {
     }
     
     async submitUpdate(){    
+        this.LoadingSpinner.showLoadingSpinner("Updating Test Info");
         var latestScore = document.getElementById("latest-score").value;
       
         const test = this.dataStore.get('test');

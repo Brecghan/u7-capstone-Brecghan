@@ -2,6 +2,7 @@ import TrainingMatrixClient from '../api/trainingMatrixClient';
 import Header from '../components/header';
 import BindingClass from "../util/bindingClass";
 import DataStore from "../util/DataStore";
+import LoadingSpinner from '../components/LoadingSpinner';
 
 /*
 The code below this comment is equivalent to...
@@ -31,6 +32,7 @@ class Employee extends BindingClass {
         // Create a new datastore with an initial "empty" state.
         this.dataStore = new DataStore(EMPTY_DATASTORE_STATE);
         this.header = new Header(this.dataStore);
+        this.LoadingSpinner = new LoadingSpinner;
         console.log("employeesHome constructor");
     }
 
@@ -50,6 +52,7 @@ class Employee extends BindingClass {
     }
 
     async clientLoaded() {
+        this.LoadingSpinner.showLoadingSpinner("Loading Employee Info");
         const urlParams = new URLSearchParams(window.location.search);
         const employeeId = urlParams.get('id');
         const employee = await this.client.getEmployee(employeeId);
@@ -102,7 +105,7 @@ class Employee extends BindingClass {
         let rowTrain = theadTrain.insertRow();
         trainingsTableHeaders.forEach(function (item, index) {
             let thTrain = document.createElement("th");
-            thTrain.style.background = '#70AD47';
+            thTrain.style.background = '#121212';
             let textTrain = document.createTextNode(item);
             thTrain.appendChild(textTrain);
             rowTrain.appendChild(thTrain);
@@ -137,7 +140,7 @@ class Employee extends BindingClass {
         let rowTest = theadTest.insertRow();
         testTableHeaders.forEach(function (item, index) {
             let thTest = document.createElement("th");
-            thTest.style.background = '#70AD47';
+            thTest.style.background = '#121212';
             let textTest = document.createTextNode(item);
             thTest.appendChild(textTest);
             rowTest.appendChild(thTest);
@@ -153,7 +156,7 @@ class Employee extends BindingClass {
         for (test of testList) {
             const testTrainingId = test.trainingId;
             let row = tblTest.insertRow();
-            row.style["color"] = "blue";
+            row.style["color"] = "#00a5f9";
             row.style["text-decoration"] = "underline";
             row.style["cursor"] = "pointer";
             let cell1 = row.insertCell();
@@ -184,6 +187,7 @@ class Employee extends BindingClass {
            currentRow.onclick = createClickHandler(currentRow);
             }
     }
+    this.LoadingSpinner.hideLoadingSpinner();
     }
 
     updateEmployee(){
@@ -212,6 +216,7 @@ class Employee extends BindingClass {
     }
     
     async submitUpdate(){    
+        this.LoadingSpinner.showLoadingSpinner("Updating Employee Info");
         var updateName = document.getElementById("employee-name").value;
         var updateTeam = document.getElementById('employee-team-field').children[1].value;
         if (updateName === '' || updateTeam === 'null') {
@@ -228,6 +233,7 @@ class Employee extends BindingClass {
 
     async deactivateEmployee(){    
         if (confirm("Are you sure you wish to Deactivate?")) {
+        this.LoadingSpinner.showLoadingSpinner("Deactivating Employee");
         const employee = this.dataStore.get('employee');
         const deactiveEmployee = await this.client.deleteEmployee(employee.employeeId)    
 

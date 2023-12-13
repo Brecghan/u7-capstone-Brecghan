@@ -2,6 +2,7 @@ import TrainingMatrixClient from '../api/trainingMatrixClient';
 import Header from '../components/header';
 import BindingClass from "../util/bindingClass";
 import DataStore from "../util/DataStore";
+import Matrix from '../components/Matrix';
 
 /*
 The code below this comment is equivalent to...
@@ -31,6 +32,7 @@ class TrainingMatrixHome extends BindingClass {
         // Create a new datastore with an initial "empty" state.
         this.dataStore = new DataStore(EMPTY_DATASTORE_STATE);
         this.header = new Header(this.dataStore);
+        this.Matrix = new Matrix();
         console.log("trainingMatrixHome constructor");
     }
 
@@ -42,7 +44,7 @@ class TrainingMatrixHome extends BindingClass {
 
         this.header.addHeaderToPage();
         this.client = new TrainingMatrixClient();
-
+        this.Matrix.showMatrix();
         this.clientLoaded();
     }
 

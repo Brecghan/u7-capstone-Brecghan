@@ -2,6 +2,7 @@ import TrainingMatrixClient from '../api/trainingMatrixClient';
 import Header from '../components/header';
 import BindingClass from "../util/bindingClass";
 import DataStore from "../util/DataStore";
+import LoadingSpinner from '../components/LoadingSpinner';
 
 /*
 The code below this comment is equivalent to...
@@ -31,6 +32,7 @@ class EmployeesHome extends BindingClass {
         // Create a new datastore with an initial "empty" state.
         this.dataStore = new DataStore(EMPTY_DATASTORE_STATE);
         this.header = new Header(this.dataStore);
+        this.LoadingSpinner = new LoadingSpinner;
         console.log("employeesHome constructor");
     }
 
@@ -42,7 +44,7 @@ class EmployeesHome extends BindingClass {
 
         this.header.addHeaderToPage();
         this.client = new TrainingMatrixClient();
-
+        this.LoadingSpinner.showLoadingSpinner("Loading Page");
         this.dataStore.set("isActive", "true");
         this.dataStore.set("team", "null");
 
@@ -58,7 +60,6 @@ class EmployeesHome extends BindingClass {
 
     async clientLoaded() {
         document.getElementById("employee-home-page").innerText = 'Employees';
-        
         this.addFieldsToPage();
     }
 
@@ -106,9 +107,11 @@ class EmployeesHome extends BindingClass {
           )});
 
         fieldZoneContainer.appendChild(searchByTeam);
+        this.LoadingSpinner.hideLoadingSpinner();
     }
 
     async getEmployees(){
+        this.LoadingSpinner.showLoadingSpinner("Loading Employees");
         const team = this.dataStore.get("team");
         const isActive = this.dataStore.get("isActive");
         const employeeList = await this.client.getEmployeeList(team, isActive);
@@ -144,7 +147,7 @@ class EmployeesHome extends BindingClass {
         } else {
         for (employee of employeeList) {
             let row = tbl.insertRow();
-            row.style["color"] = "blue";
+            row.style["color"] = "#00a5f9";
             row.style["text-decoration"] = "underline";
             row.style["cursor"] = "pointer";
             let cell1 = row.insertCell();
@@ -184,9 +187,11 @@ class EmployeesHome extends BindingClass {
     }
     document.getElementById("teamListSelectDropDown").selectedIndex = 0;
     this.dataStore.set("team", 'null');
+    this.LoadingSpinner.hideLoadingSpinner();
     }
 
     async redirectToEmployeeView() {
+        this.LoadingSpinner.showLoadingSpinner("Redirecting to Employee");
         const employeeId = document.getElementById('field-zone').children[1].value;
         window.location.href = `/employee.html?id=${employeeId}`;
     }

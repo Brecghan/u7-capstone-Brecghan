@@ -24,12 +24,19 @@
         <a class="button" id = "TrainingSeries-Search-btn">Search By Series</a>
     </p>
 </div>
-<div id = "above-trainings-display-zone">
+<br>
+<div id = "above-trainings-display-zone" class="display-group">
 </div>
 <br>
 <br>
-<div id = "trainings-display-zone">
-    <table id = "trainings-table"></table>
+<div id = "trainings-display-zone" >
+    <table id = "trainings-table" class="display-group"></table>
+</div>
+<div id="loading-spinner" class="spinner-container">
+    <div class="spinner"></div>
+    <div id="loading-message" class="fast-appear"></div>
+    <div id="loading-message-sub" class="slow-appear"></div>
+    <canvas width="500" height="200" id="canv" ></canvas>
 </div>
 </body>
 </html>

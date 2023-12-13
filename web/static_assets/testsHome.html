@@ -20,12 +20,18 @@
         <a class="button" id = "training-ID-btn">View Tests By Training Id</a>
     </p>
 </div>
-<div id = "above-tests-display-zone">
+<br>
+<div id = "above-tests-display-zone" class="display-group">
 </div>
 <br>
 <br>
 <div id = "tests-display-zone">
-    <table id = "tests-table"></table>
+    <table id = "tests-table" class="display-group"></table>
 </div>
+<div id="loading-spinner" class="spinner-container">
+    <div class="spinner"></div>
+    <div id="loading-message" class="fast-appear"></div>
+    <div id="loading-message-sub" class="slow-appear"></div>
+    <canvas width="500" height="200" id="canv" ></canvas>
 </body>
 </html>

@@ -2,6 +2,7 @@ import TrainingMatrixClient from '../api/trainingMatrixClient';
 import Header from '../components/header';
 import BindingClass from "../util/bindingClass";
 import DataStore from "../util/DataStore";
+import LoadingSpinner from '../components/LoadingSpinner';
 
 /*
 The code below this comment is equivalent to...
@@ -31,6 +32,7 @@ class TestsHome extends BindingClass {
         // Create a new datastore with an initial "empty" state.
         this.dataStore = new DataStore(EMPTY_DATASTORE_STATE);
         this.header = new Header(this.dataStore);
+        this.LoadingSpinner = new LoadingSpinner;
         console.log("trainingsHome constructor");
     }
 
@@ -48,7 +50,7 @@ class TestsHome extends BindingClass {
 
         this.dataStore.set("isActive", "true");
         this.dataStore.set("trainingSeries", "null");
-
+        this.LoadingSpinner.showLoadingSpinner("Loading Page");
         this.clientLoaded();
     }
 
@@ -77,11 +79,12 @@ class TestsHome extends BindingClass {
         searchByTrainingIdField.size = 25;
 
         fieldZoneContainer.appendChild(searchByTrainingIdField);
-
+        this.LoadingSpinner.hideLoadingSpinner();
     }
 
     
     async getTests(){
+        this.LoadingSpinner.showLoadingSpinner("Getting Tests");
         const employeeId = document.getElementById("searchByEmployeeIdField").value;
         const trainingId = document.getElementById("searchByTrainingIdField").value;
         console.log('employeeId= ' + employeeId);
@@ -106,6 +109,7 @@ class TestsHome extends BindingClass {
         if (testsList.length === 0) {
             console.log('AM I HITTING THIS?length check')
             document.getElementById("tests-table").innerHTML = "No tests associated with ID: " + idSearched;
+            this.LoadingSpinner.hideLoadingSpinner();
         }
     }
 
@@ -135,7 +139,7 @@ class TestsHome extends BindingClass {
 
         for (test of testsList) {
             let row = tbl.insertRow();
-            row.style["color"] = "blue";
+            row.style["color"] = "#00a5f9";
             row.style["text-decoration"] = "underline";
             row.style["cursor"] = "pointer";
             let cell1 = row.insertCell();
@@ -171,9 +175,11 @@ class TestsHome extends BindingClass {
            };
            currentRow.onclick = createClickHandler(currentRow);
         }
+        this.LoadingSpinner.hideLoadingSpinner();
     }
 
     redirectToTestView(testId) {
+        this.LoadingSpinner.showLoadingSpinner("Redirecting to Test");
         window.location.href = `/test.html?id=${testId}`;
     }
 }

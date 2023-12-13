@@ -2,6 +2,7 @@ import TrainingMatrixClient from '../api/trainingMatrixClient';
 import Header from '../components/header';
 import BindingClass from '../util/bindingClass';
 import DataStore from '../util/DataStore';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 /**
  * Logic needed for the create employee page of the website.
@@ -13,18 +14,20 @@ class CreateEmployee extends BindingClass {
         this.dataStore = new DataStore();
         this.dataStore.addChangeListener(this.redirectToViewEmployee);
         this.header = new Header(this.dataStore);
+        this.LoadingSpinner = new LoadingSpinner;
     }
 
     /**
      * Add the header to the page and load the TrainingMatrixClient.
      */
     mount() {
+
         document.getElementById('create').addEventListener('click', this.submit);
 
         this.header.addHeaderToPage();
 
         this.client = new TrainingMatrixClient();
-
+        this.LoadingSpinner.showLoadingSpinner('Loading Page');
         this.addTeamSelect();
     }
 
@@ -34,34 +37,34 @@ class CreateEmployee extends BindingClass {
      */
     async submit(evt) {
         evt.preventDefault();
-
+        this.LoadingSpinner.showLoadingSpinner('Creating Employee');
         const errorMessageDisplay = document.getElementById('error-message');
         errorMessageDisplay.innerText = ``;
         errorMessageDisplay.classList.add('hidden');
-
-        const createButton = document.getElementById('create');
-        const origButtonText = createButton.innerText;
-        createButton.innerText = 'Loading...';
 
         const employeeName = document.getElementById('employee-name').value;
         const employeeId = document.getElementById('employee-id').value;
         var startDate = document.getElementById('startdate').value;
         startDate += 'Z[UTC]';
         const team = document.getElementById('employee-team-field').children[1].value;
-
+        if (!employeeName || !employeeId || !document.getElementById('startdate').value || team === 'null') {
+            alert('Please fill in all information')
+            this.LoadingSpinner.hideLoadingSpinner();
+        } else {
         const employee = await this.client.createEmployee(employeeName, employeeId, team, startDate, (error) => {
-            createButton.innerText = origButtonText;
             errorMessageDisplay.innerText = `Error: ${error.message}`;
             errorMessageDisplay.classList.remove('hidden');
         });
         this.dataStore.set('employee', employee);
         console.table(employee);
     }
+    }
 
     /**
      * When the employee is updated in the datastore, redirect to the view employee page.
      */
     async redirectToViewEmployee() {
+        this.LoadingSpinner.showLoadingSpinner("Redirecting to Employee");
         const employee = this.dataStore.get('employee');
         if (employee != null) {
             window.location.href = `/employee.html?id=${employee.employeeId}`;
@@ -81,6 +84,7 @@ class CreateEmployee extends BindingClass {
             selectTag.append(opt);
         });
         searchByTeam.appendChild(selectTag);
+        this.LoadingSpinner.hideLoadingSpinner();
     }
 }
 
