@@ -27,13 +27,12 @@ class TestsHome extends BindingClass {
     constructor() {
         super();
 
-        this.bindClassMethods(['mount', 'clientLoaded', 'getTests', 'redirectToTestView', 'addFieldsToPage', 'displayTests' ], this);
+        this.bindClassMethods(['mount', 'clientLoaded', 'getTests', 'redirectToTestView', 'addFieldsToPage', 'displayTests'], this);
 
         // Create a new datastore with an initial "empty" state.
         this.dataStore = new DataStore(EMPTY_DATASTORE_STATE);
         this.header = new Header(this.dataStore);
         this.LoadingSpinner = new LoadingSpinner;
-        console.log("trainingsHome constructor");
     }
 
     /**
@@ -56,14 +55,14 @@ class TestsHome extends BindingClass {
 
     async clientLoaded() {
         document.getElementById("tests-home-page").innerText = 'Tests';
-        
+
         this.addFieldsToPage();
     }
 
     async addFieldsToPage() {
         const fieldZoneContainer = document.getElementById("field-zone");
         fieldZoneContainer.className = "selection-group";
-        
+
         const searchByEmployeeIdField = document.createElement("input");
         searchByEmployeeIdField.type = "text";
         searchByEmployeeIdField.id = "searchByEmployeeIdField";
@@ -82,17 +81,14 @@ class TestsHome extends BindingClass {
         this.LoadingSpinner.hideLoadingSpinner();
     }
 
-    
-    async getTests(){
+
+    async getTests() {
         this.LoadingSpinner.showLoadingSpinner("Getting Tests");
         const employeeId = document.getElementById("searchByEmployeeIdField").value;
         const trainingId = document.getElementById("searchByTrainingIdField").value;
-        console.log('employeeId= ' + employeeId);
-        console.log('trainingId= ' + trainingId);
         var testsList;
         var idSearched;
         if (employeeId) {
-            console.log('AM I HITTING THIS?employee');
             testsList = await this.client.getTestList(null, employeeId, null);
             idSearched = employeeId;
             this.displayTests(testsList);
@@ -105,9 +101,7 @@ class TestsHome extends BindingClass {
         }
         document.getElementById("searchByEmployeeIdField").value = '';
         document.getElementById("searchByTrainingIdField").value = '';
-        console.log('testsList = ' + testsList)
         if (testsList.length === 0) {
-            console.log('AM I HITTING THIS?length check')
             document.getElementById("tests-table").innerHTML = "No tests associated with ID: " + idSearched;
             this.LoadingSpinner.hideLoadingSpinner();
         }
@@ -160,20 +154,20 @@ class TestsHome extends BindingClass {
         var table = document.getElementById("tests-table");
         var rows = table.getElementsByTagName("tr");
         for (var i = 0; i < rows.length; i++) {
-           var currentRow = table.rows[i];
-           var createClickHandler = function(row) {
-              return function() {
-                 var cell1 = row.getElementsByTagName("td")[0];
-                 var cell2 = row.getElementsByTagName("td")[1];
-                 if (cell1 && cell2) {
-                    var trainingId = cell1.innerHTML;
-                    var employeeId = cell2.innerHTML;
-                    var testId = trainingId + '~' + employeeId;
-                    window.location.href = `/test.html?id=${testId}`;
-                 }
-              };
-           };
-           currentRow.onclick = createClickHandler(currentRow);
+            var currentRow = table.rows[i];
+            var createClickHandler = function (row) {
+                return function () {
+                    var cell1 = row.getElementsByTagName("td")[0];
+                    var cell2 = row.getElementsByTagName("td")[1];
+                    if (cell1 && cell2) {
+                        var trainingId = cell1.innerHTML;
+                        var employeeId = cell2.innerHTML;
+                        var testId = trainingId + '~' + employeeId;
+                        window.location.href = `/test.html?id=${testId}`;
+                    }
+                };
+            };
+            currentRow.onclick = createClickHandler(currentRow);
         }
         this.LoadingSpinner.hideLoadingSpinner();
     }

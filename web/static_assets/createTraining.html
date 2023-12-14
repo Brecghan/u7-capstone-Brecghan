@@ -10,20 +10,18 @@
     <header class="header" id="header"></header>
     <div class="card">
         <h2>Create Training</h2>
-        </div>
-        <div class="selection-group">
+    </div>
+    <div class="selection-group">
         <form class="card-content">
             <p class="hidden error" id="error-message"> </p>
             <p class="form-field">
                 <label>Training Name</label>
-                <input type="text" id="training-name" placeholder="Training Name"
-                    autofocus>
+                <input type="text" id="training-name" placeholder="Training Name" autofocus>
             </p>
             <br>
             <p class="form-field">
                 <label>Months Til Expiration</label>
-                <input type="number" id="months-til" placeholder="Months Til Expiration"
-                    autofocus>
+                <input type="number" id="months-til" placeholder="Months Til Expiration" autofocus>
             </p>
             <br>
             <p class="form-field">
@@ -31,7 +29,7 @@
                 <input type="datetime-local" id="trainingDate" placeholder="Enter Training Date">
             </p>
             <br>
-            <p class="form-field" id = "training-series-field" >
+            <p class="form-field" id="training-series-field">
                 <label>Training Series</label>
             </p>
             <p><a href="#" class="small-button" id="createTrainingSeries">Click to Create a New Training Series</a></p>
@@ -42,15 +40,15 @@
 
             <div id="myModal" class="modal">
                 <div class="modal-content">
-                <p class="form-field">
-                    <label>Training Series Name</label>
+                    <p class="form-field">
+                        <label>Training Series Name</label>
+                        <br>
+                    <div id="series-name">
+                    </div>
+                    </p>
                     <br>
-                    <input type="text" id="series-name" placeholder="Name of TrainingSeries to create"
-                        autofocus>
-                </p>
-                <br>
-                <button class='button' id="submit-update-btn" >Create</button>
-            </div>
+                    <button class='button' id="submit-update-btn">Create</button>
+                </div>
             </div>
         </form>
     </div>
@@ -58,7 +56,7 @@
         <div class="spinner"></div>
         <div id="loading-message" class="fast-appear"></div>
         <div id="loading-message-sub" class="slow-appear"></div>
-        <canvas width="500" height="200" id="canv" ></canvas>
+        <canvas width="500" height="200" id="canv"></canvas>
 </body>
 
 </html>

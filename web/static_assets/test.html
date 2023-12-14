@@ -10,33 +10,31 @@
     <header class="header" id="header"></header>
     <br>
     <button class='button' id="update-test-btn" style="float: right;">Update Test</button>
-    <form class="card-content">
     <div id="myModal" class="modal">
         <div class="modal-content">
-        <p class="form-field">
-            <label>Latest Score</label>
+            <p class="form-field">
+                <label>Latest Score</label>
+                <br>
+                <br>
+                <input type="number" id="latest-score" placeholder="Latest Score" autofocus>
+            </p>
             <br>
-            <input type="number" id="latest-score" placeholder="Latest Score"
-                autofocus>
-        </p>
-        <br>
-        <button class='button' id="submit-update-btn" >Update</button>
+            <button class='button' id="submit-update-btn">Update</button>
+        </div>
     </div>
-    </div>
-</form>
     <div class="card">
         <h1 id="test-view-page"></h1>
     </div>
-    <div id = "field-zone1">
+    <div id="field-zone1">
     </div><br>
-    <div id = "field-zone2">
+    <div id="field-zone2">
     </div><br>
     </div>
     </div>
     <br>
     <br>
-    <div id = "field-zone3">
-        <table id = "attempts-table"></table>
+    <div id="field-zone3">
+        <table id="attempts-table"></table>
     </div>
     <p></p>
     </div>
@@ -44,6 +42,7 @@
         <div class="spinner"></div>
         <div id="loading-message" class="fast-appear"></div>
         <div id="loading-message-sub" class="slow-appear"></div>
-        <canvas width="500" height="200" id="canv" ></canvas>
-    </body>
-    </html>
+        <canvas width="500" height="200" id="canv"></canvas>
+</body>
+
+</html>

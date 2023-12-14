@@ -15,7 +15,7 @@ export default class LoadingSpinner {
 
     // Function to hide the loading spinner
     hideLoadingSpinner() {
-       document.getElementById('loading-spinner').style.display = 'none';
+        document.getElementById('loading-spinner').style.display = 'none';
 
     }
 }

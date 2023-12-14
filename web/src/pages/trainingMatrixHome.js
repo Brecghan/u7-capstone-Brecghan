@@ -33,7 +33,6 @@ class TrainingMatrixHome extends BindingClass {
         this.dataStore = new DataStore(EMPTY_DATASTORE_STATE);
         this.header = new Header(this.dataStore);
         this.Matrix = new Matrix();
-        console.log("trainingMatrixHome constructor");
     }
 
     /**
@@ -51,15 +50,15 @@ class TrainingMatrixHome extends BindingClass {
     async clientLoaded() {
         const user = (await this.client.getIdentity());
 
-        if (user == undefined){
+        if (user == undefined) {
             document.getElementById("home-page").innerText = 'Welcome! Please sign in before continuing.';
         } else {
             const username = (await this.client.authenticator.getCurrentUserInfo()).name;
             document.getElementById("home-page").innerText = 'Welcome, ' + username + '!';
-            
+
             const buttonZoneContainer = document.getElementById("button-zone");
             buttonZoneContainer.className = "selection-group";
-            
+
             const employeeButton = document.createElement("button");
             employeeButton.innerText = "Employees";
             employeeButton.className = "button";
@@ -68,7 +67,7 @@ class TrainingMatrixHome extends BindingClass {
             employeeButton.classList.add("button");
 
             employeeButton.addEventListener("click", () => {
-                window.location.href="employeesHome.html"
+                window.location.href = "employeesHome.html"
             });
 
             buttonZoneContainer.appendChild(employeeButton);
@@ -81,7 +80,7 @@ class TrainingMatrixHome extends BindingClass {
             trainingButton.classList.add("button");
 
             trainingButton.addEventListener("click", () => {
-                window.location.href="trainingsHome.html"
+                window.location.href = "trainingsHome.html"
             });
 
             buttonZoneContainer.appendChild(trainingButton);
@@ -94,7 +93,7 @@ class TrainingMatrixHome extends BindingClass {
             testButton.classList.add("button");
 
             testButton.addEventListener("click", () => {
-                window.location.href="testsHome.html"
+                window.location.href = "testsHome.html"
             });
 
             buttonZoneContainer.appendChild(testButton);

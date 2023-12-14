@@ -51,13 +51,12 @@ class CreateEmployee extends BindingClass {
             alert('Please fill in all information')
             this.LoadingSpinner.hideLoadingSpinner();
         } else {
-        const employee = await this.client.createEmployee(employeeName, employeeId, team, startDate, (error) => {
-            errorMessageDisplay.innerText = `Error: ${error.message}`;
-            errorMessageDisplay.classList.remove('hidden');
-        });
-        this.dataStore.set('employee', employee);
-        console.table(employee);
-    }
+            const employee = await this.client.createEmployee(employeeName, employeeId, team, startDate, (error) => {
+                errorMessageDisplay.innerText = `Error: ${error.message}`;
+                errorMessageDisplay.classList.remove('hidden');
+            });
+            this.dataStore.set('employee', employee);
+        }
     }
 
     /**
@@ -77,7 +76,7 @@ class CreateEmployee extends BindingClass {
         const searchByTeam = document.getElementById("employee-team-field");
 
         let selectTag = document.createElement('select');
-        teamList.forEach(function(value, key) {
+        teamList.forEach(function (value, key) {
             let opt = document.createElement("option");
             opt.value = key; // the index
             opt.innerHTML = value;

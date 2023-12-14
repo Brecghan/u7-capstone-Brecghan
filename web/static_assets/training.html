@@ -11,61 +11,59 @@
     <br>
     <button class='button' id="deactivate-training-btn" style="float: left;">Deactivate Training</button>
     <button class='button' id="update-training-btn" style="float: right;">Update Training</button>
-    <form class="card-content">
     <div id="myModal" class="modal">
         <div class="modal-content">
-        <p class="form-field">
-            <label>Months Til Expiration</label>
+            <p class="form-field">
+                <label>Months Til Expiration</label>
+                <br>
+                <br>
+                <input type="number" id="months-til" placeholder="Months until expiration" autofocus>
+            </p>
             <br>
-            <input type="number" id="months-til" placeholder="Months until expiration"
-                autofocus>
-        </p>
-        <br>
-        <label>Expiration Status</label>
-        <br>
-        <p class="form-field" id = "training-status-field" >
+            <label>Expiration Status</label>
+            <p class="form-field" id="training-status-field">
+                <br>
+
+            </p>
             <br>
-         
-        </p>
-        <br>
-        <p>
-        <button class='button' id="submit-update-btn" >Update</button>
-    </p>
+            <p>
+                <button class='button' id="submit-update-btn">Update</button>
+            </p>
+        </div>
     </div>
-    </div>
-</form>
     <div class="card">
         <h1 id="training-view-page"></h1>
     </div>
-    <div id = "field-zone1">
+    <div id="field-zone1">
     </div><br>
-    <div id = "field-zone2">
+    <div id="field-zone2">
     </div><br>
     <button class='button' id="add-employee-btn" style="float: left;">Add Employees for Training</button>
     <div id="myModal3" class="modal">
         <div class="modal-content">
-        <p class="form-field">
-                <div id="employeeList"></div>
-        </p>
-        <button class='button' id="submit-add-employees-btn" >Add Employees</button>
-    </div>
+            <p class="form-field">
+            <div id="employeeList"></div>
+            </p>
+            <button class='button' id="submit-add-employees-btn">Add Employees</button>
+        </div>
     </div>
     <button class='button' id="create-tests-btn" style="float: right;">Create Tests for Training</button>
     <div id="myModal2" class="modal">
         <div class="modal-content">
-        <p class="form-field">
-            <label>Score To Pass</label>
-            <input type="number" id="score-to-pass" placeholder="Score to Pass"
-                autofocus>
-        </p>
-        <button class='button' id="submit-test-create-btn" >Create</button>
-    </div>
+            <p class="form-field">
+                <label>Score To Pass</label>
+                <br>
+                <br>
+                <input type="number" id="score-to-pass" placeholder="Score to Pass" autofocus>
+            </p>
+            <button class='button' id="submit-test-create-btn">Create</button>
+        </div>
     </div>
     <br>
     <br>
-    <div id = "field-zone3">
-        <table id = "trainings-table"></table>
-        <table id = "tests-table"></table>
+    <div id="field-zone3">
+        <table id="trainings-table"></table>
+        <table id="tests-table"></table>
     </div>
     <p></p>
     </div>
@@ -73,6 +71,7 @@
         <div class="spinner"></div>
         <div id="loading-message" class="fast-appear"></div>
         <div id="loading-message-sub" class="slow-appear"></div>
-        <canvas width="500" height="200" id="canv" ></canvas>
-    </body>
-    </html>
+        <canvas width="500" height="200" id="canv"></canvas>
+</body>
+
+</html>

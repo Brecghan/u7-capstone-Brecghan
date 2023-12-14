@@ -16,8 +16,8 @@ export default class TrainingMatrixClient extends BindingClass {
         super();
 
         const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'getEmployee', 'getTraining', 'getTest', 'getTestList',
-        'getTrainingList', 'getEmployeeList', 'getTrainingSeries', 'createEmployee', 'createTraining', 'createTest', 'createTrainingSeries',
-        'updateEmployee', 'updateTraining', 'updateTest', 'deleteEmployee', 'deleteTraining', 'getTeamList', 'getStatusList'];
+            'getTrainingList', 'getEmployeeList', 'getTrainingSeries', 'createEmployee', 'createTraining', 'createTest', 'createTrainingSeries',
+            'updateEmployee', 'updateTraining', 'updateTest', 'deleteEmployee', 'deleteTraining', 'getTeamList', 'getStatusList'];
         this.bindClassMethods(methodsToBind, this);
 
         this.authenticator = new Authenticator();;
@@ -118,14 +118,14 @@ export default class TrainingMatrixClient extends BindingClass {
         }
     }
 
-     /**
-     * Gets the test list with the passed criteria.
-     * @param trainingId A string containing the trainingId to pass to the API.
-     * @param employeeId A string containing the employeeId status to pass to the API.
-     * @param hasPassed A string containing the hasPassed status to pass to the API.
-     * @param errorCallback (Optional) A function to execute if the call fails.
-     * @returns The tests that match the search criteria.
-     */
+    /**
+    * Gets the test list with the passed criteria.
+    * @param trainingId A string containing the trainingId to pass to the API.
+    * @param employeeId A string containing the employeeId status to pass to the API.
+    * @param hasPassed A string containing the hasPassed status to pass to the API.
+    * @param errorCallback (Optional) A function to execute if the call fails.
+    * @returns The tests that match the search criteria.
+    */
     async getTestList(trainingId, employeeId, hasPassed, errorCallback) {
         try {
             const response = await this.axiosClient.get(`test?trainingId=${trainingId}&employeeId=${employeeId}&hasPassed=${hasPassed}`);
@@ -135,38 +135,38 @@ export default class TrainingMatrixClient extends BindingClass {
         }
     }
 
-     /**
-     * Gets the training list with the passed criteria.
-     * @param trainingSeries A string containing the trainingSeries to pass to the API.
-     * @param isActive A string containing the isActive status to pass to the API.
-     * @param Status A string containing the trainingStatus status to pass to the API.
-     * @param errorCallback (Optional) A function to execute if the call fails.
-     * @returns The trainings that match the search criteria.
-     */
-     async getTrainingList(trainingSeries, isActive, status, errorCallback) {
+    /**
+    * Gets the training list with the passed criteria.
+    * @param trainingSeries A string containing the trainingSeries to pass to the API.
+    * @param isActive A string containing the isActive status to pass to the API.
+    * @param Status A string containing the trainingStatus status to pass to the API.
+    * @param errorCallback (Optional) A function to execute if the call fails.
+    * @returns The trainings that match the search criteria.
+    */
+    async getTrainingList(trainingSeries, isActive, status, errorCallback) {
         try {
             const response = await this.axiosClient.get(`training?trainingSeries=${trainingSeries}&isActive=${isActive}&status=${status}`)
             return response.data.trainings;
         } catch (error) {
             this.handleError(error, errorCallback)
         }
-    }    
+    }
 
-     /**
-     * Gets the employee list with the passed criteria.
-     * @param team A string containing the team to pass to the API.
-     * @param isActive A string containing the isActive status to pass to the API.
-     * @param errorCallback (Optional) A function to execute if the call fails.
-     * @returns The employees that match the search criteria.
-     */
-     async getEmployeeList(team, isActive, errorCallback) {
+    /**
+    * Gets the employee list with the passed criteria.
+    * @param team A string containing the team to pass to the API.
+    * @param isActive A string containing the isActive status to pass to the API.
+    * @param errorCallback (Optional) A function to execute if the call fails.
+    * @returns The employees that match the search criteria.
+    */
+    async getEmployeeList(team, isActive, errorCallback) {
         try {
             const response = await this.axiosClient.get(`employee?team=${team}&isActive=${isActive}`);
             return response.data.employees;
         } catch (error) {
             this.handleError(error, errorCallback)
         }
-    }        
+    }
 
     /**
      * Gets the training series
@@ -406,16 +406,16 @@ export default class TrainingMatrixClient extends BindingClass {
         }
     }
 
-       /**
-     * Gets the Team List
-     * @returns The team list.
-     */
+    /**
+  * Gets the Team List
+  * @returns The team list.
+  */
     getTeamList() {
         const teamList = new Map();
-        teamList.set('null' , 'Select Team');
-        teamList.set('HUMAN_RESOURCES', 'HR Team' );
-        teamList.set('INNOVATION', 'Innovation/Admin Team' );
-        teamList.set('SHEE_FACILITIES' , 'SHEE: Facilities Team' );
+        teamList.set('null', 'Select Team');
+        teamList.set('HUMAN_RESOURCES', 'HR Team');
+        teamList.set('INNOVATION', 'Innovation/Admin Team');
+        teamList.set('SHEE_FACILITIES', 'SHEE: Facilities Team');
         teamList.set('SHEE_SAFETY', 'SHEE: Safety Team');
         teamList.set('MANUFACTURING_WASHTOWER', 'MFG: Washtower Section');
         teamList.set('MANUFACTURING_DRYER_MAIN', 'MFG: Dryer Main Section');
@@ -448,20 +448,20 @@ export default class TrainingMatrixClient extends BindingClass {
         teamList.set('ACCOUNTING_LEGAL', 'Accouting/Legal Team');
         teamList.set('RESEARCH_AND_DEVELOPMENT', 'R&D Team');
         return teamList;
-    } 
+    }
 
-       /**
-     * Gets the Status possibilities
-     * @returns the Status possibilities.
-     */
-       getStatusList() {
+    /**
+  * Gets the Status possibilities
+  * @returns the Status possibilities.
+  */
+    getStatusList() {
         const statusList = new Map();
         statusList.set('null', 'Select Status');
         statusList.set('UP_TO_DATE', 'Up to Date');
         statusList.set('SOON_TO_EXPIRE', 'Expiring Soon');
         statusList.set('EXPIRED', 'Expired');
         return statusList;
-    } 
+    }
 
     /**
      * Helper method to log the error and run any error functions.

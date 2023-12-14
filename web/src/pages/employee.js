@@ -27,13 +27,12 @@ class Employee extends BindingClass {
     constructor() {
         super();
 
-        this.bindClassMethods(['mount', 'clientLoaded', 'updateEmployee', 'submitUpdate', 'deactivateEmployee' ], this);
+        this.bindClassMethods(['mount', 'clientLoaded', 'updateEmployee', 'submitUpdate', 'deactivateEmployee'], this);
 
         // Create a new datastore with an initial "empty" state.
         this.dataStore = new DataStore(EMPTY_DATASTORE_STATE);
         this.header = new Header(this.dataStore);
         this.LoadingSpinner = new LoadingSpinner;
-        console.log("employeesHome constructor");
     }
 
     /**
@@ -57,14 +56,21 @@ class Employee extends BindingClass {
         const employeeId = urlParams.get('id');
         const employee = await this.client.getEmployee(employeeId);
         const employeeTests = await this.client.getTestList("null", employeeId, "null");
+        employeeTests.sort(function (a, b) {
+            let x = a.employeeId.toLowerCase();
+            let y = b.employeeId.toLowerCase();
+            if (x < y) { return -1; }
+            if (x > y) { return 1; }
+            return 0;
+        });
         this.dataStore.set('employee', employee);
         this.dataStore.set('employeeTests', employeeTests);
         const teamList = this.client.getTeamList();
-        this.dataStore.set('teamList',teamList);
+        this.dataStore.set('teamList', teamList);
 
         document.getElementById("employee-view-page").innerText = employee.employeeName;
         this.addFieldsToPage();
-        window.onclick = function(event) {
+        window.onclick = function (event) {
             if (event.target === document.getElementById("myModal")) {
                 document.getElementById("myModal").style.display = "none";
                 document.getElementById("employee-team-field").removeChild(document.getElementById("employee-team-field").lastChild)
@@ -79,15 +85,15 @@ class Employee extends BindingClass {
 
 
         const employeeIdField = document.createElement("text");
-        employeeIdField.innerHTML = `Employee Id:` + `<br>` + employee.employeeId; 
+        employeeIdField.innerHTML = `Employee Id:` + `<br>` + employee.employeeId;
         fieldZoneContainer1.appendChild(employeeIdField);
 
         const employeeTeamField = document.createElement("text");
-        employeeTeamField.innerHTML = `Employee Team:` + `<br>` + employee.team; 
+        employeeTeamField.innerHTML = `Employee Team:` + `<br>` + employee.team;
         fieldZoneContainer1.appendChild(employeeTeamField);
 
         const employeeisActiveField = document.createElement("text");
-        employeeisActiveField.innerHTML = `Employee Active Status:` + `<br>` + employee.isActive; 
+        employeeisActiveField.innerHTML = `Employee Active Status:` + `<br>` + employee.isActive;
         fieldZoneContainer1.appendChild(employeeisActiveField);
 
 
@@ -95,11 +101,11 @@ class Employee extends BindingClass {
         fieldZoneContainer2.className = "display-group";
 
         const employeeStartDateField = document.createElement("text");
-        employeeStartDateField.innerHTML = `Employee Start Date:` + `<br>` + employee.startDate.toString().substring(0,10); 
+        employeeStartDateField.innerHTML = `Employee Start Date:` + `<br>` + employee.startDate.toString().substring(0, 10);
         fieldZoneContainer2.appendChild(employeeStartDateField);
 
         const employeeTrainingStatusField = document.createElement("text");
-        employeeTrainingStatusField.innerHTML = `Employee Training Status:` + `<br>` + employee.trainingStatus; 
+        employeeTrainingStatusField.innerHTML = `Employee Training Status:` + `<br>` + employee.trainingStatus;
         fieldZoneContainer2.appendChild(employeeTrainingStatusField);
 
 
@@ -116,29 +122,28 @@ class Employee extends BindingClass {
             thTrain.appendChild(textTrain);
             rowTrain.appendChild(thTrain);
         });
-        
+
         if (employee.trainingsTaken.length === 0) {
-            console.log("SHOULD SHOW EMPTY TABLE");
             document.getElementById("trainings-table").innerHTML = 'No trainings have been taken';
         } else {
-        let training;
-        for (training of employee.trainingsTaken) {
-            const trainingArray = training.toString().split(":")
-            if (trainingArray.length > 2) {
-                for (var i = 2; i < 3; i++) {
-                    trainingArray[1] += ':' + trainingArray[i];
+            let training;
+            for (training of employee.trainingsTaken) {
+                const trainingArray = training.toString().split(":")
+                if (trainingArray.length > 2) {
+                    for (var i = 2; i < 3; i++) {
+                        trainingArray[1] += ':' + trainingArray[i];
+                    }
                 }
+                let row = tblTrain.insertRow();
+                let cell1 = row.insertCell();
+                let text1 = document.createTextNode(trainingArray[0]);
+                cell1.appendChild(text1);
+                let cell2 = row.insertCell();
+                let text2 = document.createTextNode(trainingArray[1]);
+                cell2.appendChild(text2);
             }
-            let row = tblTrain.insertRow();
-            let cell1 = row.insertCell();
-            let text1 = document.createTextNode(trainingArray[0]);
-            cell1.appendChild(text1);
-            let cell2 = row.insertCell();
-            let text2 = document.createTextNode(trainingArray[1]);
-            cell2.appendChild(text2);
+            fieldZoneContainer3.appendChild(tblTrain);
         }
-        fieldZoneContainer3.appendChild(tblTrain);
-    }
 
         const testTableHeaders = ["Test for Training", "Test Pass Status"]
         const tblTest = document.getElementById("tests-table");
@@ -155,49 +160,48 @@ class Employee extends BindingClass {
 
         const testList = this.dataStore.get('employeeTests')
         if (testList.length === 0) {
-            console.log("SHOULD SHOW EMPTY TABLE");
             document.getElementById("tests-table").innerHTML = 'No tests have been taken';
         } else {
-        let test;
-        for (test of testList) {
-            const testTrainingId = test.trainingId;
-            let row = tblTest.insertRow();
-            row.style["color"] = "#00a5f9";
-            row.style["text-decoration"] = "underline";
-            row.style["cursor"] = "pointer";
-            let cell1 = row.insertCell();
-            let text1 = document.createTextNode(testTrainingId);
-            cell1.appendChild(text1);
-            let cell2 = row.insertCell();
-            let text2 = document.createTextNode(test.hasPassed);
-            cell2.appendChild(text2);
-        }
-        fieldZoneContainer3.appendChild(tblTest);
-
-        var table = document.getElementById("tests-table");
-        var rows = table.getElementsByTagName("tr");
-        for (var i = 0; i < rows.length; i++) {
-           var currentRow = table.rows[i];
-           var createClickHandler = function(row) {
-              return function() {
-                 var cell1 = row.getElementsByTagName("td")[0];
-                 var cell2 = row.getElementsByTagName("td")[1];
-                 if (cell1 && cell2) {
-                    var trainingId = cell1.innerHTML;
-                    var employeeId = employee.employeeId;
-                    var testId = trainingId + '~' + employeeId;
-                    window.location.href = `/test.html?id=${testId}`;
-                 }
-              };
-           };
-           currentRow.onclick = createClickHandler(currentRow);
+            let test;
+            for (test of testList) {
+                const testTrainingId = test.trainingId;
+                let row = tblTest.insertRow();
+                row.style["color"] = "#00a5f9";
+                row.style["text-decoration"] = "underline";
+                row.style["cursor"] = "pointer";
+                let cell1 = row.insertCell();
+                let text1 = document.createTextNode(testTrainingId);
+                cell1.appendChild(text1);
+                let cell2 = row.insertCell();
+                let text2 = document.createTextNode(test.hasPassed);
+                cell2.appendChild(text2);
             }
-    }
-    this.LoadingSpinner.hideLoadingSpinner();
-    
+            fieldZoneContainer3.appendChild(tblTest);
+
+            var table = document.getElementById("tests-table");
+            var rows = table.getElementsByTagName("tr");
+            for (var i = 0; i < rows.length; i++) {
+                var currentRow = table.rows[i];
+                var createClickHandler = function (row) {
+                    return function () {
+                        var cell1 = row.getElementsByTagName("td")[0];
+                        var cell2 = row.getElementsByTagName("td")[1];
+                        if (cell1 && cell2) {
+                            var trainingId = cell1.innerHTML;
+                            var employeeId = employee.employeeId;
+                            var testId = trainingId + '~' + employeeId;
+                            window.location.href = `/test.html?id=${testId}`;
+                        }
+                    };
+                };
+                currentRow.onclick = createClickHandler(currentRow);
+            }
+        }
+        this.LoadingSpinner.hideLoadingSpinner();
+
     }
 
-    updateEmployee(){
+    updateEmployee() {
         var modal = document.getElementById("myModal");
         modal.style.display = "block";
 
@@ -208,7 +212,7 @@ class Employee extends BindingClass {
 
         let selectTag = document.createElement('select');
         selectTag.id = "employeeCreateDropDown";
-        teamList.forEach(function(value, key) {
+        teamList.forEach(function (value, key) {
             let opt = document.createElement("option");
             opt.id = 'teamSelectOptions';
             opt.value = key; // the index
@@ -216,38 +220,37 @@ class Employee extends BindingClass {
             selectTag.append(opt);
         });
         searchByTeam.appendChild(selectTag);
-        console.table(employee);
         document.getElementById("teamSelectOptions").value = employee.team;
         document.getElementById("teamSelectOptions").innerHTML = employee.team;
         document.getElementById("employee-name").value = employee.employeeName;
     }
-    
-    async submitUpdate(){    
+
+    async submitUpdate() {
         this.LoadingSpinner.showLoadingSpinner("Updating Employee Info");
         var updateName = document.getElementById("employee-name").value;
         var updateTeam = document.getElementById('employee-team-field').children[1].value;
         if (updateName === '' || updateTeam === 'null') {
             alert("Please populate both fields when updating");
         } else {
-        const employee = this.dataStore.get('employee');
-        const updatedEmployee = await this.client.updateEmployee(updateName, employee.employeeId, updateTeam, employee.isActive, null, null)    
-    
+            const employee = this.dataStore.get('employee');
+            const updatedEmployee = await this.client.updateEmployee(updateName, employee.employeeId, updateTeam, employee.isActive, null, null)
+
             if (updatedEmployee != null) {
                 window.location.href = `/employee.html?id=${updatedEmployee.employeeId}`;
             }
         }
     }
 
-    async deactivateEmployee(){    
+    async deactivateEmployee() {
         if (confirm("Are you sure you wish to Deactivate?")) {
-        this.LoadingSpinner.showLoadingSpinner("Deactivating Employee");
-        const employee = this.dataStore.get('employee');
-        const deactiveEmployee = await this.client.deleteEmployee(employee.employeeId)    
+            this.LoadingSpinner.showLoadingSpinner("Deactivating Employee");
+            const employee = this.dataStore.get('employee');
+            const deactiveEmployee = await this.client.deleteEmployee(employee.employeeId)
 
-        if (deactiveEmployee != null) {
-            window.location.href = `/employee.html?id=${deactiveEmployee.employeeId}`;
+            if (deactiveEmployee != null) {
+                window.location.href = `/employee.html?id=${deactiveEmployee.employeeId}`;
+            }
         }
-    }
     }
 }
 

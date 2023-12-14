@@ -11,36 +11,33 @@
     <br>
     <button class='button' id="deactivate-employee-btn" style="float: left;">Deactivate Employee</button>
     <button class='button' id="update-employee-btn" style="float: right;">Update Employee</button>
-    <form class="card-content">
     <div id="myModal" class="modal">
         <div class="modal-content">
-        <p class="form-field">
-            <label>Employee Name</label>
+            <p class="form-field">
+                <label>Employee Name</label>
+                <br>
+                <input type="text" id="employee-name" placeholder="Employee Name" autofocus>
+            </p>
             <br>
-            <input type="text" id="employee-name" placeholder="Employee Name"
-                autofocus>
-        </p>
-        <br>
-        <label>Employee Team</label>
-        <br>
-        <p class="form-field" id = "employee-team-field" >
-           <br>
-        </p>
-        <br>
-        <button class='button' id="submit-update-btn" >Update</button>
+            <label>Employee Team</label>
+            <br>
+            <p class="form-field" id="employee-team-field">
+                <br>
+            </p>
+            <br>
+            <button class='button' id="submit-update-btn">Update</button>
+        </div>
     </div>
-    </div>
-</form>
     <div class="card">
         <h1 id="employee-view-page"></h1>
     </div>
-    <div id = "field-zone1">
+    <div id="field-zone1">
     </div><br>
-    <div id = "field-zone2">
+    <div id="field-zone2">
     </div><br><br>
-    <div id = "field-zone3">
-        <table id = "trainings-table"></table>
-        <table id = "tests-table"></table>
+    <div id="field-zone3">
+        <table id="trainings-table"></table>
+        <table id="tests-table"></table>
     </div>
     <p></p>
     </div>
@@ -48,6 +45,7 @@
         <div class="spinner"></div>
         <div id="loading-message" class="fast-appear"></div>
         <div id="loading-message-sub" class="slow-appear"></div>
-        <canvas width="500" height="200" id="canv" ></canvas>
-    </body>
-    </html>
+        <canvas width="500" height="200" id="canv"></canvas>
+</body>
+
+</html>

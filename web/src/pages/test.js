@@ -27,13 +27,12 @@ class Test extends BindingClass {
     constructor() {
         super();
 
-        this.bindClassMethods(['mount', 'clientLoaded', 'updateTest', 'submitUpdate' ], this);
+        this.bindClassMethods(['mount', 'clientLoaded', 'updateTest', 'submitUpdate'], this);
 
         // Create a new datastore with an initial "empty" state.
         this.dataStore = new DataStore(EMPTY_DATASTORE_STATE);
         this.header = new Header(this.dataStore);
         this.LoadingSpinner = new LoadingSpinner;
-        console.log("trainingView constructor");
     }
 
     /**
@@ -61,8 +60,13 @@ class Test extends BindingClass {
         const userName = employee.employeeName;
 
         document.getElementById("test-view-page").innerText = `Viewing` + `\n` + userName + `\n` + `Test`;
-       
+
         this.addFieldsToPage();
+        // window.onclick = function(event) {
+        //     if (event.target === document.getElementById("myModal")) {
+        //         document.getElementById("myModal").style.display = "none";
+        //     }
+        // }
     }
 
     async addFieldsToPage() {
@@ -72,15 +76,15 @@ class Test extends BindingClass {
 
 
         const employeeIdField = document.createElement("text");
-        employeeIdField.innerHTML = `Training Id:` + `<br>` + test.trainingId; 
+        employeeIdField.innerHTML = `Training Id:` + `<br>` + test.trainingId;
         fieldZoneContainer1.appendChild(employeeIdField);
 
         const employeeTeamField = document.createElement("text");
-        employeeTeamField.innerHTML = `Employee Id:` + `<br>` + test.employeeId; 
+        employeeTeamField.innerHTML = `Employee Id:` + `<br>` + test.employeeId;
         fieldZoneContainer1.appendChild(employeeTeamField);
 
         const employeeisActiveField = document.createElement("text");
-        employeeisActiveField.innerHTML = `Test Passing Status:` + `<br>` + test.hasPassed; 
+        employeeisActiveField.innerHTML = `Test Passing Status:` + `<br>` + test.hasPassed;
         fieldZoneContainer1.appendChild(employeeisActiveField);
 
 
@@ -88,11 +92,11 @@ class Test extends BindingClass {
         fieldZoneContainer2.className = "display-group";
 
         const employeeStartDateField = document.createElement("text");
-        employeeStartDateField.innerHTML = `Score to Pass:` + `<br>` + test.scoreToPass; 
+        employeeStartDateField.innerHTML = `Score to Pass:` + `<br>` + test.scoreToPass;
         fieldZoneContainer2.appendChild(employeeStartDateField);
 
         const employeeTrainingStatusField = document.createElement("text");
-        employeeTrainingStatusField.innerHTML = `Latest Test Attempt Score:` + `<br>` + test.latestScore; 
+        employeeTrainingStatusField.innerHTML = `Latest Test Attempt Score:` + `<br>` + test.latestScore;
         fieldZoneContainer2.appendChild(employeeTrainingStatusField);
 
 
@@ -113,35 +117,33 @@ class Test extends BindingClass {
 
         const testList = this.dataStore.get('testAttempts')
         if (testList.length === 0) {
-            console.log("SHOULD SHOW EMPTY TABLE");
             document.getElementById("attempts-table").innerHTML = 'No test attempts have been taken';
         } else {
-        let testAttempt;
-        for (testAttempt of testList) {
-            let row = tblTest.insertRow();
-            let cell1 = row.insertCell();
-            let text1 = document.createTextNode(testAttempt);
-            cell1.appendChild(text1);
+            let testAttempt;
+            for (testAttempt of testList) {
+                let row = tblTest.insertRow();
+                let cell1 = row.insertCell();
+                let text1 = document.createTextNode(testAttempt);
+                cell1.appendChild(text1);
+            }
+            fieldZoneContainer3.appendChild(tblTest);
         }
-        fieldZoneContainer3.appendChild(tblTest);
-    }
-    this.LoadingSpinner.hideLoadingSpinner();
+        this.LoadingSpinner.hideLoadingSpinner();
     }
 
-    updateTest(){
+    updateTest() {
         var modal = document.getElementById("myModal");
         modal.style.display = "block";
 
     }
-    
-    async submitUpdate(){    
+
+    async submitUpdate() {
         this.LoadingSpinner.showLoadingSpinner("Updating Test Info");
         var latestScore = document.getElementById("latest-score").value;
-      
         const test = this.dataStore.get('test');
-        const updatedTest = await this.client.updateTest(test.trainingId, test.employeeId, latestScore)    
+        const updatedTest = await this.client.updateTest(test.trainingId, test.employeeId, latestScore)
 
-        if (updatedTest != null) {
+        if (updatedTest) {
             window.location.href = `/test.html?id=${updatedTest.trainingId + "~" + updatedTest.employeeId}`;
         }
     }

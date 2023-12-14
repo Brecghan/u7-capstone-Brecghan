@@ -10,7 +10,7 @@
     background-color: #8A8C8F;
     margin: 0;
     counter-reset: section;
-    font-family: "Helvetica Neue",Helvetica,sans-serif;
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
 }
 
 .header {
@@ -24,14 +24,14 @@
 }
 
 .button {
-  background-color: var(--tertiary-color);
-  border: none;
-  color: var(--secondary-color);
-  padding: 6px 8px 4px 8px;
-  text-align: center;
-  font-weight: bold;
-  text-decoration: none;
-  cursor: pointer;
+    background-color: var(--tertiary-color);
+    border: none;
+    color: var(--secondary-color);
+    padding: 6px 8px 4px 8px;
+    text-align: center;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 .button-group {
@@ -63,6 +63,7 @@
 .validated-field:invalid {
     outline: 2px solid var(--error-color);
 }
+
 .validated-field:focus:invalid {
     color: var(--error-color);
 }
@@ -120,9 +121,10 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Lists_and_Counters/Using_CS
     display: none;
 }
 
-/* table styles */ 
+/* table styles */
 
-th, td {
+th,
+td {
     padding: 15px;
     text-align: left;
 }

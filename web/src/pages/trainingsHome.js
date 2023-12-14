@@ -27,13 +27,12 @@ class TrainingsHome extends BindingClass {
     constructor() {
         super();
 
-        this.bindClassMethods(['mount', 'clientLoaded', 'getTrainings', 'redirectToTrainingView', 'addFieldsToPage', 'displayTrainings' ], this);
+        this.bindClassMethods(['mount', 'clientLoaded', 'getTrainings', 'redirectToTrainingView', 'addFieldsToPage', 'displayTrainings'], this);
 
         // Create a new datastore with an initial "empty" state.
         this.dataStore = new DataStore(EMPTY_DATASTORE_STATE);
         this.header = new Header(this.dataStore);
         this.LoadingSpinner = new LoadingSpinner;
-        console.log("trainingsHome constructor");
     }
 
     /**
@@ -66,7 +65,7 @@ class TrainingsHome extends BindingClass {
     async addFieldsToPage() {
         const fieldZoneContainer = document.getElementById("field-zone");
         fieldZoneContainer.className = "selection-group";
-        
+
         const radioZone = document.createElement("div");
 
         const viewAllRadio = document.createElement("input");
@@ -85,7 +84,7 @@ class TrainingsHome extends BindingClass {
         });
 
         fieldZoneContainer.appendChild(radioZone);
-        
+
         const searchByIdField = document.createElement("input");
         searchByIdField.type = "text";
         searchByIdField.placeholder = "Enter Training ID";
@@ -100,26 +99,25 @@ class TrainingsHome extends BindingClass {
 
         let optionTrainingList = searchByTraining.options;
         optionTrainingList.length = 0;
-        
+
         let opt = document.createElement("option");
         opt.value = null; // the index
         opt.innerHTML = 'Select Series';
         optionTrainingList.add(opt);
 
-        trainingSeriesList.forEach( tsl =>
+        trainingSeriesList.forEach(tsl =>
             optionTrainingList.add(
-            new Option(tsl.trainingSeriesName, tsl.trainingSeriesName)
-          ));
+                new Option(tsl.trainingSeriesName, tsl.trainingSeriesName)
+            ));
 
         fieldZoneContainer.appendChild(searchByTraining);
         this.LoadingSpinner.hideLoadingSpinner();
     }
 
-    
-    async getTrainings(){
+
+    async getTrainings() {
         this.LoadingSpinner.showLoadingSpinner("Loading Trainings");
         const trainingSeries = this.dataStore.get("trainingSeries");
-        console.log('trainingSeries = ' + trainingSeries);
         const isActive = this.dataStore.get("isActive");
         const trainingsList = await this.client.getTrainingList(trainingSeries, isActive, null);
         this.displayTrainings(trainingsList);
@@ -150,52 +148,52 @@ class TrainingsHome extends BindingClass {
 
         const trainingSeriesChosen = this.dataStore.get("trainingSeries");
         let training;
-        if (trainingsList.length === 0){
+        if (trainingsList.length === 0) {
             document.getElementById("trainings-table").innerHTML = '' + `\n` + "No trainings assigned to this Training Series: " + trainingSeriesChosen;
         } else {
-        for (training of trainingsList) {
-            let row = tbl.insertRow();
-            row.style["color"] = "#00a5f9";
-            row.style["text-decoration"] = "underline";
-            row.style["cursor"] = "pointer";
-            let cell1 = row.insertCell();
-            let text1 = document.createTextNode(training.trainingId);
-            cell1.appendChild(text1);
-            let cell2 = row.insertCell();
-            let text2 = document.createTextNode(training.expirationStatus);
-            cell2.appendChild(text2);
-            let cell3 = row.insertCell();
-            let text3 = document.createTextNode(training.isActive);
-            cell3.appendChild(text3);
-            let cell4 = row.insertCell();
-            let text4 = document.createTextNode(training.monthsTilExpire);
-            cell4.appendChild(text4);
-            let cell5 = row.insertCell();
-            let text5 = document.createTextNode(training.trainingSeries);
-            cell5.appendChild(text5);
-        }
-        trainingsDisplayZoneContainer.appendChild(tbl);
+            for (training of trainingsList) {
+                let row = tbl.insertRow();
+                row.style["color"] = "#00a5f9";
+                row.style["text-decoration"] = "underline";
+                row.style["cursor"] = "pointer";
+                let cell1 = row.insertCell();
+                let text1 = document.createTextNode(training.trainingId);
+                cell1.appendChild(text1);
+                let cell2 = row.insertCell();
+                let text2 = document.createTextNode(training.expirationStatus);
+                cell2.appendChild(text2);
+                let cell3 = row.insertCell();
+                let text3 = document.createTextNode(training.isActive);
+                cell3.appendChild(text3);
+                let cell4 = row.insertCell();
+                let text4 = document.createTextNode(training.monthsTilExpire);
+                cell4.appendChild(text4);
+                let cell5 = row.insertCell();
+                let text5 = document.createTextNode(training.trainingSeries);
+                cell5.appendChild(text5);
+            }
+            trainingsDisplayZoneContainer.appendChild(tbl);
 
-        var table = document.getElementById("trainings-table");
-        var rows = table.getElementsByTagName("tr");
-        for (var i = 0; i < rows.length; i++) {
-           var currentRow = table.rows[i];
-           var createClickHandler = function(row) {
-              return function() {
-                 var cell1 = row.getElementsByTagName("td")[0];
-                 if (cell1) {
-                    var trainingId = cell1.innerHTML;
-                    window.location.href = `/training.html?id=${trainingId}`;
-                 }
-              };
-           };
-           currentRow.onclick = createClickHandler(currentRow);
+            var table = document.getElementById("trainings-table");
+            var rows = table.getElementsByTagName("tr");
+            for (var i = 0; i < rows.length; i++) {
+                var currentRow = table.rows[i];
+                var createClickHandler = function (row) {
+                    return function () {
+                        var cell1 = row.getElementsByTagName("td")[0];
+                        if (cell1) {
+                            var trainingId = cell1.innerHTML;
+                            window.location.href = `/training.html?id=${trainingId}`;
+                        }
+                    };
+                };
+                currentRow.onclick = createClickHandler(currentRow);
+            }
         }
-    }
-    document.getElementById("trainingSelectDropDown").selectedIndex = 0;
-    this.dataStore.set("trainingSeries", 'null');
-    document.getElementById("viewAllRadioSelector").checked = false;
-    this.LoadingSpinner.hideLoadingSpinner();
+        document.getElementById("trainingSelectDropDown").selectedIndex = 0;
+        this.dataStore.set("trainingSeries", 'null');
+        document.getElementById("viewAllRadioSelector").checked = false;
+        this.LoadingSpinner.hideLoadingSpinner();
     }
 
     async redirectToTrainingView() {

@@ -27,13 +27,12 @@ class Training extends BindingClass {
     constructor() {
         super();
 
-        this.bindClassMethods(['mount', 'clientLoaded', 'updateTraining', 'submitUpdate', 'deactivateTraining', 'createTests', 'submitTestCreate', 'addEmployees', 'addEmployeesModalShow' ], this);
+        this.bindClassMethods(['mount', 'clientLoaded', 'updateTraining', 'submitUpdate', 'deactivateTraining', 'createTests', 'submitTestCreate', 'addEmployees', 'addEmployeesModalShow'], this);
 
         // Create a new datastore with an initial "empty" state.
         this.dataStore = new DataStore(EMPTY_DATASTORE_STATE);
         this.header = new Header(this.dataStore);
         this.LoadingSpinner = new LoadingSpinner;
-        console.log("trainingView constructor");
     }
 
     /**
@@ -60,6 +59,13 @@ class Training extends BindingClass {
         const trainingId = urlParams.get('id');
         const training = await this.client.getTraining(trainingId);
         const trainingTests = await this.client.getTestList(trainingId, "null", "null");
+        trainingTests.sort(function (a, b) {
+            let x = a.employeeId.toLowerCase();
+            let y = b.employeeId.toLowerCase();
+            if (x < y) { return -1; }
+            if (x > y) { return 1; }
+            return 0;
+        });
         if (training.testsForTraining.length === training.employeesTrained.length) {
             const testButton = document.getElementById('create-tests-btn');
             testButton.style.visibility = 'hidden';
@@ -67,14 +73,23 @@ class Training extends BindingClass {
         this.dataStore.set('training', training);
         this.dataStore.set('trainingTests', trainingTests);
         const statusList = this.client.getStatusList();
-        this.dataStore.set('statusList',statusList);
+        this.dataStore.set('statusList', statusList);
 
         document.getElementById("training-view-page").innerText = training.trainingName;
         this.addFieldsToPage();
-        window.onclick = function(event) {
-            if (event.target === document.getElementById("myModal")) {
-                document.getElementById("myModal").style.display = "none";
-                document.getElementById("training-status-field").removeChild(document.getElementById("training-status-field").lastChild)
+        window.onclick = function (event) {
+            if (event.target === document.getElementById("myModal") || event.target === document.getElementById("myModal2") || event.target === document.getElementById("myModal3")) {
+                if (event.target === document.getElementById("myModal")) {
+                    document.getElementById("myModal").style.display = "none";
+                    document.getElementById("training-status-field").removeChild(document.getElementById("training-status-field").lastChild);
+                } if (event.target === document.getElementById("myModal2")) {
+                    document.getElementById("myModal2").style.display = "none";
+                } else {
+                    while (document.getElementById("employeeList").firstChild) {
+                        document.getElementById("employeeList").removeChild(document.getElementById("employeeList").lastChild);
+                    }
+                    document.getElementById("myModal3").style.display = "none";
+                }
             }
         }
     }
@@ -86,15 +101,15 @@ class Training extends BindingClass {
 
 
         const employeeIdField = document.createElement("text");
-        employeeIdField.innerHTML = `Training Id:` + `<br>` + training.trainingId; 
+        employeeIdField.innerHTML = `Training Id:` + `<br>` + training.trainingId;
         fieldZoneContainer1.appendChild(employeeIdField);
 
         const employeeTeamField = document.createElement("text");
-        employeeTeamField.innerHTML = `Months until Training Expires:` + `<br>` + training.monthsTilExpire; 
+        employeeTeamField.innerHTML = `Months until Training Expires:` + `<br>` + training.monthsTilExpire;
         fieldZoneContainer1.appendChild(employeeTeamField);
 
         const employeeisActiveField = document.createElement("text");
-        employeeisActiveField.innerHTML = `Training Active Status:` + `<br>` + training.isActive; 
+        employeeisActiveField.innerHTML = `Training Active Status:` + `<br>` + training.isActive;
         fieldZoneContainer1.appendChild(employeeisActiveField);
 
 
@@ -102,11 +117,11 @@ class Training extends BindingClass {
         fieldZoneContainer2.className = "display-group";
 
         const employeeStartDateField = document.createElement("text");
-        employeeStartDateField.innerHTML = `Training Date:` + `<br>` + training.trainingDate.toString().substring(0,10); 
+        employeeStartDateField.innerHTML = `Training Date:` + `<br>` + training.trainingDate.toString().substring(0, 10);
         fieldZoneContainer2.appendChild(employeeStartDateField);
 
         const employeeTrainingStatusField = document.createElement("text");
-        employeeTrainingStatusField.innerHTML = `Training Expiration Status:` + `<br>` + training.expirationStatus; 
+        employeeTrainingStatusField.innerHTML = `Training Expiration Status:` + `<br>` + training.expirationStatus;
         fieldZoneContainer2.appendChild(employeeTrainingStatusField);
 
 
@@ -125,22 +140,29 @@ class Training extends BindingClass {
         });
 
         let employee;
+        const employeeSorted = training.employeesTrained;
+        employeeSorted.sort(function (a, b) {
+            let x = a.toLowerCase();
+            let y = b.toLowerCase();
+            if (x < y) { return -1; }
+            if (x > y) { return 1; }
+            return 0;
+        });
         if (training.employeesTrained.length === 0) {
-            console.log("SHOULD SHOW EMPTY TABLE");
             document.getElementById("trainings-table").innerHTML = 'No employees have been added to the training';
         } else {
-        for (employee of training.employeesTrained) {
-            const employeeInfo = await this.client.getEmployee(employee);
-            let row = tblTrain.insertRow();
-            let cell1 = row.insertCell();
-            let text1 = document.createTextNode(employeeInfo.employeeId);
-            cell1.appendChild(text1);
-            let cell2 = row.insertCell();
-            let text2 = document.createTextNode(employeeInfo.employeeName);
-            cell2.appendChild(text2);
+            for (employee of employeeSorted) {
+                const employeeInfo = await this.client.getEmployee(employee);
+                let row = tblTrain.insertRow();
+                let cell1 = row.insertCell();
+                let text1 = document.createTextNode(employeeInfo.employeeId);
+                cell1.appendChild(text1);
+                let cell2 = row.insertCell();
+                let text2 = document.createTextNode(employeeInfo.employeeName);
+                cell2.appendChild(text2);
+            }
+            fieldZoneContainer3.appendChild(tblTrain);
         }
-        fieldZoneContainer3.appendChild(tblTrain);
-    }
 
         const testTableHeaders = ["Employee Id", "Test Pass Status"]
         const tblTest = document.getElementById("tests-table");
@@ -158,47 +180,46 @@ class Training extends BindingClass {
         const testList = this.dataStore.get('trainingTests')
         let test;
         if (testList.length === 0) {
-            console.log("SHOULD SHOW EMPTY Test TABLE");
             fieldZoneContainer3.appendChild(tblTest);
             document.getElementById("tests-table").innerHTML = 'No tests have been created for this training';
         } else {
-        for (test of testList) {
-            let row = tblTest.insertRow();
-            row.style["color"] = "#00a5f9";
-            row.style["text-decoration"] = "underline";
-            row.style["cursor"] = "pointer";
-            let cell1 = row.insertCell();
-            let text1 = document.createTextNode(test.employeeId);
-            cell1.appendChild(text1);
-            let cell2 = row.insertCell();
-            let text2 = document.createTextNode(test.hasPassed);
-            cell2.appendChild(text2);
-        }
-        fieldZoneContainer3.appendChild(tblTest);
-
-        var table = document.getElementById("tests-table");
-        var rows = table.getElementsByTagName("tr");
-        for (var i = 0; i < rows.length; i++) {
-           var currentRow = table.rows[i];
-           var createClickHandler = function(row) {
-              return function() {
-                 var cell1 = row.getElementsByTagName("td")[0];
-                 var cell2 = row.getElementsByTagName("td")[1];
-                 if (cell1 && cell2) {
-                    var trainingId = training.trainingId;
-                    var employeeId = cell1.innerHTML;
-                    var testId = trainingId + '~' + employeeId;
-                    window.location.href = `/test.html?id=${testId}`;
-                 }
-              };
-           };
-           currentRow.onclick = createClickHandler(currentRow);
+            for (test of testList) {
+                let row = tblTest.insertRow();
+                row.style["color"] = "#00a5f9";
+                row.style["text-decoration"] = "underline";
+                row.style["cursor"] = "pointer";
+                let cell1 = row.insertCell();
+                let text1 = document.createTextNode(test.employeeId);
+                cell1.appendChild(text1);
+                let cell2 = row.insertCell();
+                let text2 = document.createTextNode(test.hasPassed);
+                cell2.appendChild(text2);
             }
-            }
-            this.LoadingSpinner.hideLoadingSpinner();
-        }
+            fieldZoneContainer3.appendChild(tblTest);
 
-    updateTraining(){
+            var table = document.getElementById("tests-table");
+            var rows = table.getElementsByTagName("tr");
+            for (var i = 0; i < rows.length; i++) {
+                var currentRow = table.rows[i];
+                var createClickHandler = function (row) {
+                    return function () {
+                        var cell1 = row.getElementsByTagName("td")[0];
+                        var cell2 = row.getElementsByTagName("td")[1];
+                        if (cell1 && cell2) {
+                            var trainingId = training.trainingId;
+                            var employeeId = cell1.innerHTML;
+                            var testId = trainingId + '~' + employeeId;
+                            window.location.href = `/test.html?id=${testId}`;
+                        }
+                    };
+                };
+                currentRow.onclick = createClickHandler(currentRow);
+            }
+        }
+        this.LoadingSpinner.hideLoadingSpinner();
+    }
+
+    updateTraining() {
         var modal = document.getElementById("myModal");
         modal.style.display = "block";
 
@@ -208,7 +229,7 @@ class Training extends BindingClass {
         const searchByTeam = document.getElementById("training-status-field");
 
         let selectTag = document.createElement('select');
-        statusList.forEach(function(value, key) {
+        statusList.forEach(function (value, key) {
             let opt = document.createElement("option");
             opt.id = 'trainingSelectOptions';
             opt.value = key; // the index
@@ -216,45 +237,42 @@ class Training extends BindingClass {
             selectTag.append(opt);
         });
         searchByTeam.appendChild(selectTag);
-        console.table(training);
         document.getElementById("trainingSelectOptions").value = training.expirationStatus;
         document.getElementById("trainingSelectOptions").innerHTML = training.expirationStatus;
         document.getElementById("months-til").value = training.monthsTilExpire;
 
     }
-    
-    async submitUpdate(){    
+
+    async submitUpdate() {
         this.LoadingSpinner.showLoadingSpinner("Updating Training Info");
         var updateMonths = document.getElementById("months-til").value;
         var updateExpiration = document.getElementById('training-status-field').children[1].value;
-        console.log('updateMonths= '+ updateMonths);
-        console.log('updateExpiration= '+ updateExpiration);
         if (updateMonths === '' || updateExpiration === 'null') {
             alert("Please populate both fields when updating");
         } else {
 
-        const training = this.dataStore.get('training');
-        const updatedTraining = await this.client.updateTraining(training.trainingId, training.isActive, updateMonths, null, null, updateExpiration)    
+            const training = this.dataStore.get('training');
+            const updatedTraining = await this.client.updateTraining(training.trainingId, training.isActive, updateMonths, null, null, updateExpiration)
 
-        if (updatedTraining != null) {
-            window.location.href = `/training.html?id=${updatedTraining.trainingId}`;
+            if (updatedTraining != null) {
+                window.location.href = `/training.html?id=${updatedTraining.trainingId}`;
+            }
         }
     }
-    }
 
-    async deactivateTraining(){    
+    async deactivateTraining() {
         if (confirm("Are you sure you wish to Deactivate?")) {
-        this.LoadingSpinner.showLoadingSpinner("Deactivating Training");
-        const training = this.dataStore.get('training');
-        const deactiveTraining = await this.client.deleteTraining(training.trainingId)    
+            this.LoadingSpinner.showLoadingSpinner("Deactivating Training");
+            const training = this.dataStore.get('training');
+            const deactiveTraining = await this.client.deleteTraining(training.trainingId)
 
-        if (deactiveTraining != null) {
-            window.location.href = `/training.html?id=${deactiveTraining.trainingId}`;
+            if (deactiveTraining != null) {
+                window.location.href = `/training.html?id=${deactiveTraining.trainingId}`;
+            }
         }
     }
-    }
 
-    createTests(){
+    createTests() {
         var modal = document.getElementById("myModal2");
         modal.style.display = "block";
         const testList = this.dataStore.get('trainingTests')
@@ -264,7 +282,7 @@ class Training extends BindingClass {
         }
     }
 
-    async submitTestCreate(){
+    async submitTestCreate() {
         this.LoadingSpinner.showLoadingSpinner("Creating Tests for Training");
         var scoreToPass = document.getElementById('score-to-pass').value;
         const training = this.dataStore.get('training');
@@ -276,19 +294,20 @@ class Training extends BindingClass {
             employeesWithTests.push(test.employeeId);
         }
         let employee;
-        for (employee of training.employeesTrained){
+        for (employee of training.employeesTrained) {
             if (!employeesWithTests.includes(employee)) {
                 newTestsNeeded.push(employee);
             }
         }
-        const updatedTraining = await this.client.createTest(training.trainingId, newTestsNeeded, scoreToPass)    
-       
+        const updatedTraining = await this.client.createTest(training.trainingId, newTestsNeeded, scoreToPass)
+
         if (updatedTraining != null) {
             window.location.href = `/training.html?id=${training.trainingId}`;
         }
     }
 
     async addEmployeesModalShow() {
+        this.LoadingSpinner.showLoadingSpinner("Retrieving Employee List");
         var modal = document.getElementById("myModal3");
         modal.style.display = "block";
         const employeesList = document.getElementById("employeeList");
@@ -305,9 +324,9 @@ class Training extends BindingClass {
             selectTag.append(opt);
         });
         employeesList.appendChild(selectTag);
-
+        this.LoadingSpinner.hideLoadingSpinner();
     }
-    
+
     async addEmployees() {
         this.LoadingSpinner.showLoadingSpinner("Adding Employees to Training");
         const employeeList = document.querySelectorAll('#employeeSelection option:checked');
@@ -317,7 +336,7 @@ class Training extends BindingClass {
         if (trainingReturn != null) {
             window.location.href = `/training.html?id=${trainingReturn.trainingId}`;
         }
-    
+
     }
 
 }
