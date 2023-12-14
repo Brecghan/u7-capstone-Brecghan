@@ -2,6 +2,7 @@ import TrainingMatrixClient from '../api/trainingMatrixClient';
 import Header from '../components/header';
 import BindingClass from '../util/bindingClass';
 import DataStore from '../util/DataStore';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 /**
  * Logic needed for the create employee page of the website.
@@ -9,10 +10,10 @@ import DataStore from '../util/DataStore';
 class CreateTraining extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['mount', 'submit', 'redirectToViewTraining', 'addTrainingSelect', 'newTrainingSeries', 'submitTrainingSeries' ], this);
+        this.bindClassMethods(['mount', 'submit', 'addTrainingSelect', 'newTrainingSeries', 'submitTrainingSeries'], this);
         this.dataStore = new DataStore();
-        this.dataStore.addChangeListener(this.redirectToViewTraining);
         this.header = new Header(this.dataStore);
+        this.LoadingSpinner = new LoadingSpinner;
     }
 
     /**
@@ -21,52 +22,55 @@ class CreateTraining extends BindingClass {
     mount() {
         document.getElementById('create').addEventListener('click', this.submit);
         document.getElementById('createTrainingSeries').addEventListener('click', this.newTrainingSeries);
-        document.getElementById('submit-update-btn').addEventListener('click', this.submitTrainingSeries);
+        document.getElementById('submit-update-btn').addEventListener('click', () => {
+            if (!document.getElementById("series-name-value").value) {
+                alert('Please enter a Training Series name');
+            } else {
+                this.submitTrainingSeries(document.getElementById("series-name-value").value);
+            }
+        });
 
         this.header.addHeaderToPage();
 
         this.client = new TrainingMatrixClient();
-
+        this.LoadingSpinner.showLoadingSpinner("Loading Page");
         this.addTrainingSelect();
+        window.onclick = function (event) {
+            if (event.target === document.getElementById("myModal")) {
+                document.getElementById("myModal").style.display = "none";
+                document.getElementById("series-name").removeChild(document.getElementById("series-name").lastChild);
+            }
+        }
     }
 
     /**
      * Method to run when the create training submit button is pressed. Call the TrainingMatrixClient to create the
      * training.
      */
-    async submit(evt) {
-        evt.preventDefault();
-
+    async submit() {
+        this.LoadingSpinner.showLoadingSpinner('Creating Training');
         const errorMessageDisplay = document.getElementById('error-message');
         errorMessageDisplay.innerText = ``;
         errorMessageDisplay.classList.add('hidden');
 
-        const createButton = document.getElementById('create');
-        const origButtonText = createButton.innerText;
-        createButton.innerText = 'Loading...';
 
         const trainingName = document.getElementById('training-name').value;
         const monthsTilExpire = document.getElementById('months-til').value;
         var trainingDate = document.getElementById('trainingDate').value;
         trainingDate += 'Z[UTC]';
         const trainingSeries = document.getElementById('training-series-field').children[1].value;
-
-        const training = await this.client.createTraining(trainingName, trainingSeries, monthsTilExpire, trainingDate, (error) => {
-            createButton.innerText = origButtonText;
-            errorMessageDisplay.innerText = `Error: ${error.message}`;
-            errorMessageDisplay.classList.remove('hidden');
-        });
-        this.dataStore.set('training', training);
-        console.table(training);
-    }
-
-    /**
-     * When the training is updated in the datastore, redirect to the view training page.
-     */
-    async redirectToViewTraining() {
-        const training = this.dataStore.get('training');
-        if (training != null) {
-            window.location.href = `/training.html?id=${training.trainingId}`;
+        if (!trainingName || !monthsTilExpire || !document.getElementById('trainingDate').value) {
+            alert('Please fill in all information')
+            this.LoadingSpinner.hideLoadingSpinner();
+        } else {
+            const training = await this.client.createTraining(trainingName, trainingSeries, monthsTilExpire, trainingDate, (error) => {
+                errorMessageDisplay.innerText = `Error: ${error.message}`;
+                errorMessageDisplay.classList.remove('hidden');
+            });
+            this.LoadingSpinner.showLoadingSpinner("Redirecting to Training");
+            if (training) {
+                window.location.href = `/training.html?id=${training.trainingId}`;
+            }
         }
     }
 
@@ -85,20 +89,33 @@ class CreateTraining extends BindingClass {
             opt.value = tsl.trainingSeriesName; // the index
             opt.innerHTML = tsl.trainingSeriesName;
             selectTag.append(opt);
-    });
-    searchByTraining.appendChild(selectTag);
+        });
+        searchByTraining.appendChild(selectTag);
+        this.LoadingSpinner.hideLoadingSpinner();
     }
 
-    newTrainingSeries(){
+    newTrainingSeries() {
         var modal = document.getElementById("myModal");
         modal.style.display = "block";
+        const newTrainingSeries = document.getElementById("series-name");
+        let seriesText = document.createElement('input');
+        seriesText.setAttribute("type", "text");
+        seriesText.setAttribute("placeholder", "Enter new series name");
+        seriesText.setAttribute("id", "series-name-value");
+        newTrainingSeries.appendChild(seriesText);
     }
 
-    async submitTrainingSeries() {
-        const newTrainingSeries = document.getElementById("series-name").value;
+    async submitTrainingSeries(newTrainingSeries) {
+        this.LoadingSpinner.showLoadingSpinner("Creating Training Series");
         const results = await this.client.createTrainingSeries(newTrainingSeries);
-        if (results != null){
-            window.location.href = `/createTraining.html`;
+        if (results) {
+            const docClear = document.getElementById("training-series-field");
+            const docClear2 = document.getElementById("series-name");
+            docClear.removeChild(docClear.lastChild);
+            docClear2.removeChild(docClear2.lastChild);
+            this.addTrainingSelect();
+            var modal = document.getElementById("myModal");
+            modal.style.display = "none";
         }
     }
 }

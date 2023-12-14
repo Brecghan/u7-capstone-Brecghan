@@ -2,6 +2,7 @@ import TrainingMatrixClient from '../api/trainingMatrixClient';
 import Header from '../components/header';
 import BindingClass from "../util/bindingClass";
 import DataStore from "../util/DataStore";
+import LoadingSpinner from '../components/LoadingSpinner';
 
 /*
 The code below this comment is equivalent to...
@@ -31,7 +32,7 @@ class EmployeesHome extends BindingClass {
         // Create a new datastore with an initial "empty" state.
         this.dataStore = new DataStore(EMPTY_DATASTORE_STATE);
         this.header = new Header(this.dataStore);
-        console.log("employeesHome constructor");
+        this.LoadingSpinner = new LoadingSpinner;
     }
 
     /**
@@ -42,27 +43,29 @@ class EmployeesHome extends BindingClass {
 
         this.header.addHeaderToPage();
         this.client = new TrainingMatrixClient();
+        this.LoadingSpinner.showLoadingSpinner("Loading Page");
+        this.dataStore.set("isActive", "true");
+        this.dataStore.set("team", "null");
 
         document.getElementById('employees-btn').addEventListener('click', this.getEmployees);
         document.getElementById('employee-ID-btn').addEventListener('click', this.redirectToEmployeeView);
-        document.getElementById('Team-Search-btn').addEventListener('click', this.getEmployees);
-
-        this.dataStore.set("isActive", "true");
-        this.dataStore.set("team", "null");
+        document.getElementById('Team-Search-btn').addEventListener('click', () => {
+            this.dataStore.set("team", document.getElementById('teamListSelectDropDown').value);
+            this.getEmployees();
+        });
 
         this.clientLoaded();
     }
 
     async clientLoaded() {
         document.getElementById("employee-home-page").innerText = 'Employees';
-        
         this.addFieldsToPage();
     }
 
     async addFieldsToPage() {
         const fieldZoneContainer = document.getElementById("field-zone");
         fieldZoneContainer.className = "selection-group";
-        
+
         const radioZone = document.createElement("div");
 
         const viewAllRadio = document.createElement("input");
@@ -81,7 +84,7 @@ class EmployeesHome extends BindingClass {
         });
 
         fieldZoneContainer.appendChild(radioZone);
-        
+
         const searchByIdField = document.createElement("input");
         searchByIdField.type = "text";
         searchByIdField.placeholder = "Enter ID Number";
@@ -92,27 +95,33 @@ class EmployeesHome extends BindingClass {
         const teamList = this.client.getTeamList();
 
         const searchByTeam = document.createElement("select");
+        searchByTeam.id = 'teamListSelectDropDown';
 
         let optionTeamList = searchByTeam.options;
         optionTeamList.length = 0;
 
-        teamList.forEach(function(value, key) {
+        teamList.forEach(function (value, key) {
             optionTeamList.add(
-            new Option(key, value)
-          )});
-    
-        searchByTeam.addEventListener("click", () => {
-            this.dataStore.set("team", searchByTeam.value);
+                new Option(value, key)
+            )
         });
 
-
         fieldZoneContainer.appendChild(searchByTeam);
+        this.LoadingSpinner.hideLoadingSpinner();
     }
 
-    async getEmployees(){
+    async getEmployees() {
+        this.LoadingSpinner.showLoadingSpinner("Loading Employees");
         const team = this.dataStore.get("team");
         const isActive = this.dataStore.get("isActive");
         const employeeList = await this.client.getEmployeeList(team, isActive);
+        employeeList.sort(function (a, b) {
+            let x = a.employeeId.toLowerCase();
+            let y = b.employeeId.toLowerCase();
+            if (x < y) { return -1; }
+            if (x > y) { return 1; }
+            return 0;
+        });
         this.displayEmployees(employeeList);
     }
 
@@ -138,46 +147,59 @@ class EmployeesHome extends BindingClass {
             row.appendChild(th);
         });
 
+        const teamChosen = this.dataStore.get("team");
         let employee;
-        for (employee of employeeList) {
-            let row = tbl.insertRow();
-            let cell1 = row.insertCell();
-            let text1 = document.createTextNode(employee.employeeId);
-            cell1.appendChild(text1);
-            let cell2 = row.insertCell();
-            let text2 = document.createTextNode(employee.employeeName);
-            cell2.appendChild(text2);
-            let cell3 = row.insertCell();
-            let text3 = document.createTextNode(employee.team);
-            cell3.appendChild(text3);
-            let cell4 = row.insertCell();
-            let text4 = document.createTextNode(employee.trainingStatus);
-            cell4.appendChild(text4);
-            let cell5 = row.insertCell();
-            let text5 = document.createTextNode(employee.isActive);
-            cell5.appendChild(text5);
-        }
-        employeesDisplayZoneContainer.appendChild(tbl);
+        if (employeeList.length === 0) {
+            document.getElementById("employees-table").innerHTML = "No employees assigned to this team: " + teamChosen;
+        } else {
+            for (employee of employeeList) {
+                let row = tbl.insertRow();
+                row.style["color"] = "#00a5f9";
+                row.style["text-decoration"] = "underline";
+                row.style["cursor"] = "pointer";
+                let cell1 = row.insertCell();
+                let text1 = document.createTextNode(employee.employeeId);
+                cell1.appendChild(text1);
+                let cell2 = row.insertCell();
+                let text2 = document.createTextNode(employee.employeeName);
+                cell2.appendChild(text2);
+                let cell3 = row.insertCell();
+                let text3 = document.createTextNode(employee.team);
+                cell3.appendChild(text3);
+                let cell4 = row.insertCell();
+                let text4 = document.createTextNode(employee.trainingStatus);
+                cell4.appendChild(text4);
+                let cell5 = row.insertCell();
+                let text5 = document.createTextNode(employee.isActive);
+                cell5.appendChild(text5);
+            }
+            employeesDisplayZoneContainer.appendChild(tbl);
 
-        
-        var table = document.getElementById("employees-table");
-        var rows = table.getElementsByTagName("tr");
-        for (var i = 0; i < rows.length; i++) {
-           var currentRow = table.rows[i];
-           var createClickHandler = function(row) {
-              return function() {
-                 var cell1 = row.getElementsByTagName("td")[0];
-                 if (cell1) {
-                    var employeeId = cell1.innerHTML;
-                    window.location.href = `/employee.html?id=${employeeId}`
-                 }
-              };
-           };
-           currentRow.onclick = createClickHandler(currentRow);
+
+            var table = document.getElementById("employees-table");
+            var rows = table.getElementsByTagName("tr");
+            for (var i = 0; i < rows.length; i++) {
+                var currentRow = table.rows[i];
+                var createClickHandler = function (row) {
+                    return function () {
+                        var cell1 = row.getElementsByTagName("td")[0];
+                        if (cell1) {
+                            var employeeId = cell1.innerHTML;
+                            window.location.href = `/employee.html?id=${employeeId}`
+                        }
+                    };
+                };
+                currentRow.onclick = createClickHandler(currentRow);
+            }
         }
+        document.getElementById("teamListSelectDropDown").selectedIndex = 0;
+        this.dataStore.set("team", 'null');
+        document.getElementById("viewAllRadioSelector").checked = false;
+        this.LoadingSpinner.hideLoadingSpinner();
     }
 
     async redirectToEmployeeView() {
+        this.LoadingSpinner.showLoadingSpinner("Redirecting to Employee");
         const employeeId = document.getElementById('field-zone').children[1].value;
         window.location.href = `/employee.html?id=${employeeId}`;
     }

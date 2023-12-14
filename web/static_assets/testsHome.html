@@ -7,23 +7,32 @@
 </head>
 
 <body class="background">
-<header class="header" id="header"></header>
-<div class="card">
-    <h1 id="tests-home-page"></h1>
-</div>
-<div id = "field-zone">
-</div>
-<p></p>
-<div id = "button-zone">
-    <p class="selection-group">        
-        <a class="button" id = "employee-ID-btn">View Tests By Employee Id</a>
-        <a class="button" id = "training-ID-btn">View Tests By Training Id</a>
-    </p>
-</div>
-<div id = "above-tests-display-zone">
-</div>
-<div id = "tests-display-zone">
-    <table id = "tests-table"></table>
-</div>
+    <header class="header" id="header"></header>
+    <div class="card">
+        <h1 id="tests-home-page"></h1>
+    </div>
+    <div id="field-zone">
+    </div>
+    <p></p>
+    <div id="button-zone">
+        <p class="selection-group">
+            <a class="button" id="employee-ID-btn">View Tests By Employee Id</a>
+            <a class="button" id="training-ID-btn">View Tests By Training Id</a>
+        </p>
+    </div>
+    <br>
+    <div id="above-tests-display-zone" class="display-group">
+    </div>
+    <br>
+    <br>
+    <div id="tests-display-zone">
+        <table id="tests-table" class="display-group"></table>
+    </div>
+    <div id="loading-spinner" class="spinner-container">
+        <div class="spinner"></div>
+        <div id="loading-message" class="fast-appear"></div>
+        <div id="loading-message-sub" class="slow-appear"></div>
+        <canvas width="500" height="200" id="canv"></canvas>
 </body>
+
 </html>

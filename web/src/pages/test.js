@@ -2,6 +2,7 @@ import TrainingMatrixClient from '../api/trainingMatrixClient';
 import Header from '../components/header';
 import BindingClass from "../util/bindingClass";
 import DataStore from "../util/DataStore";
+import LoadingSpinner from '../components/LoadingSpinner';
 
 /*
 The code below this comment is equivalent to...
@@ -26,12 +27,12 @@ class Test extends BindingClass {
     constructor() {
         super();
 
-        this.bindClassMethods(['mount', 'clientLoaded', 'updateTest', 'submitUpdate' ], this);
+        this.bindClassMethods(['mount', 'clientLoaded', 'updateTest', 'submitUpdate'], this);
 
         // Create a new datastore with an initial "empty" state.
         this.dataStore = new DataStore(EMPTY_DATASTORE_STATE);
         this.header = new Header(this.dataStore);
-        console.log("trainingView constructor");
+        this.LoadingSpinner = new LoadingSpinner;
     }
 
     /**
@@ -41,7 +42,7 @@ class Test extends BindingClass {
 
         this.header.addHeaderToPage();
         this.client = new TrainingMatrixClient();
-
+        this.LoadingSpinner.showLoadingSpinner("Loading Test Info");
         document.getElementById('update-test-btn').addEventListener('click', this.updateTest);
         document.getElementById('submit-update-btn').addEventListener('click', this.submitUpdate);
 
@@ -59,8 +60,13 @@ class Test extends BindingClass {
         const userName = employee.employeeName;
 
         document.getElementById("test-view-page").innerText = `Viewing` + `\n` + userName + `\n` + `Test`;
-       
+
         this.addFieldsToPage();
+        // window.onclick = function(event) {
+        //     if (event.target === document.getElementById("myModal")) {
+        //         document.getElementById("myModal").style.display = "none";
+        //     }
+        // }
     }
 
     async addFieldsToPage() {
@@ -70,15 +76,15 @@ class Test extends BindingClass {
 
 
         const employeeIdField = document.createElement("text");
-        employeeIdField.innerHTML = `Training Id:` + `<br>` + test.trainingId; 
+        employeeIdField.innerHTML = `Training Id:` + `<br>` + test.trainingId;
         fieldZoneContainer1.appendChild(employeeIdField);
 
         const employeeTeamField = document.createElement("text");
-        employeeTeamField.innerHTML = `Employee Id:` + `<br>` + test.employeeId; 
+        employeeTeamField.innerHTML = `Employee Id:` + `<br>` + test.employeeId;
         fieldZoneContainer1.appendChild(employeeTeamField);
 
         const employeeisActiveField = document.createElement("text");
-        employeeisActiveField.innerHTML = `Test Passing Status:` + `<br>` + test.hasPassed; 
+        employeeisActiveField.innerHTML = `Test Passing Status:` + `<br>` + test.hasPassed;
         fieldZoneContainer1.appendChild(employeeisActiveField);
 
 
@@ -86,11 +92,11 @@ class Test extends BindingClass {
         fieldZoneContainer2.className = "display-group";
 
         const employeeStartDateField = document.createElement("text");
-        employeeStartDateField.innerHTML = `Score to Pass:` + `<br>` + test.scoreToPass; 
+        employeeStartDateField.innerHTML = `Score to Pass:` + `<br>` + test.scoreToPass;
         fieldZoneContainer2.appendChild(employeeStartDateField);
 
         const employeeTrainingStatusField = document.createElement("text");
-        employeeTrainingStatusField.innerHTML = `Latest Test Attempt Score:` + `<br>` + test.latestScore; 
+        employeeTrainingStatusField.innerHTML = `Latest Test Attempt Score:` + `<br>` + test.latestScore;
         fieldZoneContainer2.appendChild(employeeTrainingStatusField);
 
 
@@ -102,7 +108,7 @@ class Test extends BindingClass {
         let rowTest = theadTest.insertRow();
         testTableHeaders.forEach(function (item, index) {
             let thTest = document.createElement("th");
-            thTest.style.background = '#70AD47';
+            thTest.style.background = '#121212';
             let textTest = document.createTextNode(item);
             thTest.appendChild(textTest);
             rowTest.appendChild(thTest);
@@ -110,29 +116,34 @@ class Test extends BindingClass {
 
 
         const testList = this.dataStore.get('testAttempts')
-        let testAttempt;
-        for (testAttempt of testList) {
-            let row = tblTest.insertRow();
-            let cell1 = row.insertCell();
-            let text1 = document.createTextNode(testAttempt);
-            cell1.appendChild(text1);
+        if (testList.length === 0) {
+            document.getElementById("attempts-table").innerHTML = 'No test attempts have been taken';
+        } else {
+            let testAttempt;
+            for (testAttempt of testList) {
+                let row = tblTest.insertRow();
+                let cell1 = row.insertCell();
+                let text1 = document.createTextNode(testAttempt);
+                cell1.appendChild(text1);
+            }
+            fieldZoneContainer3.appendChild(tblTest);
         }
-        fieldZoneContainer3.appendChild(tblTest);
+        this.LoadingSpinner.hideLoadingSpinner();
     }
 
-    updateTest(){
+    updateTest() {
         var modal = document.getElementById("myModal");
         modal.style.display = "block";
 
     }
-    
-    async submitUpdate(){    
-        var latestScore = document.getElementById("latest-score").value;
-      
-        const test = this.dataStore.get('test');
-        const updatedTest = await this.client.updateTest(test.trainingId, test.employeeId, latestScore)    
 
-        if (updatedTest != null) {
+    async submitUpdate() {
+        this.LoadingSpinner.showLoadingSpinner("Updating Test Info");
+        var latestScore = document.getElementById("latest-score").value;
+        const test = this.dataStore.get('test');
+        const updatedTest = await this.client.updateTest(test.trainingId, test.employeeId, latestScore)
+
+        if (updatedTest) {
             window.location.href = `/test.html?id=${updatedTest.trainingId + "~" + updatedTest.employeeId}`;
         }
     }

@@ -2,6 +2,7 @@ import TrainingMatrixClient from '../api/trainingMatrixClient';
 import Header from '../components/header';
 import BindingClass from "../util/bindingClass";
 import DataStore from "../util/DataStore";
+import LoadingSpinner from '../components/LoadingSpinner';
 
 /*
 The code below this comment is equivalent to...
@@ -26,12 +27,12 @@ class TestsHome extends BindingClass {
     constructor() {
         super();
 
-        this.bindClassMethods(['mount', 'clientLoaded', 'getTests', 'redirectToTestView', 'addFieldsToPage', 'displayTests' ], this);
+        this.bindClassMethods(['mount', 'clientLoaded', 'getTests', 'redirectToTestView', 'addFieldsToPage', 'displayTests'], this);
 
         // Create a new datastore with an initial "empty" state.
         this.dataStore = new DataStore(EMPTY_DATASTORE_STATE);
         this.header = new Header(this.dataStore);
-        console.log("trainingsHome constructor");
+        this.LoadingSpinner = new LoadingSpinner;
     }
 
     /**
@@ -48,20 +49,20 @@ class TestsHome extends BindingClass {
 
         this.dataStore.set("isActive", "true");
         this.dataStore.set("trainingSeries", "null");
-
+        this.LoadingSpinner.showLoadingSpinner("Loading Page");
         this.clientLoaded();
     }
 
     async clientLoaded() {
         document.getElementById("tests-home-page").innerText = 'Tests';
-        
+
         this.addFieldsToPage();
     }
 
     async addFieldsToPage() {
         const fieldZoneContainer = document.getElementById("field-zone");
         fieldZoneContainer.className = "selection-group";
-        
+
         const searchByEmployeeIdField = document.createElement("input");
         searchByEmployeeIdField.type = "text";
         searchByEmployeeIdField.id = "searchByEmployeeIdField";
@@ -77,26 +78,33 @@ class TestsHome extends BindingClass {
         searchByTrainingIdField.size = 25;
 
         fieldZoneContainer.appendChild(searchByTrainingIdField);
-
+        this.LoadingSpinner.hideLoadingSpinner();
     }
 
-    
-    async getTests(){
+
+    async getTests() {
+        this.LoadingSpinner.showLoadingSpinner("Getting Tests");
         const employeeId = document.getElementById("searchByEmployeeIdField").value;
         const trainingId = document.getElementById("searchByTrainingIdField").value;
-        console.log('employeeId= ' + employeeId);
-        console.log('trainingId= ' + trainingId);
         var testsList;
+        var idSearched;
         if (employeeId) {
             testsList = await this.client.getTestList(null, employeeId, null);
+            idSearched = employeeId;
+            this.displayTests(testsList);
         } if (trainingId) {
             testsList = await this.client.getTestList(trainingId, null, null);
+            idSearched = trainingId;
+            this.displayTests(testsList);
         } else if (!employeeId && !trainingId) {
             window.alert("Enter an ID to continue");
         }
-        this.displayTests(testsList);
         document.getElementById("searchByEmployeeIdField").value = '';
         document.getElementById("searchByTrainingIdField").value = '';
+        if (testsList.length === 0) {
+            document.getElementById("tests-table").innerHTML = "No tests associated with ID: " + idSearched;
+            this.LoadingSpinner.hideLoadingSpinner();
+        }
     }
 
     async displayTests(testsList) {
@@ -122,8 +130,12 @@ class TestsHome extends BindingClass {
         });
 
         let test;
+
         for (test of testsList) {
             let row = tbl.insertRow();
+            row.style["color"] = "#00a5f9";
+            row.style["text-decoration"] = "underline";
+            row.style["cursor"] = "pointer";
             let cell1 = row.insertCell();
             let text1 = document.createTextNode(test.trainingId);
             cell1.appendChild(text1);
@@ -142,24 +154,26 @@ class TestsHome extends BindingClass {
         var table = document.getElementById("tests-table");
         var rows = table.getElementsByTagName("tr");
         for (var i = 0; i < rows.length; i++) {
-           var currentRow = table.rows[i];
-           var createClickHandler = function(row) {
-              return function() {
-                 var cell1 = row.getElementsByTagName("td")[0];
-                 var cell2 = row.getElementsByTagName("td")[1];
-                 if (cell1 && cell2) {
-                    var trainingId = cell1.innerHTML;
-                    var employeeId = cell2.innerHTML;
-                    var testId = trainingId + '~' + employeeId;
-                    window.location.href = `/test.html?id=${testId}`;
-                 }
-              };
-           };
-           currentRow.onclick = createClickHandler(currentRow);
+            var currentRow = table.rows[i];
+            var createClickHandler = function (row) {
+                return function () {
+                    var cell1 = row.getElementsByTagName("td")[0];
+                    var cell2 = row.getElementsByTagName("td")[1];
+                    if (cell1 && cell2) {
+                        var trainingId = cell1.innerHTML;
+                        var employeeId = cell2.innerHTML;
+                        var testId = trainingId + '~' + employeeId;
+                        window.location.href = `/test.html?id=${testId}`;
+                    }
+                };
+            };
+            currentRow.onclick = createClickHandler(currentRow);
         }
+        this.LoadingSpinner.hideLoadingSpinner();
     }
 
     redirectToTestView(testId) {
+        this.LoadingSpinner.showLoadingSpinner("Redirecting to Test");
         window.location.href = `/test.html?id=${testId}`;
     }
 }

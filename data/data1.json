@@ -9,7 +9,7 @@
           "startDate": { "S": "\"2023-03-27T09:00Z[UTC]\"" },
           "team": { "S": "INNOVATION" },
           "testsTaken": { "S": "[\"Idea_Generation:2024-07-10T13:58Z[UTC]~US12321\"]" },
-          "trainingsTaken": { "S": "[\"Twerking_for_all_ages:2021-08-17\",\"Idea_Generation:2024-07-10T13:58Z[UTC]\"]" },
+          "trainingsTaken": { "S": "[\"Coding_for_all_ages:2021-08-17\",\"Idea_Generation:2024-07-10T13:58Z[UTC]\"]" },
           "trainingStatus": { "S": "UP_TO_DATE" }
         }
       }
@@ -23,7 +23,7 @@
           "startDate": { "S": "\"2023-03-27T09:00Z[UTC]\"" },
           "team": { "S": "INNOVATION" },
           "testsTaken": { "S": "[\"Idea_Generation:2024-07-10T13:58Z[UTC]~US12345\"]" },
-          "trainingsTaken": { "S": "[\"Twerking_for_all_ages:2021-08-17\",\"Idea_Generation:2024-07-10T13:58Z[UTC]\"]" },
+          "trainingsTaken": { "S": "[\"Coding_for_all_ages:2021-08-17\",\"Idea_Generation:2024-07-10T13:58Z[UTC]\"]" },
           "trainingStatus": { "S": "UP_TO_DATE" }
         }
       }
@@ -37,7 +37,7 @@
           "startDate": { "S": "\"2023-03-27T09:00Z[UTC]\"" },
           "team": { "S": "INNOVATION" },
           "testsTaken": { "S": "[\"Idea_Generation:2024-07-10T13:58Z[UTC]~US54321\"]" },
-          "trainingsTaken": { "S": "[\"Twerking_for_all_ages:2021-08-17\",\"Idea_Generation:2024-07-10T13:58Z[UTC]\"]" },
+          "trainingsTaken": { "S": "[\"Coding_for_all_ages:2021-08-17\",\"Idea_Generation:2024-07-10T13:58Z[UTC]\"]" },
           "trainingStatus": { "S": "UP_TO_DATE" }
         }
       }
@@ -51,7 +51,7 @@
           "startDate": { "S": "\"2023-03-27T09:00Z[UTC]\"" },
           "team": { "S": "INNOVATION" },
           "testsTaken": { "S": "[\"Idea_Generation:2024-07-10T13:58Z[UTC]~US54345\"]" },
-          "trainingsTaken": { "S": "[\"Twerking_for_all_ages:2021-08-17\",\"Idea_Generation:2024-07-10T13:58Z[UTC]\"]" },
+          "trainingsTaken": { "S": "[\"Coding_for_all_ages:2021-08-17\",\"Idea_Generation:2024-07-10T13:58Z[UTC]\"]" },
           "trainingStatus": { "S": "UP_TO_DATE" }
         }
       }
@@ -65,7 +65,7 @@
           "startDate": { "S": "\"2023-03-27T09:00Z[UTC]\"" },
           "team": { "S": "HUMAN_RESOURCES" },
           "testsTaken": { "S": "[\"Idea_Generation:2024-07-10T13:58Z[UTC]~US51315\"]" },
-          "trainingsTaken": { "S": "[\"Twerking_for_all_ages:2021-08-17\",\"Idea_Generation:2024-07-10T13:58Z[UTC]\"]" },
+          "trainingsTaken": { "S": "[\"Coding_for_all_ages:2021-08-17\",\"Idea_Generation:2024-07-10T13:58Z[UTC]\"]" },
           "trainingStatus": { "S": "UP_TO_DATE" }
         }
       }
@@ -93,7 +93,7 @@
           "startDate": { "S": "\"2023-03-27T09:00Z[UTC]\"" },
           "team": { "S": "QUALITY_IQC" },
           "testsTaken": { "S": "[]" },
-          "trainingsTaken": { "S": "[\"Twerking_for_all_ages:2021-08-17\"]" },
+          "trainingsTaken": { "S": "[\"Coding_for_all_ages:2021-08-17\"]" },
           "trainingStatus": { "S": "UP_TO_DATE" }
         }
       }
@@ -241,14 +241,14 @@
     {
       "PutRequest": {
         "Item": {
-            "trainingId": { "S": "Twerking_for_all_ages:2021-08-17" },
+            "trainingId": { "S": "Coding_for_all_ages:2021-08-17" },
             "employeesTrained": { "S": "[\"US54345\",\"US31313\",\"US54321\",\"US51315\",\"US12345\",\"US12321\"]" },
             "expirationStatus": { "S": "UP_TO_DATE" },
             "isActive": { "BOOL": true },
             "monthsTilExpire": { "N": "99" },
             "testsForTraining": { "S": "[]" },
             "trainingDate": { "S": "\"2021-08-17T14:30Z[UTC]\"" },
-            "trainingName": { "S": "Twerking_for_all_ages" },
+            "trainingName": { "S": "Coding_for_all_ages" },
             "trainingSeries": { "S": "null" }
         }
       }

@@ -7,27 +7,38 @@
 </head>
 
 <body class="background">
-<header class="header" id="header"></header>
-<br><div>
-    <a class="button" href="createTraining.html" style="float: right;">Create New Training</a>
-</div>
-<div class="card">
-    <h1 id="trainings-home-page"></h1>
-</div>
-<div id = "field-zone">
-</div>
-<p></p>
-<div id = "button-zone">
-    <p class="selection-group">        
-        <a class="button" id = "trainings-btn">View All</a>
-        <a class="button" id = "training-ID-btn">Search By Id</a>
-        <a class="button" id = "TrainingSeries-Search-btn">Search By Series</a>
-    </p>
-</div>
-<div id = "above-trainings-display-zone">
-</div>
-<div id = "trainings-display-zone">
-    <table id = "trainings-table"></table>
-</div>
+    <header class="header" id="header"></header>
+    <br>
+    <div>
+        <a class="button" href="createTraining.html?#" style="float: right;">Create New Training</a>
+    </div>
+    <div class="card">
+        <h1 id="trainings-home-page"></h1>
+    </div>
+    <div id="field-zone">
+    </div>
+    <p></p>
+    <div id="button-zone">
+        <p class="selection-group">
+            <a class="button" id="trainings-btn">View All</a>
+            <a class="button" id="training-ID-btn">Search By Id</a>
+            <a class="button" id="TrainingSeries-Search-btn">Search By Series</a>
+        </p>
+    </div>
+    <br>
+    <div id="above-trainings-display-zone" class="display-group">
+    </div>
+    <br>
+    <br>
+    <div id="trainings-display-zone">
+        <table id="trainings-table" class="display-group"></table>
+    </div>
+    <div id="loading-spinner" class="spinner-container">
+        <div class="spinner"></div>
+        <div id="loading-message" class="fast-appear"></div>
+        <div id="loading-message-sub" class="slow-appear"></div>
+        <canvas width="500" height="200" id="canv"></canvas>
+    </div>
 </body>
+
 </html>
